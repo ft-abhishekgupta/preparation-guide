@@ -1,0 +1,1206 @@
+<!DOCTYPE html><html><head>
+      <title>04-Back-of-the-Envelope-Estimation</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="4-back-of-the-envelope-estimation">4. Back-of-the-Envelope Estimation </h1>
+<blockquote>
+<p><strong>TL;DR:</strong> Estimation converts vague scale requirements into concrete architecture decisions. Do the math on the whiteboard, narrate every step, and let the numbers drive your choices.</p>
+</blockquote>
+<p><strong>Interview weight:</strong> P0 — interviewers expect you to produce numbers in &lt; 5 minutes and use them to justify architecture decisions. Guessing "we'll need a lot of servers" without math is a red flag at senior level.</p>
+<hr>
+<h2 id="core-concepts">Core Concepts </h2>
+<ul>
+<li><strong>The goal:</strong> produce numbers accurate to within 1 order of magnitude; don't chase false precision.</li>
+<li><strong>Recipe:</strong> DAU → daily requests → RPS → peak RPS → storage/day → storage/year → bandwidth.</li>
+<li><strong>Key insight:</strong> estimation errors that change the architecture (e.g., 1 server vs 100 servers) matter; errors that don't (e.g., 80 vs 120 servers) don't.</li>
+</ul>
+<hr>
+<h2 id="powers-of-two-and-data-sizes">Powers of Two and Data Sizes </h2>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Value</th>
+<th>Quick reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Byte</td>
+<td>8 bits</td>
+<td>1 char (ASCII)</td>
+</tr>
+<tr>
+<td>1 KB</td>
+<td>10^3 bytes ≈ 2^10</td>
+<td>Small JSON object</td>
+</tr>
+<tr>
+<td>1 MB</td>
+<td>10^6 bytes ≈ 2^20</td>
+<td>Short video clip thumbnail; large JSON blob</td>
+</tr>
+<tr>
+<td>1 GB</td>
+<td>10^9 bytes ≈ 2^30</td>
+<td>30 min HD video; 1 M small records</td>
+</tr>
+<tr>
+<td>1 TB</td>
+<td>10^12 bytes ≈ 2^40</td>
+<td>~1000 HD movies; large DB</td>
+</tr>
+<tr>
+<td>1 PB</td>
+<td>10^15 bytes ≈ 2^50</td>
+<td>Hyperscale analytics; video platforms</td>
+</tr>
+<tr>
+<td>1 million</td>
+<td>10^6</td>
+<td>—</td>
+</tr>
+<tr>
+<td>1 billion</td>
+<td>10^9</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Seconds/day</td>
+<td>86,400 ≈ 10^5</td>
+<td>Use 100 K for quick math</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="latency-numbers-every-programmer-should-know">Latency Numbers Every Programmer Should Know </h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Latency</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 cache reference</td>
+<td>0.5 ns</td>
+<td>—</td>
+</tr>
+<tr>
+<td>L2 cache reference</td>
+<td>7 ns</td>
+<td>14× L1</td>
+</tr>
+<tr>
+<td>RAM read</td>
+<td>100 ns</td>
+<td>200× L1</td>
+</tr>
+<tr>
+<td>SSD random read</td>
+<td>150 µs (0.15 ms)</td>
+<td>Flash NAND; Azure Premium SSD</td>
+</tr>
+<tr>
+<td>HDD seek</td>
+<td>10 ms</td>
+<td>Spinning disk; avoid in hot paths</td>
+</tr>
+<tr>
+<td>Redis GET (same DC)</td>
+<td>0.5–1 ms</td>
+<td>Network + in-memory lookup</td>
+</tr>
+<tr>
+<td>DB indexed read (same DC)</td>
+<td>1–5 ms</td>
+<td>PostgreSQL / SQL Server; in-memory buffer pool hit</td>
+</tr>
+<tr>
+<td>DB read (cold, full scan row)</td>
+<td>10–50 ms</td>
+<td>Disk involved</td>
+</tr>
+<tr>
+<td>Network round-trip (same DC / AZ)</td>
+<td>0.5–2 ms</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Network round-trip (cross-AZ)</td>
+<td>2–5 ms</td>
+<td>Same Azure region</td>
+</tr>
+<tr>
+<td>Network round-trip (cross-region)</td>
+<td>50–150 ms</td>
+<td>E.g., East US → West Europe</td>
+</tr>
+<tr>
+<td>Cosmos DB read (Session, same region)</td>
+<td>2–10 ms</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Cosmos DB write (Session, single region)</td>
+<td>5–15 ms</td>
+<td>—</td>
+</tr>
+<tr>
+<td>HTTP call (same DC, small payload)</td>
+<td>1–5 ms</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="qps-math-dau-→-rps-→-peak-rps">QPS Math: DAU → RPS → Peak RPS </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Daily RPS   = (DAU × avg_requests_per_user_per_day) / 86,400
+Peak factor = 2–3× (typical); 5–10× for event spikes
+Peak RPS    = Daily RPS × peak_factor
+</code></pre><p><strong>Quick rules:</strong></p>
+<ul>
+<li>1 M DAU × 10 requests/day ÷ 100 K s/day = <strong>100 RPS average</strong></li>
+<li>10 M DAU × 10 req/day ÷ 100 K s/day = <strong>1 000 RPS average</strong> → ~3 000 RPS peak</li>
+<li>100 M DAU × 10 req/day ÷ 100 K s/day = <strong>10 000 RPS average</strong> → ~30 000 RPS peak</li>
+</ul>
+<hr>
+<h2 id="storage-math">Storage Math </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Storage/day  = records_per_day × bytes_per_record
+Storage/year = storage_per_day × 365
+With replication (3×): × 3
+With index overhead: × 1.5
+</code></pre><hr>
+<h2 id="bandwidth-math">Bandwidth Math </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Ingress bandwidth = write_RPS × avg_payload_bytes
+Egress bandwidth  = read_RPS × avg_response_bytes
+</code></pre><hr>
+<h2 id="cache-sizing-8020-rule">Cache Sizing (80/20 Rule) </h2>
+<ul>
+<li>20% of content drives 80% of reads → cache that 20%.</li>
+<li>Cache size = <code>0.2 × total_content_size</code> as a baseline.</li>
+<li><strong>Hit ratio impact on DB load:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Cache Hit Ratio</th>
+<th>% of reads hitting DB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80%</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>90%</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>95%</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>99%</td>
+<td>1%</td>
+</tr>
+</tbody>
+</table>
+<p>At 99% hit ratio and 5 K RPS reads, DB sees only 50 RPS — enormous relief. A 5% drop in hit ratio (94% → 89%) doubles DB load from 5% to 11%.</p>
+<p><strong>Redis memory sizing:</strong> Each entry ≈ key size + value size + 50 bytes overhead. For 10 M cached objects averaging 200 bytes each: <code>10 M × 250 bytes = 2.5 GB</code>. Add 30% headroom → <strong>~3.5 GB Redis cluster</strong>.</p>
+<hr>
+<h2 id="memory-connection-and-thread-budgets-per-server">Memory, Connection, and Thread Budgets per Server </h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Typical limit</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAM per server</td>
+<td>4–64 GB (common)</td>
+<td>D4s_v3 = 16 GB; D8s_v3 = 32 GB</td>
+</tr>
+<tr>
+<td>Thread pool (ASP.NET Core)</td>
+<td>~200–500 threads</td>
+<td>Set via <code>ThreadPool.SetMinThreads</code>; async reduces need</td>
+</tr>
+<tr>
+<td>TCP connections per server</td>
+<td>~65 K ports</td>
+<td>Outbound; use connection pooling</td>
+</tr>
+<tr>
+<td>DB connections per pool</td>
+<td>100–300</td>
+<td>Postgres default max = 100; use PgBouncer</td>
+</tr>
+<tr>
+<td>Redis connections</td>
+<td>10–50 per pod</td>
+<td>StackExchange.Redis uses multiplexed connection</td>
+</tr>
+<tr>
+<td>RPS per ASP.NET Core server</td>
+<td>5–20 K</td>
+<td>Depends on compute per request</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="how-many-servers-do-i-need">How Many Servers Do I Need? </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>servers = ceil(peak_RPS / RPS_per_server)
+</code></pre><p>With 70% utilization target (headroom):</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>servers = ceil(peak_RPS / (RPS_per_server × 0.7))
+</code></pre><p><strong>Example:</strong> 10 K peak RPS, 5 K RPS/server (moderate compute):</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>servers = ceil(10000 / (5000 × 0.7)) = ceil(2.86) = 3 servers minimum
+</code></pre><p>With multi-AZ (3 zones), at least 1 per zone + spare = <strong>6 servers</strong>.</p>
+<hr>
+<h2 id="cost-estimation-rough-azure-unit-costs">Cost Estimation (Rough Azure Unit Costs) </h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Approx monthly cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D4s_v3 VM (4 vCPU, 16 GB)</td>
+<td>~$140</td>
+</tr>
+<tr>
+<td>Azure Cache for Redis C1 (1 GB)</td>
+<td>~$55</td>
+</tr>
+<tr>
+<td>Azure Cache for Redis P1 (6 GB)</td>
+<td>~$200</td>
+</tr>
+<tr>
+<td>Cosmos DB 100 RU/s (serverless est.)</td>
+<td>~$0.25/M RU</td>
+</tr>
+<tr>
+<td>Cosmos DB 1000 RU/s provisioned</td>
+<td>~$58</td>
+</tr>
+<tr>
+<td>Azure Blob Storage 1 TB</td>
+<td>~$18</td>
+</tr>
+<tr>
+<td>Azure Service Bus Standard</td>
+<td>~$0.05/M operations</td>
+</tr>
+<tr>
+<td>Azure Front Door</td>
+<td>~$35 base + bandwidth</td>
+</tr>
+<tr>
+<td>AKS (control plane)</td>
+<td>Free; pay for nodes</td>
+</tr>
+</tbody>
+</table>
+<p>Use these for order-of-magnitude cost justification, not billing.</p>
+<hr>
+<h2 id="traffic-funnel-diagram">Traffic Funnel Diagram </h2>
+<div class="mermaid">flowchart TD
+    DAU["DAU: 10 M users"]
+    DReq["Daily Requests: 100 M&lt;br/&gt;(10 req/user/day)"]
+    ARPS["Avg RPS: ~1 000"]
+    PRPS["Peak RPS: ~3 000&lt;br/&gt;(3× peak factor)"]
+    CACHE["Cache absorbs 95%&lt;br/&gt;~2 850 RPS to cache"]
+    DB["DB receives 5%&lt;br/&gt;~150 RPS"]
+    DAU --&gt; DReq --&gt; ARPS --&gt; PRPS --&gt; CACHE --&gt; DB
+</div><hr>
+<h2 id="estimation-worksheet">Estimation Worksheet </h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Formula</th>
+<th>Your value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAU</td>
+<td>given</td>
+<td></td>
+</tr>
+<tr>
+<td>Requests/user/day</td>
+<td>estimate by feature</td>
+<td></td>
+</tr>
+<tr>
+<td>Daily total requests</td>
+<td>DAU × req/user/day</td>
+<td></td>
+</tr>
+<tr>
+<td>Average RPS</td>
+<td>daily / 86 400</td>
+<td></td>
+</tr>
+<tr>
+<td>Peak RPS</td>
+<td>avg × peak factor (2–3×)</td>
+<td></td>
+</tr>
+<tr>
+<td>Write RPS</td>
+<td>peak × write fraction</td>
+<td></td>
+</tr>
+<tr>
+<td>Read RPS</td>
+<td>peak × read fraction</td>
+<td></td>
+</tr>
+<tr>
+<td>Bytes per record</td>
+<td>estimate fields</td>
+<td></td>
+</tr>
+<tr>
+<td>Records per day</td>
+<td>write RPS × 86 400</td>
+<td></td>
+</tr>
+<tr>
+<td>Storage per day</td>
+<td>records × bytes</td>
+<td></td>
+</tr>
+<tr>
+<td>Storage per year</td>
+<td>per_day × 365</td>
+<td></td>
+</tr>
+<tr>
+<td>Replicated storage</td>
+<td>× replication factor</td>
+<td></td>
+</tr>
+<tr>
+<td>Ingress bandwidth</td>
+<td>write RPS × payload</td>
+<td></td>
+</tr>
+<tr>
+<td>Egress bandwidth</td>
+<td>read RPS × response</td>
+<td></td>
+</tr>
+<tr>
+<td>Cache size</td>
+<td>20% of hot content</td>
+<td></td>
+</tr>
+<tr>
+<td>Servers needed</td>
+<td>peak RPS / RPS_per_server / 0.7</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="worked-example-1-—-twitter-like-feed">Worked Example 1 — Twitter-like Feed </h2>
+<p><strong>Given:</strong> 100 M DAU, 5 reads/user/day, 1 write/user/day, ~300 bytes/tweet.</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Read RPS avg   = 100M × 5 / 86400 ≈ 5 800 RPS → peak ~17 000 RPS
+Write RPS avg  = 100M × 1 / 86400 ≈ 1 160 RPS → peak ~3 500 RPS
+
+Tweets/day     = 1 160 RPS × 86400 ≈ 100 M tweets/day
+Storage/day    = 100 M × 300 B = 30 GB/day
+Storage/year   = 30 × 365 ≈ 11 TB × 3 (replication) = 33 TB/year
+
+Fan-out writes: avg follower count 200 → 200 write ops/tweet
+Fan-out RPS    = 1 160 × 200 = 232 000 write RPS → need async queue + worker pool
+</code></pre><p><strong>Architecture implication:</strong> Fan-out at write time for users with &lt; 1 000 followers; fan-out at read time (pull model) for celebrities (10 M+ followers). Hybrid fan-out is the industry standard.</p>
+<hr>
+<h2 id="worked-example-2-—-video-streaming-service">Worked Example 2 — Video Streaming Service </h2>
+<p><strong>Given:</strong> 10 M DAU, 1 video watched/day avg, avg video = 500 MB (720p, 60 min), peak concurrent viewers 5 M.</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Egress bandwidth = 5 M viewers × 1 Mbps (adaptive bitrate floor) = 5 Tbps
+Storage new/day  = 500 K uploads/day × 500 MB = 250 TB/day raw
+  + transcoding to 3 qualities (360p/720p/1080p) = ~750 TB/day
+  + replicated × 3 = ~2.25 PB/day delta
+
+DB: video metadata only → 10 M videos × 1 KB = 10 GB, trivial
+Hot content cache: top 0.1% of videos = 10 000 videos × 500 MB = 5 TB CDN
+</code></pre><p><strong>Architecture implication:</strong> CDN is not optional — 5 Tbps egress from origin is impossible; CDN absorbs 95%+. Blob storage (Azure Blob + tiering to cool/archive) for raw video. Async transcoding workers on Service Bus queue. Separate metadata service (lightweight) from media service.</p>
+<hr>
+<h2 id="worked-example-3-—-5-000-rps-rest-api-9999-slo">Worked Example 3 — 5 000 RPS REST API, 99.99% SLO </h2>
+<p><em>Directly maps to your News Feed system.</em></p>
+<p><strong>Given:</strong> 7 M DAU, 5 K RPS peak, 99.99% SLO, p99 latency ≤ 200 ms.</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Peak RPS       = 5 000
+Write fraction = 10% → 500 write RPS
+Read fraction  = 90% → 4 500 read RPS
+
+Servers        = ceil(5 000 / (10 000 × 0.7)) = 1 server mathematically
+  But 99.99% SLO + multi-AZ → min 2 AZs × 2 servers = 4 servers minimum
+  With headroom for rolling deploy: 6 servers
+
+Cache (Redis):
+  Hit ratio target: 95% → DB sees 225 RPS (manageable)
+  Cache size: 7 M users × 1 active session (500 B) + top 1% content = ~3.5 GB + 10 GB = ~15 GB Redis cluster
+
+Cosmos DB:
+  225 reads × 5 RU = 1 125 RU/s reads
+  500 writes × 10 RU = 5 000 RU/s writes
+  Total ≈ 6 125 RU/s provisioned → round up to 7 500 RU/s
+  With 3× replication factor: cost × 3 for writes, reads cheap from local replica
+
+Storage:
+  Feed events: 500 writes/s × 500 B × 86400 × 365 × 3 = ~21 TB/year
+  (Fits comfortably in Cosmos DB or Azure SQL with partitioning by userId)
+
+Bandwidth:
+  Ingress: 500 × 1 KB = 500 KB/s (trivial)
+  Egress: 4 500 × 5 KB = 22.5 MB/s = ~180 Gbps/year (negligible for a CDN-fronted API)
+</code></pre><p><strong>SLO constraint:</strong> 99.99% → multi-AZ, blue-green deploy (&lt; 5 min rollback), all dependencies ≥ 99.99% or circuit-broken.</p>
+<hr>
+<h2 id="interview-questions">Interview Questions </h2>
+<p><strong>Q1. How do you estimate RPS from DAU?</strong><br>
+A: <code>avg RPS = DAU × requests_per_user_per_day / 86 400</code>. Peak RPS = avg × 2–3× for normal traffic, up to 10× for spikes. Always separate read and write RPS.</p>
+<p><strong>Q2. How much storage does a Twitter-like system need per year?</strong><br>
+A: ~100 M tweets/day × 300 bytes × 365 × 3 (replication) ≈ 33 TB/year for tweet text. Add media separately (orders of magnitude larger). DB tier handles text; blob storage handles media.</p>
+<p><strong>Q3. How does cache hit ratio affect DB load?</strong><br>
+A: Dramatically. At 4 500 read RPS and 95% cache hit rate, DB sees only 225 RPS. A drop to 90% doubles DB load to 450 RPS. A cache stampede (all cache entries expire simultaneously) can spike DB to full 4 500 RPS — use jittered TTLs.</p>
+<p><strong>Q4. How many servers do you need for 5 K RPS?</strong><br>
+A: At 10 K RPS/server and 70% utilization target: ceil(5000 / 7000) = 1. But 99.99% SLO requires multi-AZ redundancy: at minimum 2 AZs × 2 servers = 4. Add rolling deploy capacity and monitoring/admin instances → 6 servers is a reasonable starting point.</p>
+<p><strong>Q5. Estimate Cosmos DB RU/s for your News Feed system.</strong><br>
+A: 500 write RPS × 10 RU/write + 225 uncached read RPS × 5 RU/read ≈ 6 100 RU/s. Round up to 7 500 for headroom. With single-region Cosmos, cost ≈ 7 500 RU/s × <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.008</mn><mi mathvariant="normal">/</mi><mn>100</mn><mi>R</mi><mi>U</mi><mi mathvariant="normal">/</mi><mi>h</mi><mi>r</mi><mo>×</mo><mn>720</mn><mi>h</mi><mi>r</mi><mi mathvariant="normal">/</mi><mi>m</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>h</mi><mo>≈</mo></mrow><annotation encoding="application/x-tex">0.008/100 RU/hr × 720 hr/month ≈</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0.008/100</span><span class="mord mathnormal" style="margin-right:0.0077em;">R</span><span class="mord mathnormal" style="margin-right:0.109em;">U</span><span class="mord">/</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">720</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord">/</span><span class="mord mathnormal">m</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span></span></span></span>430/month.</p>
+<p><strong>Q6. What is the egress bandwidth for a video platform with 5 M concurrent viewers?</strong><br>
+A: 5 M × 1 Mbps (360p adaptive) = 5 Tbps minimum. This is physically impossible from a single origin; CDN is mandatory. CDN PoPs collectively provide this bandwidth; origin serves only cache misses (~5% of requests).</p>
+<p><strong>Q7. How much memory does Redis need to cache 10 M sessions at 500 bytes each?</strong><br>
+A: 10 M × (500 + 50 overhead) = 5.5 GB. Add 30% headroom → ~7 GB. Azure Cache for Redis P2 (13 GB) is appropriate. Use Redis Cluster for scaling beyond single shard.</p>
+<p><strong>Q8. Why is the fan-out write problem critical for a feed system at Twitter scale?</strong><br>
+A: At 1 160 write RPS with average 200 followers, fan-out generates 232 000 write RPS to the feed store. At 10 K write RPS (celebrity with 10 M followers) fan-out alone = 100 B writes/tweet — impossible synchronously. Solution: async fan-out workers via Service Bus; or fan-out at read time for high-follower accounts (hybrid model).</p>
+<p><strong>Q9. How do you estimate the number of DB connections needed?</strong><br>
+A: connections_needed = servers × threads_per_server × DB_connection_fraction. At 6 API servers × 200 threads × 30% hitting DB = 360 connections. Postgres default max is 100 — use PgBouncer (connection proxy) or Cosmos DB (HTTP-based, no persistent connections).</p>
+<p><strong>Q10. How do latency numbers inform architecture choices?</strong><br>
+A: Redis GET at 1 ms vs DB read at 5 ms → for 5 K read RPS, uncached latency would be ~5 ms; cached is 1 ms. Cross-region calls at 100 ms make synchronous fan-out to a remote region impossible in a 200 ms p99 budget. These numbers justify: local caching, async fan-out, CDN for static content, region co-location of services and their data.</p>
+<hr>
+<h2 id="quick-recap">Quick Recap </h2>
+<ul>
+<li>Daily RPS = DAU × req/user/day ÷ 86 400; peak = avg × 2–3×.</li>
+<li>Latency anchors: Redis 1 ms, DB 5 ms, cross-region 100 ms, SSD 0.15 ms.</li>
+<li>Storage = write RPS × 86 400 × bytes × 365 × replication factor.</li>
+<li>Cache the top 20% of content → achieves 80%+ hit rate; 95%+ hit rate = 20× DB load reduction.</li>
+<li>Servers = peak RPS ÷ (RPS/server × 0.7); min 4 for 99.99% SLO multi-AZ.</li>
+<li>Fan-out math catches scale surprises early (232 K write RPS from naive fan-out).</li>
+<li>Always narrate units and round to 1 significant figure.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

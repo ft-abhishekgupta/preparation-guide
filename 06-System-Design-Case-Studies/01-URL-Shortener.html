@@ -1,0 +1,1149 @@
+<!DOCTYPE html><html><head>
+      <title>01-URL-Shortener</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="1-design-a-url-shortener">1. Design a URL Shortener </h1>
+<blockquote>
+<p><strong>TL;DR:</strong> Map long URLs to short 6–8 character codes; serve 301/302 redirects at &lt; 10 ms from a distributed KV store backed by a write-once, read-many access pattern with aggressive caching.</p>
+</blockquote>
+<p><strong>Interview weight:</strong> P0 — tests ID generation, hashing, caching, sharding and abuse prevention in a tight, estimable system.</p>
+<hr>
+<h2 id="1-requirements">1. Requirements </h2>
+<h3 id="functional">Functional </h3>
+<ul>
+<li>Shorten a URL; optionally specify a custom alias and TTL.</li>
+<li>Redirect short URL → original URL (301 or 302).</li>
+<li>Click analytics (count, geo, referrer) — async, non-blocking.</li>
+<li>URL expiry and deletion.</li>
+</ul>
+<h3 id="non-functional">Non-Functional </h3>
+<ul>
+<li>Read-heavy (redirect : create ≈ 100 : 1).</li>
+<li>Redirect p99 &lt; 10 ms (cache-served); creation &lt; 100 ms.</li>
+<li>Short codes are unique globally, unguessable (no sequential IDs).</li>
+<li>99.99% availability on the redirect path.</li>
+</ul>
+<h3 id="out-of-scope">Out of Scope </h3>
+<ul>
+<li>ML spam scoring (flag only), full web crawler, user accounts / dashboards.</li>
+</ul>
+<hr>
+<h2 id="2-scale-estimation">2. Scale Estimation </h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Calculation</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAU (creators)</td>
+<td>10 M / month ÷ 30</td>
+<td>~333 K/day</td>
+</tr>
+<tr>
+<td>Write RPS</td>
+<td>333 K ÷ 86 400</td>
+<td>~4 RPS</td>
+</tr>
+<tr>
+<td>Peak write RPS</td>
+<td>4 × 5</td>
+<td>~20 RPS</td>
+</tr>
+<tr>
+<td>Read RPS (100:1)</td>
+<td>20 × 100</td>
+<td>~2 000 RPS</td>
+</tr>
+<tr>
+<td>Peak read RPS</td>
+<td>2 000 × 5</td>
+<td>~10 K RPS</td>
+</tr>
+<tr>
+<td>Storage/year</td>
+<td>4 RPS × 86 400 × 365 × 500 B</td>
+<td>~63 GB/yr</td>
+</tr>
+<tr>
+<td>Cache size (20% hot)</td>
+<td>top 20% URLs serve 80% reads → cache 20% of daily entries</td>
+<td>~12 M entries × 500 B ≈ 6 GB</td>
+</tr>
+<tr>
+<td>Bandwidth (read)</td>
+<td>10 K RPS × 500 B response</td>
+<td>~5 MB/s</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-api-design">3. API Design </h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Request</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/v1/shorten</code></td>
+<td><code>{ longUrl, alias?, ttlDays? }</code></td>
+<td><code>{ shortUrl, code, expiresAt }</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/{code}</code></td>
+<td>—</td>
+<td><code>HTTP 301/302 Location: &lt;longUrl&gt;</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/api/v1/urls/{code}</code></td>
+<td>—</td>
+<td><code>204 No Content</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/v1/urls/{code}/stats</code></td>
+<td>—</td>
+<td><code>{ clicks, geo[], referrers[] }</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-data-model">4. Data Model </h2>
+<div class="mermaid">erDiagram
+    URL_ENTRY {
+        string code PK
+        string longUrl
+        string ownerId
+        datetime createdAt
+        datetime expiresAt
+        bool isCustom
+    }
+    CLICK_EVENT {
+        string clickId PK
+        string code FK
+        datetime timestamp
+        string country
+        string referrer
+        string userAgent
+    }
+    URL_ENTRY ||--o{ CLICK_EVENT : "tracks"
+</div><p><strong>Storage choice:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Choice</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Short code → long URL lookup</td>
+<td><strong>Redis</strong> (L1) + <strong>Azure Cosmos DB</strong> (KV, key=code)</td>
+<td>Sub-ms reads; Cosmos handles durability</td>
+</tr>
+<tr>
+<td>Click analytics (append-only, high write)</td>
+<td><strong>Azure Event Hubs</strong> → <strong>Cosmos DB / Azure Data Explorer</strong></td>
+<td>Decouple analytics writes from redirect path</td>
+</tr>
+<tr>
+<td>Custom alias uniqueness check</td>
+<td>Cosmos DB unique index on <code>code</code></td>
+<td>Single point of truth</td>
+</tr>
+</tbody>
+</table>
+<p>Cosmos DB partition key = <code>code</code> (uniform distribution, point reads O(1)).</p>
+<hr>
+<h2 id="5-high-level-architecture">5. High-Level Architecture </h2>
+<div class="mermaid">flowchart TD
+    C["Client"] --&gt; LB["Azure Front Door / LB"]
+    LB --&gt; GW["API Gateway"]
+    GW --&gt; RD["Redirect Service"]
+    GW --&gt; CR["Create Service"]
+    RD --&gt; Cache["Redis Cache"]
+    Cache --&gt;|miss| KV["Cosmos DB (KV)"]
+    CR --&gt; IDGen["ID Generator Service"]
+    CR --&gt; KV
+    CR --&gt; DLQ["Validation / Abuse Check"]
+    RD --&gt; EH["Event Hubs (click event)"]
+    EH --&gt; AN["Analytics Worker"]
+    AN --&gt; ADX["Azure Data Explorer"]
+</div><p><strong>Request path (redirect):</strong></p>
+<ol>
+<li>Client hits <code>/{code}</code> via Azure Front Door.</li>
+<li>API Gateway routes to Redirect Service.</li>
+<li>Redis lookup: cache hit → return 301/302 immediately (&lt; 1 ms).</li>
+<li>Cache miss: read Cosmos DB point-read (~5 ms) → populate Redis with TTL → return redirect.</li>
+<li>Fire-and-forget: publish click event to Event Hubs.</li>
+<li>Analytics Worker batches events into Azure Data Explorer (Kusto).</li>
+</ol>
+<p><strong>Request path (create):</strong></p>
+<ol>
+<li>Create Service calls ID Generator to get a unique code.</li>
+<li>Validate long URL (format, safe-browsing blocklist check).</li>
+<li>Write to Cosmos DB; set Redis entry with same TTL.</li>
+<li>Return <code>shortUrl</code> to caller.</li>
+</ol>
+<hr>
+<h2 id="6-deep-dives">6. Deep Dives </h2>
+<h3 id="61-id-generation-—-comparison-table">6.1 ID Generation — Comparison Table </h3>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Uniqueness</th>
+<th>Guessability</th>
+<th>Complexity</th>
+<th>Collision risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MD5/SHA256 + take first 6 chars</strong></td>
+<td>High</td>
+<td>Low</td>
+<td>Simple</td>
+<td>~1% at 1 B entries (birthday paradox) — retry loop needed</td>
+</tr>
+<tr>
+<td><strong>Base62 of auto-increment counter</strong></td>
+<td>Perfect</td>
+<td><strong>High</strong> (sequential)</td>
+<td>Simple DB counter</td>
+<td>None if single writer; SPOF if DB is down</td>
+</tr>
+<tr>
+<td><strong>Snowflake-style 64-bit ID → Base62</strong></td>
+<td>Perfect</td>
+<td>Low (time-based, opaque)</td>
+<td>Medium — need epoch + worker ID</td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong>Pre-generated key range (ticket server)</strong></td>
+<td>Perfect</td>
+<td>Low</td>
+<td>Each service grabs a range (e.g. 1 M codes), works offline</td>
+<td>None during batch; must handle range exhaustion</td>
+</tr>
+<tr>
+<td><strong>Redis INCR → Base62</strong></td>
+<td>Perfect in single Redis</td>
+<td>Low</td>
+<td>Very simple</td>
+<td>Redis SPOF without replication</td>
+</tr>
+<tr>
+<td><strong>ZooKeeper range assignment</strong></td>
+<td>Perfect</td>
+<td>Low</td>
+<td>Complex ops</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommended:</strong> Snowflake-style ID from a dedicated ID Generator service (epoch 41 bits + datacenter 5 bits + worker 5 bits + seq 12 bits). Base62-encode the lower 36 bits → 6-char code. No DB round-trip for uniqueness.</p>
+<p>Base62 alphabet: <code>0-9A-Za-z</code> → 62^6 ≈ 56 billion codes.</p>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// Base62 encode</span>
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name"><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> Alphabet <span class="token operator">=</span>
+    <span class="token string">"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"</span><span class="token punctuation">.</span><span class="token function">ToCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> <span class="token function">ToBase62</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">long</span></span> id<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> sb <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>id <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> sb<span class="token punctuation">.</span><span class="token function">Insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Alphabet<span class="token punctuation">[</span>id <span class="token operator">%</span> <span class="token number">62</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> id <span class="token operator">/=</span> <span class="token number">62</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> sb<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">PadLeft</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="62-301-vs-302-redirect">6.2 301 vs 302 Redirect </h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>301 Permanent</th>
+<th>302 Temporary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser caching</td>
+<td>Browser caches; <strong>no future request to our server</strong></td>
+<td>Browser re-requests each time</td>
+</tr>
+<tr>
+<td>Analytics accuracy</td>
+<td><strong>Clicks lost</strong> after first visit per browser</td>
+<td>Every click hits our server → accurate counts</td>
+</tr>
+<tr>
+<td>CDN behaviour</td>
+<td>Edge may cache indefinitely</td>
+<td>Edge does not cache</td>
+</tr>
+<tr>
+<td>URL update possible?</td>
+<td>No — browser won't re-check</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Use when</strong></td>
+<td>Static, never-expiring short links, maximum perf</td>
+<td>Any link with analytics or that may change</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision:</strong> Use 302 for analytics-enabled links (default); 301 only for verified-static no-analytics links.</p>
+<h3 id="63-cache-design">6.3 Cache Design </h3>
+<ul>
+<li><strong>L1:</strong> Redis (Azure Cache for Redis) — key: <code>url:{code}</code>, value: serialized <code>longUrl + expiresAt</code>.</li>
+<li>TTL on Redis entry = min(URL TTL, 24 h) — auto-evicts when URL expires.</li>
+<li><strong>Hot-key problem:</strong> A viral short link can hammer one Redis slot. Mitigate with local in-process cache (IMemoryCache, 30 s TTL) on each Redirect Service pod before hitting Redis.</li>
+<li><strong>Cache invalidation:</strong> On URL deletion, issue a <code>DEL url:{code}</code> to Redis; eventual consistency acceptable for a 302 redirect.</li>
+</ul>
+<h3 id="64-click-analytics-pipeline-async">6.4 Click Analytics Pipeline (Async) </h3>
+<div class="mermaid">flowchart LR
+    RS["Redirect Service"] --&gt;|"fire-and-forget"| EH["Event Hubs"]
+    EH --&gt; AW["Analytics Worker (Azure Function)"]
+    AW --&gt;|batch upsert| ADX["Azure Data Explorer"]
+    ADX --&gt; DB["Dashboard / Stats API"]
+</div><ul>
+<li>Redirect Service publishes <code>{ code, ts, ip, referrer, ua }</code> to Event Hubs (partition key = <code>code</code>).</li>
+<li>Analytics Worker processes micro-batches every 5 s; writes to Kusto (ADX) for fast aggregation.</li>
+<li>Stats API queries ADX — completely decoupled from the hot redirect path.</li>
+</ul>
+<h3 id="65-rate-limiting-and-abuse-prevention">6.5 Rate Limiting and Abuse Prevention </h3>
+<ul>
+<li>Per-IP rate limit: 10 creates/min (token bucket in Redis — see <a href="02-Rate-Limiter.html">02-Rate-Limiter</a>).</li>
+<li>Safe-browsing API check (Google Safe Browsing / Microsoft Defender) before persisting URL.</li>
+<li>Block reserved aliases (<code>api</code>, <code>admin</code>, <code>health</code>, etc.).</li>
+<li>Blocklist table in Cosmos DB (partition key = <code>domain</code>); checked on creation.</li>
+<li>CAPTCHA challenge above 5 creates/hour per unauthenticated IP.</li>
+</ul>
+<h3 id="66-expiry-and-cleanup">6.6 Expiry and Cleanup </h3>
+<ul>
+<li>Cosmos DB TTL feature: set document TTL = <code>ttlDays × 86400</code>. Cosmos auto-deletes expired docs.</li>
+<li>Redis entry also carries TTL matching document TTL.</li>
+<li>Soft-delete flag for audit: <code>isDeleted=true</code> for owner-deleted URLs (retain 30 days for reporting).</li>
+<li>Background sweeper job (Azure Function Timer) for custom expiry edge cases not covered by Cosmos TTL.</li>
+</ul>
+<hr>
+<h2 id="7-bottlenecks-failure-modes--trade-offs">7. Bottlenecks, Failure Modes &amp; Trade-offs </h2>
+<table>
+<thead>
+<tr>
+<th>Bottleneck</th>
+<th>Symptom</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Redis cache miss storm on startup or eviction</td>
+<td>Redirect latency spike</td>
+<td>Stagger pod restarts; pre-warm cache from Cosmos on startup</td>
+</tr>
+<tr>
+<td>Hot single short code (viral link)</td>
+<td>Redis single-key saturation</td>
+<td>Pod-local <code>IMemoryCache</code> + Redis read replicas</td>
+</tr>
+<tr>
+<td>Cosmos DB hot partition</td>
+<td>High RU consumption, throttling</td>
+<td>Partition key = <code>code</code> is ideal; no range scans</td>
+</tr>
+<tr>
+<td>ID Generator SPOF</td>
+<td>No new URLs can be created</td>
+<td>Deploy ≥ 2 ID Generator instances; each has disjoint worker IDs</td>
+</tr>
+<tr>
+<td>Analytics Event Hubs consumer lag</td>
+<td>Stale click counts</td>
+<td>Scale out Analytics Worker; add partitions</td>
+</tr>
+<tr>
+<td>Malicious URL bypass</td>
+<td>Short link points to phishing page</td>
+<td>Safe-browsing check + async periodic re-scan of stored URLs</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-scaling-the-design">8. Scaling the Design </h2>
+<ul>
+<li><strong>Geo-distribution:</strong> Deploy Redirect Services in multiple Azure regions behind Azure Front Door (anycast). Cosmos DB multi-region writes with eventual consistency; Redis replicated per region.</li>
+<li><strong>Read scaling:</strong> Azure CDN layer in front of the Redirect Service can cache 302 responses for 5–60 s (configurable per analytics requirement).</li>
+<li><strong>Write scaling:</strong> ID Generator is stateless after initialization; add instances freely. Cosmos DB auto-scales RU/s.</li>
+<li><strong>Storage growth:</strong> ~63 GB/yr — trivial for Cosmos. Archive cold entries (&gt; 1 yr old, 0 clicks) to Azure Blob Storage + remove from Cosmos.</li>
+</ul>
+<hr>
+<h2 id="9-follow-up-extensions">9. Follow-up Extensions </h2>
+<ul>
+<li><strong>Custom domain support:</strong> Owner maps <code>short.mybrand.com</code> → DNS CNAME to our Front Door; we route by domain+alias.</li>
+<li><strong>QR code generation:</strong> Render on demand via Image Service; cache in Blob Storage.</li>
+<li><strong>A/B testing links:</strong> One short code → weighted fan-out to multiple long URLs.</li>
+<li><strong>Dashboard with real-time updates:</strong> SignalR WebSocket push from Analytics Worker on click event.</li>
+<li><strong>Link-in-bio pages:</strong> Aggregate multiple links under one profile short URL.</li>
+</ul>
+<hr>
+<h2 id="interview-questions">Interview Questions </h2>
+<p><strong>Q1. Why Base62 instead of Base64?</strong><br>
+A: Base64 uses <code>+</code> and <code>/</code> which are URL-unsafe. Base62 (<code>0-9A-Za-z</code>) needs no URL encoding, is case-sensitive, and gives 62^6 ≈ 56 B combinations — sufficient for years of traffic.</p>
+<p><strong>Q2. What's the simplest ID generation approach and what's wrong with it?</strong><br>
+A: Auto-increment counter in a DB. Simple, zero collisions. Problems: single writer bottleneck, counter is guessable (competitors can scan your traffic volume), and it's a SPOF if the DB is down.</p>
+<p><strong>Q3. How do you handle a collision with the MD5-truncation approach?</strong><br>
+A: On write conflict (Cosmos unique constraint violation), append a salt (e.g. <code>longUrl + attempt</code>) and retry hashing. Cap retries at 5; after that fall back to Snowflake ID. In practice collision rate is low enough that one retry suffices.</p>
+<p><strong>Q4. Why use 302 rather than 301 by default?</strong><br>
+A: 301 causes browsers and CDNs to cache the redirect permanently, so subsequent clicks never reach our servers — click analytics become inaccurate. 302 ensures every request reaches us.</p>
+<p><strong>Q5. How do you prevent the cache from serving a deleted/expired URL?</strong><br>
+A: On deletion, issue synchronous <code>DEL url:{code}</code> to Redis before returning 204. Redis TTL auto-handles expiry. The pod-local cache has a short (30 s) TTL so stale entries clear quickly. Accept up to 30 s eventual consistency on deletion — serving one extra redirect to a deleted URL is not a correctness violation.</p>
+<p><strong>Q6. Describe the hot-link problem and how to solve it.</strong><br>
+A: A single viral short code (e.g. a Super Bowl ad URL) can receive millions of requests/second, all hashing to the same Redis key on the same shard. Solution: add a pod-local <code>IMemoryCache</code> with 5–30 s TTL so the Redis hit rate drops 99%+. Additionally, use Redis read replicas and spread reads across them.</p>
+<p><strong>Q7. How does Cosmos DB TTL work for URL expiry?</strong><br>
+A: Set <code>DefaultTimeToLive</code> on the container and per-document <code>ttl</code> (seconds). Cosmos deletes expired documents in the background at no additional RU cost. This is reliable, serverless, and requires zero application-side cleanup logic.</p>
+<p><strong>Q8. How would you scale the creation path to 10 000 writes/sec?</strong><br>
+A: The Cosmos DB write path easily handles this with auto-scale RU/s. The bottleneck would be the ID Generator — scale it horizontally (each node has a unique <code>workerId</code>). The abuse-check (safe-browsing API) is the real latency concern — move it async: persist the URL immediately with <code>status=pending</code>, serve the short link, and reject/delete asynchronously if flagged.</p>
+<p><strong>Q9. Design the analytics schema for "top 10 most clicked links in the last hour."</strong><br>
+A: Use Azure Data Explorer (Kusto) with a streaming ingestion from Event Hubs. Query: <code>ClickEvents | where timestamp &gt; ago(1h) | summarize count() by code | top 10 by count_</code>. Kusto handles this in milliseconds on billions of rows. Alternative: Redis sorted set <code>ZINCR clicks:hourly {code} 1</code> + <code>ZREVRANGE</code> — simpler but requires TTL management.</p>
+<p><strong>Q10. What's the read:write ratio and how does it influence design?</strong><br>
+A: 100:1 read-heavy. Drives: (a) invest heavily in caching (Redis + pod-local), (b) Cosmos DB chosen for sub-ms point reads not relational queries, (c) write path complexity (ID generation, abuse checks) can be slower (&lt; 100 ms) without impacting the majority of traffic.</p>
+<p><strong>Q11. How would you implement custom aliases with collision prevention?</strong><br>
+A: Custom aliases are user-supplied strings. Insert into Cosmos with the alias as the <code>code</code> partition key — Cosmos unique constraint on <code>code</code> will reject duplicates. On <code>409 Conflict</code>, return "alias taken" to the user. Reserved aliases are pre-populated in a blocklist checked before the Cosmos write.</p>
+<p><strong>Q12. Single point of failure analysis — what are the SPOFs and how do you mitigate them?</strong><br>
+A:</p>
+<ul>
+<li><strong>Redis:</strong> Use Azure Cache for Redis with zone-redundant replication + automatic failover. On Redis outage, the Redirect Service falls back to direct Cosmos DB reads (higher latency but available).</li>
+<li><strong>Cosmos DB:</strong> Multi-region replicas with automatic failover. 99.999% SLA.</li>
+<li><strong>ID Generator:</strong> Deploy ≥ 2 instances with disjoint worker ID ranges. Creates fail gracefully to secondary.</li>
+<li><strong>API Gateway / Azure Front Door:</strong> Managed service with Microsoft SLA — not a SPOF in practice.</li>
+</ul>
+<p><strong>Q13. How would you add a "preview before redirect" feature to prevent phishing complaints?</strong><br>
+A: Add a query param <code>?preview=1</code>. Redirect Service renders a simple HTML interstitial (served from CDN) showing the destination URL and a "Proceed" button. Only the button performs the actual redirect. Cache the interstitial HTML at the CDN edge.</p>
+<hr>
+<h2 id="quick-recap">Quick Recap </h2>
+<ul>
+<li><strong>Base62</strong> of Snowflake ID = 6-char code; 56 B capacity; globally unique, unguessable, no DB round-trip.</li>
+<li><strong>302 by default</strong> (analytics accuracy); 301 only for static, never-changing, analytics-free links.</li>
+<li><strong>Cache hierarchy:</strong> pod-local <code>IMemoryCache</code> (30 s) → Redis (URL TTL) → Cosmos DB point-read.</li>
+<li><strong>Cosmos DB TTL</strong> handles expiry serverlessly; partition key = <code>code</code> for uniform O(1) point reads.</li>
+<li><strong>Click analytics</strong> fully decoupled via Event Hubs → Analytics Worker → Azure Data Explorer; redirect path never blocks on analytics.</li>
+<li><strong>Abuse prevention:</strong> safe-browsing API on create + per-IP rate limiting (token bucket in Redis).</li>
+<li><strong>Hot-link mitigation:</strong> pod-local cache absorbs viral traffic before it reaches Redis.</li>
+<li><strong>SPOF hardening:</strong> Redis zone-redundant replica + Cosmos multi-region + ≥ 2 ID Generator nodes.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

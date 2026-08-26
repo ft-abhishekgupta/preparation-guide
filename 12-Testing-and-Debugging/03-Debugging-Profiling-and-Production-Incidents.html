@@ -1,0 +1,1276 @@
+<!DOCTYPE html><html><head>
+      <title>03-Debugging-Profiling-and-Production-Incidents</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="3-debugging-profiling-and-production-incidents">3. Debugging, Profiling and Production Incidents </h1>
+<h2 id="tldr">TL;DR </h2>
+<ul>
+<li><strong>Takeaway</strong> — reproduce, isolate, hypothesize, bisect, verify.</li>
+<li><strong>Production rule</strong> — correlate logs, traces, and metrics first; mitigate user impact before chasing perfect root cause.</li>
+</ul>
+<h2 id="interview-weight">Interview Weight </h2>
+<ul>
+<li><strong>P1</strong> — directly maps to on-call experience; walk me through a production incident is a classic senior-level question.</li>
+</ul>
+<h2 id="core-concepts">Core Concepts </h2>
+<ul>
+<li><strong>Debugging</strong> — converting a symptom into a proven root cause.</li>
+<li><strong>Profiling</strong> — measuring CPU, memory, allocation, lock, and I/O behavior under load.</li>
+<li><strong>Observability</strong> — understanding system state from <strong>logs</strong>, <strong>metrics</strong>, and <strong>traces</strong>.</li>
+<li><strong>Mitigation</strong> — restoring service quickly with rollback, feature flags, scaling, or traffic shifts.</li>
+<li><strong>Regression prevention</strong> — proving the fix with metrics and adding a test so the same class of bug does not return.</li>
+</ul>
+<h2 id="systematic-debugging-method">Systematic Debugging Method </h2>
+<ol>
+<li><strong>Reproduce</strong></li>
+</ol>
+<ul>
+<li>Get the smallest repro possible: single request, single payload, single tenant, single host if possible.</li>
+<li>Define <strong>what broken looks like</strong> with metrics: <code>500</code> rate, <code>p99</code> latency, timeout count, memory growth, queue depth.</li>
+<li>Capture exact inputs, environment, timestamps, and correlation IDs.</li>
+</ul>
+<ol start="2">
+<li><strong>Isolate</strong></li>
+</ol>
+<ul>
+<li>Narrow scope: which service, endpoint, deployment ring, node, dependency, or code path.</li>
+<li>Use <strong>correlation IDs</strong> to follow one failing request end-to-end.</li>
+<li>Separate app bug vs dependency issue vs infrastructure issue.</li>
+</ul>
+<ol start="3">
+<li><strong>Hypothesize</strong></li>
+</ol>
+<ul>
+<li>Form <code>2-3</code> specific theories, not vague guesses.</li>
+<li>Test the <strong>most likely</strong> theory first.</li>
+<li>Example: bad rollout, hot partition, connection leak, retry storm, thread-pool starvation.</li>
+</ul>
+<ol start="4">
+<li><strong>Bisect</strong></li>
+</ol>
+<ul>
+<li>Use <code>git bisect</code> to locate the exact bad commit with binary search through history.</li>
+<li>Useful when the issue started after a change window and reproduction is reliable.</li>
+</ul>
+<ol start="5">
+<li><strong>Verify</strong></li>
+</ol>
+<ul>
+<li>Fix, deploy to staging, measure the same metrics, and confirm the symptom is gone.</li>
+<li>Add or update a test to prevent regression.</li>
+<li>Close the loop with a short write-up: trigger, evidence, fix, prevention.</li>
+</ul>
+<h2 id="reading-stack-traces-and-async-stack-traces">Reading Stack Traces and Async Stack Traces </h2>
+<ul>
+<li><strong>Synchronous traces</strong> — read from <strong>bottom</strong> for outer caller/context, then move <strong>up</strong> to the exception site.</li>
+<li><strong>Async traces</strong> — <code>async</code> state machines can mangle frame names; <code>.NET 6+</code> preserves the logical call stack better around <code>await</code>.</li>
+<li><strong>Key marker</strong> — <code>--- End of stack trace from previous location ---</code> means the exception crossed an async boundary and was re-thrown later.</li>
+<li><strong>Preserve stack</strong> — use <code>throw;</code> for immediate rethrow; use <code>ExceptionDispatchInfo.Capture(ex).Throw()</code> when you must rethrow later while keeping the original stack.</li>
+<li><strong>Triage habit</strong></li>
+<li>First exception type.</li>
+<li>First app-owned frame.</li>
+<li>Common wrapper exceptions: <code>AggregateException</code>, <code>TargetInvocationException</code>, <code>TaskCanceledException</code>.</li>
+<li>Whether the same failing frame appears across many requests or hosts.</li>
+</ul>
+<h2 id="git-bisect"><code>git bisect</code> </h2>
+<ul>
+<li><strong>Start</strong> — <code>git bisect start</code></li>
+<li><strong>Mark current broken state</strong> — <code>git bisect bad</code></li>
+<li><strong>Mark known good commit</strong> — <code>git bisect good &lt;sha&gt;</code></li>
+<li><strong>Automate</strong> — <code>git bisect run ./run-test.sh</code> where exit <code>0 = good</code>, <code>1 = bad</code></li>
+<li><strong>Why it matters</strong> — finds the exact commit in <code>O(log n)</code> steps instead of linearly inspecting history.</li>
+<li><strong>Use when</strong></li>
+<li>Repro is deterministic.</li>
+<li>There is a bounded commit range.</li>
+<li>The failure is hard to reason about by inspection alone.</li>
+</ul>
+<h2 id="logging-for-debuggability">Logging for Debuggability </h2>
+<ul>
+<li><strong>Structured logs</strong> — use named fields, not string concatenation: <code>logger.LogInformation("Processing {OrderId} for {UserId}", orderId, userId)</code>.</li>
+<li><strong>Correlation IDs</strong></li>
+<li>Propagate <code>X-Correlation-Id</code> through all service calls.</li>
+<li>Enrich logs through <code>LogContext</code> in Serilog or <code>BeginScope</code> in <code>ILogger</code>.</li>
+<li><strong>Log levels</strong></li>
+<li><code>TRACE</code> — verbose path tracing.</li>
+<li><code>DEBUG</code> — development diagnostics.</li>
+<li><code>INFO</code> — business events and major flow milestones.</li>
+<li><code>WARN</code> — recoverable issues.</li>
+<li><code>ERROR</code> — unhandled or failed operations.</li>
+<li><code>CRITICAL</code> — service unavailable or severe data-loss risk.</li>
+<li><strong>What to log</strong></li>
+<li>Request/response summary.</li>
+<li>Major state transitions.</li>
+<li>External dependency calls with latency and result.</li>
+<li>Retry count, circuit-breaker state, queue depth, throttling metadata.</li>
+<li><strong>Never log</strong></li>
+<li>PII: names, emails, cards.</li>
+<li>Secrets, tokens, connection strings.</li>
+<li>Full production request bodies unless explicitly scrubbed and justified.</li>
+</ul>
+<h2 id="distributed-tracing">Distributed Tracing </h2>
+<ul>
+<li><strong>Span model</strong> — each service adds a span with timing, status, and metadata.</li>
+<li><strong>Propagation</strong> — carry the trace ID via the W3C <code>traceparent</code> header.</li>
+<li><strong>Tooling</strong> — Application Insights, Jaeger, Zipkin, OpenTelemetry.</li>
+<li><strong>Root-cause pattern</strong> — open the waterfall view and look for the <strong>deepest, widest span</strong> to find the slow hop.</li>
+<li><strong>.NET APIs</strong> — <code>Activity</code>, <code>ActivitySource</code>, OpenTelemetry SDK.</li>
+<li><strong>Use cases</strong></li>
+<li>Separate upstream waiting time from downstream latency.</li>
+<li>Prove whether retries, DNS, TLS handshake, or SQL are dominant.</li>
+<li>Correlate failures across <code>10+</code> microservices without grep-heavy log hunting.</li>
+</ul>
+<h2 id="metrics-and-signals">Metrics and Signals </h2>
+<ul>
+<li><strong>RED</strong> — best for services and APIs: request <strong>Rate</strong>, <strong>Errors</strong>, <strong>Duration</strong>.</li>
+<li><strong>USE</strong> — best for resources: <strong>Utilization</strong>, <strong>Saturation</strong>, <strong>Errors</strong>.</li>
+<li><strong>Four golden signals</strong> — <strong>Latency</strong>, <strong>Traffic</strong>, <strong>Errors</strong>, <strong>Saturation</strong>.</li>
+<li><strong>Use both layers</strong></li>
+<li>RED tells you user-visible service health.</li>
+<li>USE tells you whether the platform or dependency capacity is the bottleneck.</li>
+</ul>
+<h2 id="diagnosing-common-net-production-problems">Diagnosing Common .NET Production Problems </h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely Cause</th>
+<th>Tool</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High CPU</td>
+<td>Tight loop, regex catastrophic backtracking, GC pressure</td>
+<td><code>dotnet-counters</code>, <code>dotnet-trace</code>, PerfView</td>
+<td>Profile hot method, fix algorithm</td>
+</tr>
+<tr>
+<td>High memory / leak</td>
+<td>Objects rooted in static, event handler not unsubscribed, LOH fragmentation</td>
+<td><code>dotnet-gcdump</code>, <code>dotnet-dump</code>, <code>!dumpheap -stat</code></td>
+<td>Fix root, use <code>WeakReference</code>, pooling</td>
+</tr>
+<tr>
+<td>GC pause storms</td>
+<td>High allocation rate, LOH fragmentation, large gen2</td>
+<td><code>dotnet-counters</code> (<code>gc-heap-size</code>, <code>gen-X-gc-count</code>), PerfView GC view</td>
+<td>Reduce allocations, use <code>ArrayPool</code>, increase memory</td>
+</tr>
+<tr>
+<td>Thread pool starvation</td>
+<td>Sync-over-async (<code>.Result</code> / <code>.Wait()</code>), blocking I/O in pool thread</td>
+<td><code>dotnet-counters</code> (<code>threadpool-queue-length</code>), <code>!threadpool</code> in dump</td>
+<td><code>async</code>/<code>await</code> everywhere, <code>SemaphoreSlim</code></td>
+</tr>
+<tr>
+<td>Deadlock</td>
+<td>Circular lock, lock + async</td>
+<td><code>dotnet-dump</code> + <code>!threads</code> + <code>!clrstack</code></td>
+<td>Fix lock ordering, use <code>SemaphoreSlim</code></td>
+</tr>
+<tr>
+<td>Socket/port exhaustion</td>
+<td>Too many short-lived <code>HttpClient</code> instances, <code>TIME_WAIT</code></td>
+<td><code>netstat -an | grep TIME_WAIT</code>, <code>ss -s</code></td>
+<td><code>HttpClientFactory</code>, increase port range</td>
+</tr>
+<tr>
+<td>Connection pool exhaustion</td>
+<td>Connections not returned, missing <code>Dispose</code>, slow queries holding connections</td>
+<td><code>sp_who2</code>, connection pool metrics, App Insights</td>
+<td>Fix <code>using</code>/<code>Dispose</code>, async queries, add pool size</td>
+</tr>
+<tr>
+<td>Slow SQL</td>
+<td>Missing index, parameter sniffing, lock contention</td>
+<td>Execution plan, <code>sys.dm_exec_query_stats</code>, Query Store</td>
+<td>Add index, <code>OPTION(RECOMPILE)</code>, schema changes</td>
+</tr>
+<tr>
+<td>Cache stampede</td>
+<td>TTL expiry on hot key, thundering herd</td>
+<td>Cache miss rate spike in metrics</td>
+<td>Probabilistic early expiry, distributed lock on miss</td>
+</tr>
+<tr>
+<td>Throttling <code>429</code>s</td>
+<td>Rate limit hit on downstream such as Azure Service Bus, Cosmos, or external API</td>
+<td>App Insights dependency failures, <code>Retry-After</code> header</td>
+<td>Exponential backoff, circuit breaker, increase quota</td>
+</tr>
+<tr>
+<td>Memory fragmentation / LOH</td>
+<td>Large byte arrays <code>&gt; 85 KB</code> not pooled, pinning</td>
+<td><code>dotnet-gcdump</code>, <code>!dumpheap -min 85000</code></td>
+<td><code>ArrayPool&lt;byte&gt;</code>, avoid large object creation in loops</td>
+</tr>
+<tr>
+<td><code>TaskCanceledException</code> floods</td>
+<td>Timeout too tight, slow dependency, <code>CancellationToken</code> propagated through chain</td>
+<td>App Insights exceptions, trace</td>
+<td>Increase timeout or circuit-break the dependency</td>
+</tr>
+<tr>
+<td>Dependency timeouts</td>
+<td>Cold start, overloaded downstream, DNS change not picked up</td>
+<td>Distributed trace waterfall, <code>ping</code>/<code>curl</code> from service</td>
+<td>Retry with backoff, pre-warm, fix DNS with <code>PooledConnectionLifetime</code></td>
+</tr>
+<tr>
+<td>Retry storms</td>
+<td>Multiple services simultaneously retrying overloaded dependency</td>
+<td>Error-rate spike pattern, same-time retries</td>
+<td>Jitter in backoff, circuit breaker, shed load at edge</td>
+</tr>
+</tbody>
+</table>
+<h2 id="diagnostic-tools-reference">Diagnostic Tools Reference </h2>
+<ul>
+<li><strong><code>dotnet-counters monitor</code></strong> — real-time counters; use <code>--counters System.Runtime,Microsoft.AspNetCore.Hosting</code>.</li>
+<li><strong><code>dotnet-dump collect -p &lt;pid&gt;</code></strong> then <strong><code>dotnet-dump analyze</code></strong> — heap and thread analysis.</li>
+<li><strong><code>dotnet-gcdump collect -p &lt;pid&gt;</code></strong> — GC heap snapshot; open in Visual Studio or PerfView.</li>
+<li><strong><code>dotnet-trace collect -p &lt;pid&gt;</code></strong> — CPU sampling trace; open in PerfView or SpeedScope.</li>
+<li><strong>PerfView</strong> — collect ETW traces; analyze CPU, allocations, GC; Windows-only.</li>
+<li><strong>WinDbg / SOS</strong></li>
+<li><code>!threads</code> — list managed threads.</li>
+<li><code>!clrstack</code> — current managed call stack.</li>
+<li><code>!dumpheap -stat</code> — heap grouped by type.</li>
+<li><code>!gcroot &lt;addr&gt;</code> — find what is keeping an object alive.</li>
+<li><strong>Application Insights Profiler</strong> — on-demand CPU trace in production with low overhead.</li>
+<li><strong>Live Metrics</strong> — near-real-time requests, failures, and CPU in the Application Insights portal.</li>
+</ul>
+<h2 id="incident-management">Incident Management </h2>
+<h3 id="severity-levels">Severity Levels </h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Definition</th>
+<th>Response time</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEV1</td>
+<td>Service down for all users</td>
+<td>15 min</td>
+<td>Checkout API returning <code>500</code></td>
+</tr>
+<tr>
+<td>SEV2</td>
+<td>Major feature broken or significant user impact</td>
+<td>30 min</td>
+<td><code>p99</code> latency above <code>5s</code></td>
+</tr>
+<tr>
+<td>SEV3</td>
+<td>Minor degradation, workaround exists</td>
+<td>Next business day</td>
+<td>Search occasionally timing out for one region</td>
+</tr>
+<tr>
+<td>SEV4</td>
+<td>Cosmetic or single-user issue</td>
+<td>Normal sprint</td>
+<td>One-user UI formatting bug</td>
+</tr>
+</tbody>
+</table>
+<h3 id="on-call-hygiene">On-Call Hygiene </h3>
+<ul>
+<li><strong>Paging</strong> — alert on symptoms such as latency and error rate, not just causes such as <code>CPU &gt; X%</code>.</li>
+<li><strong>Escalation path</strong> — primary on-call -&gt; secondary -&gt; engineering lead -&gt; incident commander.</li>
+<li><strong>Runbooks</strong> — step-by-step mitigation for known failure modes; link them from the alert.</li>
+</ul>
+<h3 id="incident-lifecycle">Incident Lifecycle </h3>
+<div class="mermaid">flowchart TD
+    A["Alert fires"] --&gt; B["Triage: is this real?"]
+    B --&gt;|"Yes"| C["Mitigate first"]
+    B --&gt;|"No"| X["Close as false positive"]
+    C --&gt; D["Communicate status"]
+    D --&gt; E["Root cause analysis"]
+    E --&gt; F["Resolve"]
+    F --&gt; G["Post-mortem"]
+    G --&gt; H["Action items"]
+</div><ul>
+<li><strong>Mitigation before root cause</strong> — rollback, feature-flag kill switch, scale out, or redirect traffic. Restore service first.</li>
+<li><strong>Rollback options</strong> — blue-green swap, previous image tag, feature flag disable.</li>
+<li><strong>Comms</strong> — status page update within <code>5 min</code> of SEV1; stakeholder update every <code>30 min</code>.</li>
+</ul>
+<h2 id="blameless-postmortems">Blameless Postmortems </h2>
+<ul>
+<li><strong>Structure</strong></li>
+<li>Incident summary.</li>
+<li>Timeline.</li>
+<li>User impact.</li>
+<li>Root cause(s).</li>
+<li>Contributing factors.</li>
+<li>Action items.</li>
+<li><strong>5 Whys</strong> — keep asking <code>why</code> until you hit a systemic cause, not a person-shaped answer.</li>
+<li><strong>Action items</strong> — assign owner, due date, and category: <strong>prevent</strong>, <strong>detect</strong>, <strong>reduce impact</strong>.</li>
+<li><strong>Blameless</strong> — systems failed, not people. Avoid naming and shaming.</li>
+</ul>
+<h2 id="error-budgets-and-slo-burn-rate-alerts">Error Budgets and SLO Burn Rate Alerts </h2>
+<ul>
+<li><strong>Error budget</strong> — <code>1 - SLO</code>; a <code>99.9%</code> SLO gives <code>43.8 min/month</code> downtime budget.</li>
+<li><strong>Burn rate</strong> — how fast you are consuming that budget relative to plan.</li>
+<li><strong>High-burn paging</strong> — at <code>36x</code> burn rate, use the interview shorthand <code>1 hr to exhaust the monthly budget</code> -&gt; page immediately.</li>
+<li><strong>Freeze rule</strong> — if the error budget is exhausted, freeze non-essential deployments until budget recovers.</li>
+</ul>
+<h2 id="alerting-design">Alerting Design </h2>
+<ul>
+<li><strong>Symptom-based, not cause-based</strong> — alert on <code>users are failing</code>, not only <code>CPU &gt; 80%</code>.</li>
+<li><strong>Actionable</strong> — every alert needs a runbook and a clear next action.</li>
+<li><strong>Alert fatigue</strong> — low-signal alerts teach on-call engineers to ignore pages; prune ruthlessly.</li>
+<li><strong>SLO burn-rate alerts</strong> — use multi-window alerting such as <code>1h</code> and <code>6h</code> windows to reduce false positives.</li>
+</ul>
+<h2 id="star-ready-talking-points-walk-me-through-a-production-incident-you-debugged">STAR-Ready Talking Points: <code>Walk me through a production incident you debugged</code> </h2>
+<ul>
+<li><strong>Set up</strong> — service, traffic, customer importance, SLO.</li>
+<li><strong>Detection</strong> — alert, user report, metric anomaly, or deploy correlation.</li>
+<li><strong>Initial triage</strong> — what you checked first and why.</li>
+<li><strong>Mitigation</strong> — rollback, feature flag, scale, traffic shift.</li>
+<li><strong>Root cause</strong> — exact evidence and tool used.</li>
+<li><strong>Resolution</strong> — code fix, config fix, data fix, or infra fix.</li>
+<li><strong>Learning</strong> — runbook, alert, architecture, test, or process improvement.</li>
+<li><strong>Delivery</strong> — keep the story to <code>2-3</code> minutes; avoid irrelevant rabbit holes.</li>
+</ul>
+<h2 id="comparison">Comparison </h2>
+<h3 id="monitoring-vs-observability">Monitoring vs Observability </h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Monitoring</th>
+<th>Observability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goal</td>
+<td>Detect known failure modes</td>
+<td>Explain unknown failure modes</td>
+</tr>
+<tr>
+<td>Input</td>
+<td>Predefined dashboards and alerts</td>
+<td>Logs, metrics, traces, ad-hoc queries</td>
+</tr>
+<tr>
+<td>Best question</td>
+<td><code>Is the system broken?</code></td>
+<td><code>Why is the system broken?</code></td>
+</tr>
+<tr>
+<td>Strength</td>
+<td>Fast detection</td>
+<td>Deep diagnosis</td>
+</tr>
+<tr>
+<td>Limitation</td>
+<td>Misses novel issues</td>
+<td>Requires instrumentation discipline</td>
+</tr>
+</tbody>
+</table>
+<h3 id="red-vs-use">RED vs USE </h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Stands for</th>
+<th>Metrics</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RED</td>
+<td>Rate, Errors, Duration</td>
+<td>Request rate, failure rate, latency</td>
+<td>Services and APIs</td>
+</tr>
+<tr>
+<td>USE</td>
+<td>Utilization, Saturation, Errors</td>
+<td>CPU, memory, queues, connection pools, disk</td>
+<td>Resources and dependencies</td>
+</tr>
+</tbody>
+</table>
+<h3 id="four-golden-signals">Four Golden Signals </h3>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>What to measure</th>
+<th>Alert threshold example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latency</td>
+<td><code>p95</code> and <code>p99</code> response time by endpoint</td>
+<td><code>p99 &gt; 2s</code> for <code>10 min</code></td>
+</tr>
+<tr>
+<td>Traffic</td>
+<td>RPS, queue ingress, message rate</td>
+<td>Traffic drops <code>50%</code> unexpectedly</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td><code>5xx</code>, failed dependencies, timeout rate</td>
+<td>Error rate <code>&gt; 2%</code> for <code>5 min</code></td>
+</tr>
+<tr>
+<td>Saturation</td>
+<td>CPU, memory, queue depth, DB connections</td>
+<td>Queue depth rising while throughput stalls</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cpu-vs-memory-vs-allocation-profiling">CPU vs Memory vs Allocation Profiling </h3>
+<table>
+<thead>
+<tr>
+<th>Profiling Type</th>
+<th>What it finds</th>
+<th>Tool</th>
+<th>Overhead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU sampling</td>
+<td>Hot methods consuming CPU</td>
+<td><code>dotnet-trace</code> + SpeedScope</td>
+<td><code>~1-3%</code></td>
+</tr>
+<tr>
+<td>CPU instrumentation</td>
+<td>Exact call counts</td>
+<td>PerfView, BenchmarkDotNet</td>
+<td><code>~10-50%</code></td>
+</tr>
+<tr>
+<td>Memory snapshot</td>
+<td>Object counts by type, GC roots</td>
+<td><code>dotnet-gcdump</code>, WinDbg <code>!dumpheap</code></td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Allocation profiling</td>
+<td>What allocates the most</td>
+<td>PerfView <code>/GCCollectOnly</code>, <code>AllocationTick</code> event</td>
+<td>Low-medium</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Sampling</strong> — statistically representative and low overhead.</li>
+<li><strong>Instrumentation</strong> — exact counts but noticeably slows the app.</li>
+</ul>
+<h2 id="code-example">Code Example </h2>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Diagnostics</span><span class="token punctuation">;</span>
+
+<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name">ActivitySource</span> Source <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token string">"Checkout.Api"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token function">Use</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token operator">=></span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> correlationId <span class="token operator">=</span> ctx<span class="token punctuation">.</span>Request<span class="token punctuation">.</span>Headers<span class="token punctuation">[</span><span class="token string">"X-Correlation-Id"</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">FirstOrDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token operator">??</span> Guid<span class="token punctuation">.</span><span class="token function">NewGuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token string">"N"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ctx<span class="token punctuation">.</span>Response<span class="token punctuation">.</span>Headers<span class="token punctuation">[</span><span class="token string">"X-Correlation-Id"</span><span class="token punctuation">]</span> <span class="token operator">=</span> correlationId<span class="token punctuation">;</span>
+
+    <span class="token keyword">using</span> <span class="token class-name"><span class="token keyword">var</span></span> scope <span class="token operator">=</span> logger<span class="token punctuation">.</span><span class="token function">BeginScope</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">></span></span>
+    <span class="token punctuation">{</span>
+        <span class="token punctuation">[</span><span class="token string">"CorrelationId"</span><span class="token punctuation">]</span> <span class="token operator">=</span> correlationId
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">using</span> <span class="token class-name"><span class="token keyword">var</span></span> activity <span class="token operator">=</span> Source<span class="token punctuation">.</span><span class="token function">StartActivity</span><span class="token punctuation">(</span><span class="token string">"HTTP request"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    activity<span class="token punctuation">?.</span><span class="token function">SetTag</span><span class="token punctuation">(</span><span class="token string">"http.route"</span><span class="token punctuation">,</span> ctx<span class="token punctuation">.</span>Request<span class="token punctuation">.</span>Path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    activity<span class="token punctuation">?.</span><span class="token function">SetTag</span><span class="token punctuation">(</span><span class="token string">"correlation.id"</span><span class="token punctuation">,</span> correlationId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name"><span class="token keyword">var</span></span> sw <span class="token operator">=</span> Stopwatch<span class="token punctuation">.</span><span class="token function">StartNew</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">await</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        logger<span class="token punctuation">.</span><span class="token function">LogInformation</span><span class="token punctuation">(</span><span class="token string">"Handled {Path} in {ElapsedMs} ms with {StatusCode}"</span><span class="token punctuation">,</span>
+            ctx<span class="token punctuation">.</span>Request<span class="token punctuation">.</span>Path<span class="token punctuation">,</span> sw<span class="token punctuation">.</span>ElapsedMilliseconds<span class="token punctuation">,</span> ctx<span class="token punctuation">.</span>Response<span class="token punctuation">.</span>StatusCode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> ex<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        logger<span class="token punctuation">.</span><span class="token function">LogError</span><span class="token punctuation">(</span>ex<span class="token punctuation">,</span> <span class="token string">"Failed {Path} after {ElapsedMs} ms"</span><span class="token punctuation">,</span>
+            ctx<span class="token punctuation">.</span>Request<span class="token punctuation">.</span>Path<span class="token punctuation">,</span> sw<span class="token punctuation">.</span>ElapsedMilliseconds<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">throw</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><h2 id="trade-offs">Trade-offs </h2>
+<ul>
+<li><strong>More logs vs less noise</strong></li>
+<li>More fields improve diagnosis.</li>
+<li>More volume increases cost, cardinality, and PII risk.</li>
+<li><strong>Trace every request vs sample</strong></li>
+<li>Full tracing helps rare bugs.</li>
+<li>Sampling keeps cost and storage under control.</li>
+<li><strong>Retry aggressively vs protect dependencies</strong></li>
+<li>Retries hide transient faults.</li>
+<li>Unbounded retries create retry storms and longer incidents.</li>
+<li><strong>Rollback fast vs hotfix in place</strong></li>
+<li>Rollback is safer under pressure.</li>
+<li>Hotfix is justified when data migration or contract drift makes rollback risky.</li>
+<li><strong>Tight alerts vs alert fatigue</strong></li>
+<li>Sensitive alerts catch incidents early.</li>
+<li>Noisy alerts destroy on-call trust.</li>
+</ul>
+<h2 id="common-pitfalls">Common Pitfalls </h2>
+<ul>
+<li><strong>Skipping symptom definition</strong> — start with measurable failure, not intuition.</li>
+<li><strong>Reading only averages</strong> — <code>p50</code> can look healthy while <code>p99</code> is on fire.</li>
+<li><strong>Using <code>throw ex;</code></strong> — resets the stack and destroys evidence.</li>
+<li><strong>Blocking on async</strong> — <code>.Result</code> and <code>.Wait()</code> can starve the thread pool.</li>
+<li><strong>Logging secrets or full bodies</strong> — improves diagnosis but creates compliance and breach risk.</li>
+<li><strong>Retrying without jitter</strong> — synchronized retries amplify downstream overload.</li>
+<li><strong>Taking dumps too late</strong> — transient states disappear after restarts or scale events.</li>
+<li><strong>Fixing the code but not the guardrail</strong> — no runbook, no alert, no regression test means repeat incident.</li>
+</ul>
+<h2 id="interview-questions">Interview Questions </h2>
+<p><strong>Q1. What is the difference between monitoring and observability?</strong><br>
+A: Monitoring tells you whether known bad conditions are happening. Observability lets you explain unknown failures by correlating logs, metrics, and traces.</p>
+<p><strong>Q2. What is RED vs USE method for metrics?</strong><br>
+A: Use <strong>RED</strong> for service health: request rate, errors, duration. Use <strong>USE</strong> for resource health: utilization, saturation, errors.</p>
+<p><strong>Q3. What is the difference between <code>p50</code>, <code>p95</code>, and <code>p99</code> latency, and why do you care about <code>p99</code>?</strong><br>
+A: <code>p50</code> is median user experience, <code>p95</code> shows tail behavior for many users, and <code>p99</code> exposes the worst tail for the slowest <code>1%</code>. Incidents usually show up in the tail first, so <code>p99</code> is where SLO pain becomes visible.</p>
+<p><strong>Q4. What is the first thing you do when you get paged at <code>2am</code>?</strong><br>
+A: Confirm whether the alert is real, assess blast radius, and look at user-visible symptoms first: error rate, latency, traffic, and recent deploys. If impact is real, mitigate before deep root-cause work.</p>
+<p><strong>Q5. What is <code>git bisect</code> and when would you use it?</strong><br>
+A: <code>git bisect</code> does a binary search across commits to find the exact change that introduced a bug. Use it when you have a reliable repro and a bounded good-to-bad commit range.</p>
+<p><strong>Q6. How do you correlate a request across <code>10</code> microservices?</strong><br>
+A: Propagate a correlation ID such as <code>X-Correlation-Id</code> and the W3C trace context <code>traceparent</code>. Emit both in structured logs and spans so one request can be reconstructed end-to-end.</p>
+<p><strong>Q7. What is a blameless postmortem and why does it matter?</strong><br>
+A: It focuses on how the system allowed the failure, not on blaming individuals. That creates psychological safety and produces stronger fixes such as better automation, guardrails, and alerts.</p>
+<p><strong>Q8. Why is an SLO burn-rate alert better than a static threshold alert?</strong><br>
+A: Burn-rate alerts map directly to error-budget consumption, so they reflect user impact and urgency better than static resource thresholds. Multi-window burn-rate alerts also reduce false positives from brief spikes.</p>
+<p><strong>Q9. [Senior] How do you find a memory leak in a .NET application?</strong><br>
+A: First prove it is a leak, not just load-driven cache growth, by checking sustained memory after traffic normalizes. Then capture <code>dotnet-gcdump</code> or <code>dotnet-dump</code>, inspect top types with <code>!dumpheap -stat</code>, and use <code>!gcroot</code> to find why objects stay rooted.</p>
+<p><strong>Q10. [Senior] Walk me through diagnosing thread pool starvation.</strong><br>
+A: Look for rising latency with low CPU, backed-up work, and growing <code>threadpool-queue-length</code>. Then inspect dumps or traces for <code>.Result</code>, <code>.Wait()</code>, blocking I/O, or lock contention on pool threads; fix by going async end-to-end or isolating blocking work.</p>
+<p><strong>Q11. [Senior] What tools would you use to find a deadlock in production .NET?</strong><br>
+A: Collect a dump with <code>dotnet-dump</code>, inspect <code>!threads</code>, then walk blocked threads with <code>!clrstack</code>. I am looking for circular lock ownership, sync-over-async, or a <code>lock</code> around awaited code.</p>
+<p><strong>Q12. [Senior] Walk me through a production incident you debugged.</strong><br>
+A: Use a STAR structure: service context and scale, how you detected it, what you checked first, how you mitigated blast radius, what evidence proved root cause, what fix shipped, and what durable improvements followed.</p>
+<h2 id="quick-recap">Quick Recap </h2>
+<ul>
+<li><strong>Debugging loop</strong> — reproduce -&gt; isolate -&gt; hypothesize -&gt; bisect -&gt; verify.</li>
+<li><strong>Trace reading</strong> — find the first app-owned frame; preserve evidence with <code>throw;</code> or <code>ExceptionDispatchInfo</code>.</li>
+<li><strong>Observability stack</strong> — logs explain events, metrics show health, traces connect the path.</li>
+<li><strong>RED + USE</strong> — combine service symptoms with resource saturation.</li>
+<li><strong>Tool choice</strong> — <code>dotnet-counters</code> for live counters, <code>dotnet-trace</code> for CPU, <code>dotnet-gcdump</code> / <code>dotnet-dump</code> for memory.</li>
+<li><strong>Incident priority</strong> — mitigate first, then root cause, then postmortem.</li>
+<li><strong>Alerting rule</strong> — page on user pain, not on noisy infrastructure guesses.</li>
+<li><strong>Senior answer pattern</strong> — talk in evidence, blast radius, mitigation, prevention, and trade-offs.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

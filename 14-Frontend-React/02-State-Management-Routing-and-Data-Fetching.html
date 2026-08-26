@@ -1,0 +1,1122 @@
+<!DOCTYPE html><html><head>
+      <title>02-State-Management-Routing-and-Data-Fetching</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="2-state-management-routing-and-data-fetching">2. State Management, Routing and Data Fetching </h1>
+<blockquote>
+<p><strong>TL;DR:</strong> Pick the narrowest state scope that works — local state first, context for infrequent cross-tree needs, a global store for complex synchronous client state, and a server-state library (TanStack Query) for anything that lives on a server.</p>
+</blockquote>
+<p><strong>Interview weight:</strong> P2 — interviewers check whether you understand trade-offs, not whether you memorized Redux API.</p>
+<hr>
+<h2 id="core-concepts">Core Concepts </h2>
+<ul>
+<li><strong>Local state</strong> — <code>useState</code>/<code>useReducer</code> inside a component. Zero cost, zero coupling.</li>
+<li><strong>Lifted state</strong> — moved to nearest common ancestor so siblings share it. Fine until the ancestor is too far from consumers.</li>
+<li><strong>Context</strong> — broadcast value to an arbitrary subtree. Low ceremony, but every consumer re-renders on value change.</li>
+<li><strong>Global store</strong> — Redux/Zustand/MobX. Single source of truth for complex client-side state with derived selectors and synchronous mutations.</li>
+<li><strong>Server state</strong> — data that lives on a server and must be fetched, cached, and synchronized. TanStack Query / RTK Query own this concern — separate it from UI state.</li>
+</ul>
+<hr>
+<h2 id="state-scope-comparison">State Scope Comparison </h2>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>API</th>
+<th>Re-render cost</th>
+<th>Boilerplate</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local</td>
+<td><code>useState</code></td>
+<td>Component only</td>
+<td>Zero</td>
+<td>Form fields, toggles, UI-only state</td>
+</tr>
+<tr>
+<td>Lifted</td>
+<td><code>useState</code> in parent</td>
+<td>Parent + all children</td>
+<td>Zero</td>
+<td>Sibling communication</td>
+</tr>
+<tr>
+<td>Context</td>
+<td><code>createContext</code> + <code>useContext</code></td>
+<td>All consumers of that context</td>
+<td>Low</td>
+<td>Theme, locale, auth user, infrequently-changing global data</td>
+</tr>
+<tr>
+<td>Global store</td>
+<td>Redux Toolkit / Zustand</td>
+<td>Subscribers of affected slice</td>
+<td>Medium</td>
+<td>Shopping cart, multi-step wizard, complex shared synchronous state</td>
+</tr>
+<tr>
+<td>Server state</td>
+<td>TanStack Query / RTK Query</td>
+<td>Only components using that query</td>
+<td>Low</td>
+<td>Anything fetched from an API</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="context-api-the-re-render-problem-and-fixes">Context API: the Re-render Problem and Fixes </h2>
+<ul>
+<li>When the context <code>value</code> reference changes, <strong>every</strong> consumer re-renders — even if the part of the value they use didn't change.</li>
+<li><strong>Fix 1 — Split contexts:</strong> one context for stable values (dispatch), one for changing values (state).</li>
+<li><strong>Fix 2 — Memoize the value:</strong> <code>useMemo</code> on the context value object so reference only changes when data changes.</li>
+<li><strong>Fix 3 — Selector via <code>useSyncExternalStore</code></strong> or migrate to Zustand/Jotai for selector-level granularity.</li>
+</ul>
+<pre data-role="codeBlock" data-info="tsx" class="language-tsx tsx"><code><span class="token comment">// Split context pattern</span>
+<span class="token keyword">const</span> UserStateCtx <span class="token operator">=</span> <span class="token generic-function"><span class="token function">createContext</span><span class="token generic class-name"><span class="token operator">&lt;</span>UserState <span class="token operator">|</span> <span class="token keyword">null</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> UserDispatchCtx <span class="token operator">=</span> <span class="token generic-function"><span class="token function">createContext</span><span class="token generic class-name"><span class="token operator">&lt;</span>React<span class="token punctuation">.</span>Dispatch<span class="token operator">&lt;</span>UserAction<span class="token operator">></span> <span class="token operator">|</span> <span class="token keyword">null</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><hr>
+<h2 id="redux-toolkit">Redux Toolkit </h2>
+<p>Redux Toolkit (RTK) is the official, opinionated way to write Redux. Uses <strong>Immer</strong> under the hood so you can write mutating-looking code safely.</p>
+<h3 id="key-building-blocks">Key building blocks </h3>
+<ul>
+<li><strong>Store</strong> — single JS object; created with <code>configureStore</code>.</li>
+<li><strong>Slice</strong> — combines reducer + action creators for one feature (<code>createSlice</code>).</li>
+<li><strong>Selector</strong> — pure function <code>(state) =&gt; derived</code> — use <code>createSelector</code> (reselect) for memoized derived state.</li>
+<li><strong><code>createAsyncThunk</code></strong> — generates pending/fulfilled/rejected actions around an async operation.</li>
+</ul>
+<pre data-role="codeBlock" data-info="tsx" class="language-tsx tsx"><code><span class="token comment">// cartSlice.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> createSlice<span class="token punctuation">,</span> createAsyncThunk<span class="token punctuation">,</span> PayloadAction <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@reduxjs/toolkit"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> fetchCart <span class="token operator">=</span> <span class="token function">createAsyncThunk</span><span class="token punctuation">(</span><span class="token string">"cart/fetch"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>userId<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/api/cart/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>userId<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span>CartItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> cartSlice <span class="token operator">=</span> <span class="token function">createSlice</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  name<span class="token operator">:</span> <span class="token string">"cart"</span><span class="token punctuation">,</span>
+  initialState<span class="token operator">:</span> <span class="token punctuation">{</span> items<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token keyword">as</span> CartItem<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> loading<span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  reducers<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">addItem</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> action<span class="token operator">:</span> PayloadAction<span class="token operator">&lt;</span>CartItem<span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      state<span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>action<span class="token punctuation">.</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Immer makes this safe</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">removeItem</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> action<span class="token operator">:</span> PayloadAction<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      state<span class="token punctuation">.</span>items <span class="token operator">=</span> state<span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>i <span class="token operator">=></span> i<span class="token punctuation">.</span>id <span class="token operator">!==</span> action<span class="token punctuation">.</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">extraReducers</span><span class="token operator">:</span> <span class="token punctuation">(</span>builder<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    builder
+      <span class="token punctuation">.</span><span class="token function">addCase</span><span class="token punctuation">(</span>fetchCart<span class="token punctuation">.</span>pending<span class="token punctuation">,</span> <span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> state<span class="token punctuation">.</span>loading <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">addCase</span><span class="token punctuation">(</span>fetchCart<span class="token punctuation">.</span>fulfilled<span class="token punctuation">,</span> <span class="token punctuation">(</span>state<span class="token punctuation">,</span> action<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>items <span class="token operator">=</span> action<span class="token punctuation">.</span>payload<span class="token punctuation">;</span>
+        state<span class="token punctuation">.</span>loading <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token punctuation">{</span> addItem<span class="token punctuation">,</span> removeItem <span class="token punctuation">}</span> <span class="token operator">=</span> cartSlice<span class="token punctuation">.</span>actions<span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> cartSlice<span class="token punctuation">.</span>reducer<span class="token punctuation">;</span>
+</code></pre><h3 id="redux-unidirectional-data-flow">Redux unidirectional data flow </h3>
+<div class="mermaid">flowchart LR
+    UI["UI Component"] -- "dispatch(action)" --&gt; Store["Redux Store"]
+    Store -- "reducer(state, action)" --&gt; NewState["New State"]
+    NewState -- "selector / useSelector" --&gt; UI
+</div><hr>
+<h2 id="global-state-libraries-comparison">Global State Libraries Comparison </h2>
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>Model</th>
+<th>Boilerplate</th>
+<th>Re-render granularity</th>
+<th>Bundle size</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Redux Toolkit</td>
+<td>Flux/reducer</td>
+<td>Medium</td>
+<td>Selector-level</td>
+<td>~13 KB</td>
+<td>Large apps, team consistency, DevTools</td>
+</tr>
+<tr>
+<td>Zustand</td>
+<td>Imperative store</td>
+<td>Very low</td>
+<td>Selector-level</td>
+<td>~1 KB</td>
+<td>Small-medium apps, minimal ceremony</td>
+</tr>
+<tr>
+<td>Jotai</td>
+<td>Atomic (Recoil-like)</td>
+<td>Low</td>
+<td>Atom-level</td>
+<td>~3 KB</td>
+<td>Fine-grained subscriptions, derived atoms</td>
+</tr>
+<tr>
+<td>MobX</td>
+<td>Observable/reactive</td>
+<td>Low-medium</td>
+<td>Computed property level</td>
+<td>~16 KB</td>
+<td>OOP style, complex derived state</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>Built-in</td>
+<td>Zero</td>
+<td>Whole context</td>
+<td>0 KB</td>
+<td>Infrequent updates, theme/auth</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="server-state-tanstack-query">Server State: TanStack Query </h2>
+<pre data-role="codeBlock" data-info="tsx" class="language-tsx tsx"><code><span class="token comment">// query</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> data<span class="token punctuation">,</span> isLoading<span class="token punctuation">,</span> error <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useQuery</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  queryKey<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">,</span> userId<span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">queryFn</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">fetchUser</span><span class="token punctuation">(</span>userId<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  staleTime<span class="token operator">:</span> <span class="token number">60_000</span><span class="token punctuation">,</span> <span class="token comment">// consider fresh for 60 s</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// mutation with optimistic update</span>
+<span class="token keyword">const</span> mutation <span class="token operator">=</span> <span class="token function">useMutation</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mutationFn<span class="token operator">:</span> updateUser<span class="token punctuation">,</span>
+  <span class="token function-variable function">onMutate</span><span class="token operator">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>newData<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">await</span> queryClient<span class="token punctuation">.</span><span class="token function">cancelQueries</span><span class="token punctuation">(</span><span class="token punctuation">{</span> queryKey<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">,</span> userId<span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> prev <span class="token operator">=</span> queryClient<span class="token punctuation">.</span><span class="token function">getQueryData</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">,</span> userId<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    queryClient<span class="token punctuation">.</span><span class="token function">setQueryData</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">,</span> userId<span class="token punctuation">]</span><span class="token punctuation">,</span> newData<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// optimistic</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span> prev <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">onError</span><span class="token operator">:</span> <span class="token punctuation">(</span>_err<span class="token punctuation">,</span> _vars<span class="token punctuation">,</span> ctx<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    queryClient<span class="token punctuation">.</span><span class="token function">setQueryData</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">,</span> userId<span class="token punctuation">]</span><span class="token punctuation">,</span> ctx<span class="token operator">?.</span>prev<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// rollback</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">onSettled</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> queryClient<span class="token punctuation">.</span><span class="token function">invalidateQueries</span><span class="token punctuation">(</span><span class="token punctuation">{</span> queryKey<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"user"</span><span class="token punctuation">,</span> userId<span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TanStack Query</th>
+<th>RTK Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup</td>
+<td>Standalone <code>QueryClient</code></td>
+<td>Integrates with Redux store</td>
+</tr>
+<tr>
+<td>Cache key</td>
+<td><code>queryKey</code> array</td>
+<td>Endpoint + arg</td>
+</tr>
+<tr>
+<td>Invalidation</td>
+<td><code>invalidateQueries</code></td>
+<td><code>invalidateTags</code> (tag-based)</td>
+</tr>
+<tr>
+<td>Optimistic updates</td>
+<td>Manual <code>onMutate</code></td>
+<td><code>pessimisticUpdate</code> / <code>optimisticUpdate</code></td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Non-Redux apps</td>
+<td>Already using Redux Toolkit</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why server state libraries replace most global state:</strong> Instead of storing fetched data in Redux (stale, manual loading flags, manual invalidation), TanStack Query handles caching, background refetch, deduplication, retries, pagination, and infinite scroll — leaving Redux for true client-side state only.</p>
+<hr>
+<h2 id="normalizing-relational-data-on-the-client">Normalizing Relational Data on the Client </h2>
+<p>RTK includes <code>createEntityAdapter</code> for normalized client-side collections (store entities by ID, avoid duplication). TanStack Query intentionally doesn't normalize — simpler, good enough for most apps; normalize manually or use a normalized cache (Apollo, Relay) only when you truly have relational data accessed in multiple shapes.</p>
+<hr>
+<h2 id="react-router-v6">React Router v6 </h2>
+<pre data-role="codeBlock" data-info="tsx" class="language-tsx tsx"><code><span class="token comment">// main.tsx</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> createBrowserRouter<span class="token punctuation">,</span> RouterProvider <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react-router-dom"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token function">createBrowserRouter</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    path<span class="token operator">:</span> <span class="token string">"/"</span><span class="token punctuation">,</span>
+    element<span class="token operator">:</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">RootLayout</span></span> <span class="token punctuation">/></span></span><span class="token punctuation">,</span>
+    children<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span> index<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> element<span class="token operator">:</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Home</span></span> <span class="token punctuation">/></span></span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> path<span class="token operator">:</span> <span class="token string">"users/:id"</span><span class="token punctuation">,</span> element<span class="token operator">:</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">UserDetail</span></span> <span class="token punctuation">/></span></span><span class="token punctuation">,</span>
+        <span class="token function-variable function">loader</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> params <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">fetchUser</span><span class="token punctuation">(</span>params<span class="token punctuation">.</span>id<span class="token operator">!</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// data loader</span>
+      <span class="token punctuation">{</span> path<span class="token operator">:</span> <span class="token string">"admin"</span><span class="token punctuation">,</span> element<span class="token operator">:</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">RequireAuth</span></span><span class="token punctuation">></span></span><span class="token plain-text">&lt;Admin /></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">RequireAuth</span></span><span class="token punctuation">></span></span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> path<span class="token operator">:</span> <span class="token string">"reports"</span><span class="token punctuation">,</span> <span class="token function-variable function">lazy</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">"./Reports"</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">// code split</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">RouterProvider</span></span> <span class="token attr-name">router</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>router<span class="token punctuation">}</span></span> <span class="token punctuation">/></span></span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</code></pre><ul>
+<li><strong><code>useParams</code></strong> — read URL params.</li>
+<li><strong><code>useNavigate</code></strong> — programmatic navigation.</li>
+<li><strong><code>useLoaderData</code></strong> — data returned by route loader (fetched before render).</li>
+<li><strong>Protected routes</strong> — wrapper component checks auth, redirects to <code>/login</code> if unauthenticated.</li>
+<li><strong>Lazy routes</strong> — <code>lazy: () =&gt; import(...)</code> splits the bundle at route boundaries.</li>
+</ul>
+<hr>
+<h2 id="auth-in-spas-token-storage">Auth in SPAs: Token Storage </h2>
+<table>
+<thead>
+<tr>
+<th>Storage</th>
+<th>XSS risk</th>
+<th>CSRF risk</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>localStorage</code></td>
+<td><strong>High</strong> — any script can read</td>
+<td>Low</td>
+<td>Persist across tabs; exposed to XSS</td>
+</tr>
+<tr>
+<td><code>sessionStorage</code></td>
+<td><strong>High</strong></td>
+<td>Low</td>
+<td>Tab-scoped; still exposed to XSS</td>
+</tr>
+<tr>
+<td>In-memory (JS variable)</td>
+<td>Low</td>
+<td>Low</td>
+<td>Lost on page refresh; need silent refresh</td>
+</tr>
+<tr>
+<td><strong>httpOnly cookie</strong></td>
+<td><strong>Low</strong> — JS cannot read</td>
+<td><strong>High</strong> (mitigate with <code>SameSite=Strict/Lax</code> + CSRF token)</td>
+<td>Best practice for access tokens</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation:</strong> Store access token in memory; refresh token in <code>httpOnly SameSite=Strict</code> cookie. Implement silent refresh before expiry (refresh-token rotation).</p>
+<h3 id="handling-401403-in-axiosfetch">Handling 401/403 in Axios/fetch </h3>
+<pre data-role="codeBlock" data-info="tsx" class="language-tsx tsx"><code>axios<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>
+  res <span class="token operator">=></span> res<span class="token punctuation">,</span>
+  <span class="token keyword">async</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>error<span class="token punctuation">.</span>response<span class="token operator">?.</span>status <span class="token operator">===</span> <span class="token number">401</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>error<span class="token punctuation">.</span>config<span class="token punctuation">.</span>_retry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      error<span class="token punctuation">.</span>config<span class="token punctuation">.</span>_retry <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+      <span class="token keyword">await</span> <span class="token function">refreshTokens</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// silent refresh</span>
+      <span class="token keyword">return</span> <span class="token function">axios</span><span class="token punctuation">(</span>error<span class="token punctuation">.</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// retry original request</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>error<span class="token punctuation">.</span>response<span class="token operator">?.</span>status <span class="token operator">===</span> <span class="token number">403</span><span class="token punctuation">)</span> <span class="token function">navigate</span><span class="token punctuation">(</span><span class="token string">"/forbidden"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token builtin">Promise</span><span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p><strong>CORS from the frontend:</strong> The browser enforces Same-Origin Policy. CORS headers (<code>Access-Control-Allow-Origin</code>) are set by the <strong>server</strong>; the browser either allows or blocks the response. Preflight (<code>OPTIONS</code>) fires for non-simple requests. See <a href="../09-Security/03-OWASP-Top-10-and-Application-Security.html">OWASP and Application Security</a> for CSRF/XSS detail.</p>
+<hr>
+<h2 id="api-integration-patterns">API Integration Patterns </h2>
+<ul>
+<li><strong>Abort/cancellation:</strong> <code>AbortController</code> passed to <code>fetch</code>; TanStack Query cancels in-flight requests automatically when query key changes.</li>
+<li><strong>Retry:</strong> TanStack Query retries failed queries 3× with backoff by default.</li>
+<li><strong>Loading skeletons:</strong> render placeholder UI immediately; replace with data on resolve — better UX than spinners that block layout.</li>
+<li><strong>Error boundaries + fallback UI:</strong> wrap async data consumers; catch render errors without crashing the whole app.</li>
+</ul>
+<hr>
+<h2 id="forms-controlled-vs-react-hook-form">Forms: Controlled vs React Hook Form </h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Controlled (<code>useState</code>)</th>
+<th>React Hook Form</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Re-renders</td>
+<td>Every keystroke</td>
+<td>Minimal (uncontrolled under the hood)</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Manual or with Yup</td>
+<td>Built-in register + resolver (Zod/Yup)</td>
+</tr>
+<tr>
+<td>Boilerplate</td>
+<td>High for many fields</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>When</td>
+<td>Simple forms, ≤5 fields</td>
+<td>Complex forms, performance matters</td>
+</tr>
+</tbody>
+</table>
+<pre data-role="codeBlock" data-info="tsx" class="language-tsx tsx"><code><span class="token comment">// React Hook Form + Zod</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useForm <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react-hook-form"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> zodResolver <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@hookform/resolvers/zod"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> z <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"zod"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> schema <span class="token operator">=</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">{</span> email<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">email</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> age<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">number</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">type</span> <span class="token class-name">FormData</span> <span class="token operator">=</span> z<span class="token punctuation">.</span>infer<span class="token operator">&lt;</span><span class="token keyword">typeof</span> schema<span class="token operator">></span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">SignupForm</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span> register<span class="token punctuation">,</span> handleSubmit<span class="token punctuation">,</span> formState<span class="token operator">:</span> <span class="token punctuation">{</span> errors <span class="token punctuation">}</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token generic-function"><span class="token function">useForm</span><span class="token generic class-name"><span class="token operator">&lt;</span>FormData<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    resolver<span class="token operator">:</span> <span class="token function">zodResolver</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">onSubmit</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token function">handleSubmit</span><span class="token punctuation">(</span><span class="token builtin">console</span><span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token spread"><span class="token punctuation">{</span><span class="token operator">...</span><span class="token function">register</span><span class="token punctuation">(</span><span class="token string">"email"</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+      </span><span class="token punctuation">{</span>errors<span class="token punctuation">.</span>email <span class="token operator">&amp;&amp;</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token punctuation">{</span>errors<span class="token punctuation">.</span>email<span class="token punctuation">.</span>message<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span><span class="token punctuation">}</span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="interview-questions">Interview Questions </h2>
+<p><strong>Q1. What is the difference between Context and Redux?</strong><br>
+A: Context is a built-in broadcast mechanism — low ceremony but causes every consumer to re-render on any value change. Redux provides a predictable state container with selector-level subscriptions, DevTools, middleware, and a clear action/reducer pattern. Use Context for infrequent updates (theme, auth); use Redux for complex client-side state accessed by many components.</p>
+<p><strong>Q2. What is server state and why does TanStack Query exist?</strong><br>
+A: Server state is data that lives on a server: it's async, can go stale, may be shared across sessions. Managing it in Redux means manual loading flags, manual cache invalidation, and manual retry logic. TanStack Query encapsulates all of that — caching by query key, background refetch, deduplication, retries, optimistic updates — freeing Redux for true client state.</p>
+<p><strong>Q3. Where should you store a JWT access token in a SPA? Why?</strong><br>
+A: In-memory (JS variable) is most secure against XSS since <code>localStorage</code>/<code>sessionStorage</code> are readable by any script on the page. Combine with a refresh token in an <code>httpOnly SameSite=Strict</code> cookie (not readable by JS). Use silent refresh before the access token expires. The trade-off is losing the token on page refresh, which requires a refresh call on load.</p>
+<p><strong>Q4. What is <code>createAsyncThunk</code> in Redux Toolkit?</strong><br>
+A: A helper that generates three action types (<code>pending</code>, <code>fulfilled</code>, <code>rejected</code>) around an async function. It dispatches <code>pending</code> when called, <code>fulfilled</code>/<code>rejected</code> when the promise resolves/rejects. Handled in <code>extraReducers</code> in a slice, keeping loading/error state co-located with the data.</p>
+<p><strong>Q5. How do you prevent a large Context value from causing unnecessary re-renders?</strong><br>
+A: (1) Split contexts — one for stable dispatch, one for changing state. (2) Memoize the context value with <code>useMemo</code>. (3) Move to a library with selector granularity (Zustand, Jotai) if context re-renders are measurably hurting performance.</p>
+<p><strong>Q6. Explain React Router loaders. How do they compare to fetching inside <code>useEffect</code>?</strong><br>
+A: Loaders run <em>before</em> the component renders — the router fetches data in parallel with code-splitting. When the component mounts, data is ready via <code>useLoaderData</code>. Effect-based fetching runs <em>after</em> render, causing a loading flash. Loaders also integrate with browser navigation (back/forward), error handling, and deferred data streaming.</p>
+<p><strong>Q7. How do you implement a protected route in React Router v6?</strong><br>
+A: Create a wrapper component that reads auth context; if unauthenticated, returns <code>&lt;Navigate to="/login" replace /&gt;</code>. Nest all protected routes under this wrapper in the route config. For production: validate the token server-side on every API call — the client-side gate is only UX, not security.</p>
+<p><strong>Q8. Explain optimistic updates in TanStack Query and when they go wrong.</strong><br>
+A: In <code>onMutate</code>, cancel in-flight queries, snapshot the old data, and update the cache immediately. If the mutation fails (<code>onError</code>), roll back to the snapshot. Goes wrong when the server returns a different shape than optimistically assumed, or when multiple mutations race. Always <code>invalidateQueries</code> in <code>onSettled</code> to sync with server truth.</p>
+<p><strong>Q9. (Senior) A user reports stale data after updating their profile. How do you debug and fix it in a TanStack Query app?</strong><br>
+A: (1) Check <code>staleTime</code> — if set high, TanStack Query won't background-refetch. (2) Confirm the mutation calls <code>invalidateQueries(["user", id])</code> on success. (3) Check for mismatched query keys (string vs array). (4) If using RTK Query, verify tags are correctly invalidated. Root fix: ensure mutation success path always invalidates the affected queries.</p>
+<p><strong>Q10. (Senior) When would you NOT use Redux, even in a large app?</strong><br>
+A: If state is predominantly server state (fetch/cache/sync), TanStack Query alone is better — Redux adds ceremony with no value. If state is localized to a feature, co-located state + context is simpler. If the team is small, Zustand's minimal API reduces overhead. Redux shines when you have truly complex synchronous client state (multi-step workflows, undo/redo, offline state machines) accessed globally.</p>
+<p><strong>Q11. (Senior) How does React Router v6 lazy loading interact with Suspense?</strong><br>
+A: Lazy routes (<code>lazy: () =&gt; import(...)</code>) return a promise that React Router resolves before rendering. Suspense boundaries in the route tree catch the loading state and render a fallback. Combined with route-level loaders, you get parallel code-splitting + data fetching — components load only what they need, when needed, without a sequential waterfall.</p>
+<hr>
+<h2 id="quick-recap">Quick Recap </h2>
+<ul>
+<li>State scope hierarchy: local → lifted → context → global store → server state library.</li>
+<li>Context re-renders all consumers on value change — split contexts or memoize value.</li>
+<li>Redux Toolkit: configureStore + createSlice + createAsyncThunk; Immer allows "mutating" syntax.</li>
+<li>TanStack Query: caching, deduplication, background refetch, optimistic updates — replaces most Redux usage for server data.</li>
+<li>JWT: access token in memory + refresh token in httpOnly cookie = best XSS/CSRF balance.</li>
+<li>React Router v6: loaders fetch before render, lazy routes split bundles, nested routes share layout.</li>
+<li>React Hook Form + Zod: uncontrolled inputs + schema validation = high performance forms.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

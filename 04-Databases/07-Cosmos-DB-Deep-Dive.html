@@ -1,0 +1,1393 @@
+<!DOCTYPE html><html><head>
+      <title>07-Cosmos-DB-Deep-Dive</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="7-cosmos-db-deep-dive">7. Cosmos DB Deep Dive </h1>
+<blockquote>
+<p><strong>TL;DR:</strong> Cosmos DB is a globally distributed, multi-model NoSQL database. Mastering partition-key design, RU budgeting, consistency levels, and the change feed is the difference between a 429-plagued system and one that scales to 5K+ RPS with p99 &lt; 50 ms.</p>
+</blockquote>
+<p><strong>Interview weight:</strong> P0 — this is the reader's production system. Expect exhaustive questions on partition keys, RU consumption, consistency trade-offs, and migration strategies. Be ready to reference real production experience.</p>
+<hr>
+<h2 id="core-concepts">Core Concepts </h2>
+<ul>
+<li><strong>Request Unit (RU)</strong> — the single currency of Cosmos DB throughput. One RU ≈ cost to read a 1 KB item by point read. Every operation has an RU cost visible in the response header (<code>x-ms-request-charge</code>).</li>
+<li><strong>Logical partition</strong> — all items with the same partition key value. Max 20 GB, max 10,000 RU/s per logical partition.</li>
+<li><strong>Physical partition</strong> — one or more logical partitions mapped to a server group. Cosmos DB manages the mapping transparently.</li>
+<li><strong>Change feed</strong> — append-only ordered log of all insert/update operations per partition. Core primitive for event-driven patterns.</li>
+</ul>
+<hr>
+<h2 id="resource-model">Resource Model </h2>
+<div class="mermaid">flowchart TD
+    Account["Cosmos DB Account&lt;br/&gt;(global endpoint, consistency default, geo-regions)"]
+    Account --&gt; DB1["Database&lt;br/&gt;(shared throughput pool optional)"]
+    DB1 --&gt; C1["Container&lt;br/&gt;(provisioned RU/s or autoscale&lt;br/&gt;partition key defined here)"]
+    DB1 --&gt; C2["Container 2"]
+    C1 --&gt; LP1["Logical Partition&lt;br/&gt;partitionKey = 'user1'&lt;br/&gt;max 20 GB / 10K RU/s"]
+    C1 --&gt; LP2["Logical Partition&lt;br/&gt;partitionKey = 'user2'"]
+    LP1 --&gt; I1["Item (JSON document)"]
+    LP1 --&gt; I2["Item"]
+</div><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Key config</th>
+<th>Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Account</td>
+<td>Global endpoint, default consistency, geo-regions</td>
+<td>Up to 25 regions</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>Optional shared throughput (400–1M RU/s shared across containers)</td>
+<td>Shared RU/s split by demand</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>Partition key (immutable after creation); throughput (dedicated or shared)</td>
+<td>Max 1M RU/s dedicated; autoscale 10×</td>
+</tr>
+<tr>
+<td>Logical partition</td>
+<td>All items with same PK value</td>
+<td>Max 20 GB; max 10,000 RU/s</td>
+</tr>
+<tr>
+<td>Item</td>
+<td>JSON document</td>
+<td>Max 2 MB per item</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="logical-vs-physical-partitions">Logical vs Physical Partitions </h2>
+<ul>
+<li><strong>Logical partition</strong> — defined by partition key value; controlled by developer; unit of atomicity (transactions scoped to one LP).</li>
+<li><strong>Physical partition</strong> — internal server group; hosts one or more logical partitions; Cosmos transparently splits physical partitions when one grows &gt; ~50 GB or RU/s demand requires it.</li>
+<li><strong>Hot partition</strong> — one logical partition receiving disproportionate RU/s → throttling (429) for that LP only, even if aggregate throughput is available.</li>
+</ul>
+<hr>
+<h2 id="partition-key-design">Partition Key Design </h2>
+<h3 id="requirements-checklist">Requirements Checklist </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>✅ High cardinality — thousands to millions of distinct values
+✅ Even RU distribution — avoid "celebrity" keys (famous user, hot event)
+✅ Even storage distribution — avoid keys whose data grows unboundedly
+✅ Aligned with most frequent query — point reads / single-partition queries cost 1 RU
+✅ Immutable — Cosmos DB does not support changing a partition key after item creation
+✅ Not too fine-grained — avoid per-document keys if batching helps
+</code></pre><h3 id="hot-partition-symptoms">Hot Partition Symptoms </h3>
+<ul>
+<li>Sustained 429 responses with <code>x-ms-retry-after-ms</code> on specific partition key values.</li>
+<li><code>CosmosPartitionKeyRangeStatistics</code> shows 1 partition consuming &gt; 80% of RU/s.</li>
+<li>P99 latency spikes correlated with specific user IDs / entity IDs.</li>
+</ul>
+<h3 id="synthetic--composite-keys">Synthetic / Composite Keys </h3>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// Low cardinality department ID — combine with a suffix to spread load</span>
+item<span class="token punctuation">.</span>PartitionKey <span class="token operator">=</span> <span class="token interpolation-string"><span class="token string">$"</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">departmentId</span><span class="token punctuation">}</span></span><span class="token string">_</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">itemId<span class="token punctuation">[</span><span class="token range operator">..</span><span class="token number">4</span><span class="token punctuation">]</span></span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">;</span>  <span class="token comment">// e.g., "HR_a3f2"</span>
+
+<span class="token comment">// Tenant + entity type composite</span>
+item<span class="token punctuation">.</span>PartitionKey <span class="token operator">=</span> <span class="token interpolation-string"><span class="token string">$"tenant:</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">tenantId</span><span class="token punctuation">}</span></span><span class="token string">:type:</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">entityType</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">;</span>
+</code></pre><h3 id="hierarchical-partition-keys-sdk-v318-preview">Hierarchical Partition Keys (SDK v3.18+, preview) </h3>
+<ul>
+<li>Define up to 3 levels: <code>/tenantId</code>, <code>/userId</code>, <code>/sessionId</code>.</li>
+<li>Queries scoped to a tenant hit one sub-partition set. Queries scoped to a user hit an even smaller set.</li>
+<li>Backward-compatible with existing single-partition-key queries.</li>
+</ul>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token class-name">ContainerProperties</span> props <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">(</span>containerId<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PartitionKeyDefinition</span>
+<span class="token punctuation">{</span>
+    Version <span class="token operator">=</span> PartitionKeyDefinitionVersion<span class="token punctuation">.</span>V2<span class="token punctuation">,</span>
+    Paths <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"/tenantId"</span><span class="token punctuation">,</span> <span class="token string">"/userId"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><hr>
+<h2 id="request-units-—-what-consumes-rus">Request Units — What Consumes RUs </h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Typical RU cost</th>
+<th>Key factors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Point read</strong> (by id + PK)</td>
+<td>~1 RU per 1 KB</td>
+<td>Item size</td>
+</tr>
+<tr>
+<td><strong>Query</strong> (single partition)</td>
+<td>2.5–50+ RU</td>
+<td>Filters, index hits, result count, item size</td>
+</tr>
+<tr>
+<td><strong>Cross-partition query</strong></td>
+<td>(RU per partition) × fan-out</td>
+<td>Scans all physical partitions; multiply by partition count</td>
+</tr>
+<tr>
+<td><strong>Insert</strong></td>
+<td>~5–10 RU per 1 KB</td>
+<td>Item size, index count</td>
+</tr>
+<tr>
+<td><strong>Upsert</strong></td>
+<td>~6–12 RU</td>
+<td>Read + write</td>
+</tr>
+<tr>
+<td><strong>Delete</strong></td>
+<td>~5 RU</td>
+<td>Item size</td>
+</tr>
+<tr>
+<td><strong>Stored procedure</strong></td>
+<td>Varies</td>
+<td>Sum of operations within</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Check <code>x-ms-request-charge</code> response header to measure actual RU cost.</li>
+<li>Use <a href="https://cosmos.azure.com/capacitycalculator/">Cosmos DB Capacity Calculator</a> for planning.</li>
+<li>Items with many indexed paths cost more to write — exclude non-queried paths from indexing.</li>
+</ul>
+<hr>
+<h2 id="provisioned-vs-autoscale-vs-serverless">Provisioned vs Autoscale vs Serverless </h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Min throughput</th>
+<th>Max throughput</th>
+<th>Billing</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Provisioned</strong></td>
+<td>400 RU/s</td>
+<td>Unlimited (scale manually)</td>
+<td>Per-hour at provisioned RU</td>
+<td>Steady, predictable load</td>
+</tr>
+<tr>
+<td><strong>Autoscale</strong></td>
+<td>10% of max (e.g., 100 RU/s if max=1000)</td>
+<td>Up to configured max</td>
+<td>Per-hour at highest RU/s in the hour</td>
+<td>Spiky workloads; dev/test</td>
+</tr>
+<tr>
+<td><strong>Serverless</strong></td>
+<td>0</td>
+<td>5,000 RU/s burst</td>
+<td>Per actual RU consumed</td>
+<td>Infrequent access, dev, tiny workloads</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Autoscale: scales up in ~6 ms, scales down over 4 hours. No cold start.</li>
+<li>Provisioned: best cost at high steady-state load. Can also manually scale with SDK.</li>
+<li>Serverless: no global distribution, no SLA for high throughput, max 50 GB per container.</li>
+</ul>
+<hr>
+<h2 id="429-throttling--retry-policy">429 Throttling &amp; Retry Policy </h2>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// SDK v3 default retry: 9 retries, initial wait 1s with exponential backoff</span>
+<span class="token class-name">CosmosClientOptions</span> options <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    MaxRetryAttemptsOnRateLimitedRequests <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">,</span>   <span class="token comment">// default 9</span>
+    MaxRetryWaitTimeOnRateLimitedRequests <span class="token operator">=</span> TimeSpan<span class="token punctuation">.</span><span class="token function">FromSeconds</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Check RU charge on response</span>
+<span class="token class-name">ItemResponse<span class="token punctuation">&lt;</span>MyDoc<span class="token punctuation">></span></span> response <span class="token operator">=</span> <span class="token keyword">await</span> container<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">ReadItemAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>MyDoc<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PartitionKey</span><span class="token punctuation">(</span>pk<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token keyword">double</span></span> ruCharge <span class="token operator">=</span> response<span class="token punctuation">.</span>RequestCharge<span class="token punctuation">;</span>  <span class="token comment">// log this for cost monitoring</span>
+
+<span class="token comment">// Bulk mode — batch operations efficiently (reduces RU per operation via backend optimization)</span>
+<span class="token class-name">CosmosClientOptions</span> bulkOptions <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> AllowBulkExecution <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment">// Combine with Task.WhenAll for parallel upserts → Cosmos batches automatically</span>
+</code></pre><ul>
+<li>429 = <code>TooManyRequests</code>. Response contains <code>x-ms-retry-after-ms</code> — SDK retries automatically.</li>
+<li>Log <code>RequestCharge</code> on every operation in production — essential for cost debugging.</li>
+<li>Bulk mode reduces RU/item by ~30–40% for large batch operations.</li>
+</ul>
+<hr>
+<h2 id="consistency-levels">Consistency Levels </h2>
+<div class="mermaid">flowchart LR
+    S["Strong&lt;br/&gt;(linearizable)"] --&gt; BS["Bounded Staleness&lt;br/&gt;(lag ≤ K ops or T time)"]
+    BS --&gt; SE["Session&lt;br/&gt;(read-your-writes&lt;br/&gt;for a session)"]
+    SE --&gt; CP["Consistent Prefix&lt;br/&gt;(no out-of-order reads)"]
+    CP --&gt; E["Eventual&lt;br/&gt;(lowest latency&lt;br/&gt;highest availability)"]
+</div><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Guarantee</th>
+<th>RU cost</th>
+<th>Latency</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Strong</strong></td>
+<td>Linearizable; read always returns latest write</td>
+<td>2× read RU</td>
+<td>Higher (sync replication)</td>
+<td>Financial ledgers, inventory counts</td>
+</tr>
+<tr>
+<td><strong>Bounded Staleness</strong></td>
+<td>Reads lag behind writes by at most K operations or T seconds</td>
+<td>2× read RU</td>
+<td>Slightly lower</td>
+<td>Near-real-time leaderboards, feeds with bounded lag</td>
+</tr>
+<tr>
+<td><strong>Session</strong></td>
+<td>Read-your-writes within a session token scope</td>
+<td>1× read RU</td>
+<td>Low</td>
+<td>Default for most apps — user sees own writes</td>
+</tr>
+<tr>
+<td><strong>Consistent Prefix</strong></td>
+<td>Reads never see out-of-order writes, but may be stale</td>
+<td>1× read RU</td>
+<td>Low</td>
+<td>Social feeds — order matters but lag is OK</td>
+</tr>
+<tr>
+<td><strong>Eventual</strong></td>
+<td>Replicas converge eventually; reads may be stale</td>
+<td>1× read RU</td>
+<td>Lowest</td>
+<td>Counters, non-critical aggregates, telemetry</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Default recommendation</strong>: <strong>Session consistency</strong> for most OLTP — strong enough (user sees own writes), no extra RU cost, compatible with global distribution.</li>
+<li>Strong consistency requires reading from the primary replica only — cannot be combined with multi-region write.</li>
+<li>Session token is returned per-response; pass it in subsequent requests to maintain session guarantee: <code>container.ReadItemAsync(..., new ItemRequestOptions { SessionToken = sessionToken })</code>.</li>
+</ul>
+<hr>
+<h2 id="global-distribution--multi-region-writes">Global Distribution &amp; Multi-Region Writes </h2>
+<ul>
+<li><strong>Single-region write</strong>: one write region; all other regions are read replicas. Failover promotes a read replica. RPO = replication lag.</li>
+<li><strong>Multi-region write</strong>: all configured regions accept writes. Lower write latency globally. Requires conflict resolution.</li>
+</ul>
+<h3 id="conflict-resolution">Conflict Resolution </h3>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>How</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LWW (Last-Write-Wins)</strong></td>
+<td>Use <code>_ts</code> (timestamp) or a custom timestamp property as tiebreaker</td>
+<td>Default; acceptable data loss on rare conflicts</td>
+</tr>
+<tr>
+<td><strong>Custom (stored procedure)</strong></td>
+<td>A server-side merge procedure receives conflicting versions; developer writes merge logic</td>
+<td>Complex merge needed (e.g., array union, field-level merge)</td>
+</tr>
+<tr>
+<td><strong>Conflict feed</strong></td>
+<td>Conflicts written to a feed for manual resolution</td>
+<td>Audit-required scenarios</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="indexing-policy">Indexing Policy </h2>
+<ul>
+<li><strong>Default</strong>: all paths indexed automatically (range index). Writes pay RU cost for every indexed path.</li>
+<li><strong>Optimization</strong>: exclude non-queried paths, include only what's needed.</li>
+</ul>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"indexingMode"</span><span class="token operator">:</span> <span class="token string">"consistent"</span><span class="token punctuation">,</span>
+  <span class="token property">"automatic"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"includedPaths"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/userId/?"</span><span class="token punctuation">,</span> <span class="token property">"indexes"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token property">"kind"</span><span class="token operator">:</span> <span class="token string">"Range"</span><span class="token punctuation">,</span> <span class="token property">"dataType"</span><span class="token operator">:</span> <span class="token string">"String"</span><span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/createdAt/?"</span><span class="token punctuation">,</span> <span class="token property">"indexes"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span><span class="token property">"kind"</span><span class="token operator">:</span> <span class="token string">"Range"</span><span class="token punctuation">,</span> <span class="token property">"dataType"</span><span class="token operator">:</span> <span class="token string">"Number"</span><span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"excludedPaths"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/largeBlob/*"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/internalMetadata/*"</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"compositeIndexes"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span> <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/userId"</span><span class="token punctuation">,</span> <span class="token property">"order"</span><span class="token operator">:</span> <span class="token string">"ascending"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/createdAt"</span><span class="token punctuation">,</span> <span class="token property">"order"</span><span class="token operator">:</span> <span class="token string">"descending"</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li><strong>Composite indexes</strong> required for <code>ORDER BY</code> on multiple properties or <code>WHERE A AND B ORDER BY C</code>.</li>
+<li><strong>Spatial indexes</strong> for <code>ST_DISTANCE</code> geo queries.</li>
+<li>Lazy indexing mode: writes don't pay index cost immediately — index is built async. Queries may be inconsistent. Use only for bulk import.</li>
+</ul>
+<hr>
+<h2 id="query-execution">Query Execution </h2>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// Single-partition query — cheap</span>
+<span class="token class-name">QueryDefinition</span> query <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM c WHERE c.userId = @uid AND c.type = 'order'"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">WithParameter</span><span class="token punctuation">(</span><span class="token string">"@uid"</span><span class="token punctuation">,</span> userId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">FeedIterator<span class="token punctuation">&lt;</span>Order<span class="token punctuation">></span></span> iterator <span class="token operator">=</span> container<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetItemQueryIterator</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Order<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>
+    query<span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">requestOptions</span><span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">QueryRequestOptions</span> <span class="token punctuation">{</span> PartitionKey <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PartitionKey</span><span class="token punctuation">(</span>userId<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span>iterator<span class="token punctuation">.</span>HasMoreResults<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name">FeedResponse<span class="token punctuation">&lt;</span>Order<span class="token punctuation">></span></span> page <span class="token operator">=</span> <span class="token keyword">await</span> iterator<span class="token punctuation">.</span><span class="token function">ReadNextAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// page.RequestCharge — log this</span>
+    <span class="token comment">// page.ContinuationToken — for pagination</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Cross-partition fan-out — expensive: scans all physical partitions</span>
+<span class="token comment">// Avoid in hot paths; use only for admin/batch queries</span>
+<span class="token class-name">FeedIterator<span class="token punctuation">&lt;</span>Order<span class="token punctuation">></span></span> crossPartition <span class="token operator">=</span> container<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetItemQueryIterator</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Order<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// No PartitionKey in options → fan-out</span>
+</code></pre><ul>
+<li><code>MaxItemCount</code> — controls items per page (default -1 = server default ~100). Set explicitly for predictable RU per round-trip.</li>
+<li>Continuation tokens are opaque strings; store for pagination resumption. Do NOT parse them.</li>
+<li>Cross-partition fan-out RU cost = (RU per partition) × (number of physical partitions). Can be 10–100× a single-partition query.</li>
+</ul>
+<hr>
+<h2 id="change-feed">Change Feed </h2>
+<div class="mermaid">flowchart LR
+    App["App writes item"] --&gt; C["Container"]
+    C --&gt; CF["Change Feed&lt;br/&gt;(ordered per partition&lt;br/&gt;persistent)"]
+    CF --&gt; CFP["Change Feed Processor&lt;br/&gt;(Azure Function / hosted service)"]
+    CFP --&gt; MV["Materialized View&lt;br/&gt;container"]
+    CFP --&gt; Search["Azure AI Search&lt;br/&gt;indexer"]
+    CFP --&gt; MQ["Service Bus&lt;br/&gt;/ Event Hubs"]
+</div><ul>
+<li>Change feed captures <strong>inserts and updates</strong> (not deletes by default; enable with <code>ChangeFeedStartFrom.Beginning</code> + soft-delete pattern for deletes).</li>
+<li><strong>Change Feed Processor</strong> (SDK v3): distributes partitions across N processor instances with a lease container. Handles failover automatically.</li>
+<li><strong>Azure Functions CosmosDBTrigger</strong>: wrapper around change feed processor; good for stateless handlers.</li>
+</ul>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// Change Feed Processor</span>
+<span class="token class-name">ChangeFeedProcessor</span> processor <span class="token operator">=</span> container<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetChangeFeedProcessorBuilder</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>MyDoc<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>
+    <span class="token named-parameter punctuation">processorName</span><span class="token punctuation">:</span> <span class="token string">"myProcessor"</span><span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">onChangesDelegate</span><span class="token punctuation">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span>changes<span class="token punctuation">,</span> cancellationToken<span class="token punctuation">)</span> <span class="token operator">=></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> doc <span class="token keyword">in</span> changes<span class="token punctuation">)</span>
+            <span class="token keyword">await</span> <span class="token function">HandleChange</span><span class="token punctuation">(</span>doc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">WithInstanceName</span><span class="token punctuation">(</span>Environment<span class="token punctuation">.</span>MachineName<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">WithLeaseContainer</span><span class="token punctuation">(</span>leaseContainer<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">await</span> processor<span class="token punctuation">.</span><span class="token function">StartAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p><strong>Use cases</strong>: materialized views, event-driven pipelines, search index sync, audit log, cache invalidation, aggregation for reporting, fan-out notifications.</p>
+<hr>
+<h2 id="ttl-time-to-live">TTL (Time to Live) </h2>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// Container-level default TTL (seconds); -1 = enabled, items use own TTL</span>
+<span class="token class-name">ContainerProperties</span> props <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> partitionKey<span class="token punctuation">)</span> <span class="token punctuation">{</span> DefaultTimeToLive <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Item-level TTL</span>
+item<span class="token punctuation">.</span>ttl <span class="token operator">=</span> <span class="token number">86400</span><span class="token punctuation">;</span>  <span class="token comment">// expire in 24 hours; set to -1 to override container default (never expire)</span>
+</code></pre><ul>
+<li>Cosmos DB deletes expired items lazily in the background — no RU cost to the container.</li>
+<li>TTL deletion does NOT appear in the change feed.</li>
+</ul>
+<hr>
+<h2 id="optimistic-concurrency-with-etags">Optimistic Concurrency with ETags </h2>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// Read item — response contains ETag</span>
+<span class="token class-name">ItemResponse<span class="token punctuation">&lt;</span>MyDoc<span class="token punctuation">></span></span> readResp <span class="token operator">=</span> <span class="token keyword">await</span> container<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">ReadItemAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>MyDoc<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PartitionKey</span><span class="token punctuation">(</span>pk<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token keyword">string</span></span> etag <span class="token operator">=</span> readResp<span class="token punctuation">.</span>ETag<span class="token punctuation">;</span>
+
+<span class="token comment">// Update with ETag — fails with 412 if item was modified since read</span>
+<span class="token keyword">await</span> container<span class="token punctuation">.</span><span class="token function">ReplaceItemAsync</span><span class="token punctuation">(</span>
+    <span class="token named-parameter punctuation">item</span><span class="token punctuation">:</span> updatedDoc<span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">id</span><span class="token punctuation">:</span> id<span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">partitionKey</span><span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PartitionKey</span><span class="token punctuation">(</span>pk<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">requestOptions</span><span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ItemRequestOptions</span> <span class="token punctuation">{</span> IfMatchEtag <span class="token operator">=</span> etag <span class="token punctuation">}</span>  <span class="token comment">// optimistic lock</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// CosmosException with StatusCode 412 → reload and retry</span>
+</code></pre><hr>
+<h2 id="transactional-batch--stored-procedures">Transactional Batch &amp; Stored Procedures </h2>
+<pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">// Transactional batch — all operations on the SAME partition key, atomic</span>
+<span class="token class-name">TransactionalBatch</span> batch <span class="token operator">=</span> container<span class="token punctuation">.</span><span class="token function">CreateTransactionalBatch</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">PartitionKey</span><span class="token punctuation">(</span>userId<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+batch<span class="token punctuation">.</span><span class="token function">CreateItem</span><span class="token punctuation">(</span>newProfile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+batch<span class="token punctuation">.</span><span class="token function">UpsertItem</span><span class="token punctuation">(</span>updatedStats<span class="token punctuation">)</span><span class="token punctuation">;</span>
+batch<span class="token punctuation">.</span><span class="token function">DeleteItem</span><span class="token punctuation">(</span>oldSessionId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">TransactionalBatchResponse</span> batchResp <span class="token operator">=</span> <span class="token keyword">await</span> batch<span class="token punctuation">.</span><span class="token function">ExecuteAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// All succeed or all fail — ACID within the partition</span>
+</code></pre><ul>
+<li>Stored procedures run server-side within a single logical partition — can do multi-document atomic operations.</li>
+<li>JavaScript UDFs for custom query functions.</li>
+<li>Limitation: no cross-partition transactions (use saga or change feed).</li>
+</ul>
+<hr>
+<h2 id="data-modeling-embed-vs-reference">Data Modeling: Embed vs Reference </h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Embed</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Access pattern</td>
+<td>Always read parent + child together</td>
+<td>Child accessed independently</td>
+</tr>
+<tr>
+<td>Update frequency</td>
+<td>Child rarely updated</td>
+<td>Child updated frequently</td>
+</tr>
+<tr>
+<td>Relationship cardinality</td>
+<td>One-to-few (&lt; ~20 children)</td>
+<td>One-to-many (unbounded)</td>
+</tr>
+<tr>
+<td>Item size</td>
+<td>Child collection stays &lt; 2 MB total</td>
+<td>No size concern</td>
+</tr>
+<tr>
+<td>Consistency</td>
+<td>Atomic within one document</td>
+<td>Eventual (two separate reads)</td>
+</tr>
+</tbody>
+</table>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token comment">// Embed: order with items (read together, bounded count)</span>
+<span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"order1"</span><span class="token punctuation">,</span>
+  <span class="token property">"userId"</span><span class="token operator">:</span> <span class="token string">"user1"</span><span class="token punctuation">,</span>
+  <span class="token property">"partitionKey"</span><span class="token operator">:</span> <span class="token string">"user1"</span><span class="token punctuation">,</span>
+  <span class="token property">"items"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> <span class="token property">"productId"</span><span class="token operator">:</span> <span class="token string">"p1"</span><span class="token punctuation">,</span> <span class="token property">"qty"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token property">"price"</span><span class="token operator">:</span> <span class="token number">9.99</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token property">"productId"</span><span class="token operator">:</span> <span class="token string">"p2"</span><span class="token punctuation">,</span> <span class="token property">"qty"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token property">"price"</span><span class="token operator">:</span> <span class="token number">4.99</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Reference: order references product (product accessed independently, frequently updated)</span>
+<span class="token punctuation">{</span>
+  <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"order1"</span><span class="token punctuation">,</span>
+  <span class="token property">"userId"</span><span class="token operator">:</span> <span class="token string">"user1"</span><span class="token punctuation">,</span>
+  <span class="token property">"partitionKey"</span><span class="token operator">:</span> <span class="token string">"user1"</span><span class="token punctuation">,</span>
+  <span class="token property">"lineItems"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> <span class="token property">"productId"</span><span class="token operator">:</span> <span class="token string">"p1"</span><span class="token punctuation">,</span> <span class="token property">"qty"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token property">"unitPriceAtOrderTime"</span><span class="token operator">:</span> <span class="token number">9.99</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// Product lives in a separate container, queried separately when needed</span>
+</code></pre><h3 id="denormalization--change-feed-sync">Denormalization + Change Feed Sync </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Order container → change feed → function → update OrderSummary in UserProfile container
+</code></pre><ul>
+<li>Denormalize <code>customerName</code>, <code>productName</code> into the document for single-read retrieval.</li>
+<li>When the source changes, use change feed to propagate updates to denormalized copies.</li>
+</ul>
+<hr>
+<h2 id="analytical-store--synapse-link">Analytical Store / Synapse Link </h2>
+<ul>
+<li>Cosmos DB Analytical Store: column-oriented copy of transactional data, auto-synced.</li>
+<li>Accessed via Azure Synapse Analytics (Spark or SQL Serverless) — no impact on OLTP RUs.</li>
+<li>Use for: BI reporting, ML feature extraction, ad-hoc analytics without affecting production.</li>
+<li>Enable per-container: <code>AnalyticalStoreTimeToLiveInSeconds = -1</code> (retain forever).</li>
+</ul>
+<hr>
+<h2 id="cost-optimization-checklist">Cost Optimization Checklist </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>✅ Right-size RU/s — monitor average consumed RU/s; target 60–70% utilization
+✅ Use autoscale for spiky workloads (billed at peak per hour)
+✅ Exclude non-queried paths from indexing — saves write RUs
+✅ Use point reads (by id + PK) instead of queries where possible (~1 RU vs 10+ RU)
+✅ Prefer single-partition queries — add PK filter to every query
+✅ Paginate large result sets with MaxItemCount — avoid loading 10K items per query
+✅ Use TTL for session/ephemeral data — auto-deletes without consuming RUs
+✅ Bulk mode for batch ingestion — reduces per-item RU cost ~30–40%
+✅ Share throughput at database level for dev/test containers
+✅ Analytical Store for reporting — doesn't consume OLTP RUs
+✅ Serverless for dev/test/low-traffic containers
+</code></pre><hr>
+<h2 id="cosmos-db-vs-azure-sql-vs-dynamodb-vs-mongodb">Cosmos DB vs Azure SQL vs DynamoDB vs MongoDB </h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Cosmos DB</th>
+<th>Azure SQL</th>
+<th>DynamoDB</th>
+<th>MongoDB Atlas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>Multi-model (document, key-value, graph, table API)</td>
+<td>Relational</td>
+<td>Key-value / document</td>
+<td>Document</td>
+</tr>
+<tr>
+<td>Global distribution</td>
+<td>Native (click to add region)</td>
+<td>Geo-replication / failover group</td>
+<td>Global Tables</td>
+<td>Atlas Global Clusters</td>
+</tr>
+<tr>
+<td>Consistency levels</td>
+<td>5 tunable levels</td>
+<td>Isolation levels (lock / MVCC)</td>
+<td>Eventual / strong per-read</td>
+<td>Causal sessions</td>
+</tr>
+<tr>
+<td>Partition key</td>
+<td>Mandatory; immutable</td>
+<td>Optional (table partitioning)</td>
+<td>Mandatory (PK+SK)</td>
+<td>Shard key (optional)</td>
+</tr>
+<tr>
+<td>Multi-document transactions</td>
+<td>Same partition only; batch API</td>
+<td>Full ACID</td>
+<td>Same partition</td>
+<td>Full ACID (replica set)</td>
+</tr>
+<tr>
+<td>Max item size</td>
+<td>2 MB</td>
+<td>Row size varies</td>
+<td>400 KB</td>
+<td>16 MB</td>
+</tr>
+<tr>
+<td>Pricing model</td>
+<td>RU/s + storage</td>
+<td>DTU / vCore + storage</td>
+<td>WCU/RCU + storage</td>
+<td>vCPU + storage</td>
+</tr>
+<tr>
+<td>Managed operational overhead</td>
+<td>Fully managed (SLA 99.999%)</td>
+<td>Fully managed</td>
+<td>Fully managed</td>
+<td>Fully managed</td>
+</tr>
+<tr>
+<td>Best fit</td>
+<td>Azure-native; globally distributed; flexible schema</td>
+<td>Complex queries; strong ACID</td>
+<td>AWS-native; predictable key access</td>
+<td>Flexible schema; rich queries</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="zero-downtime-migration-to-cosmos-db-playbook">Zero-Downtime Migration to Cosmos DB Playbook </h2>
+<p>This mirrors the reader's actual p99 4x improvement migration at Xbox scale.</p>
+<div class="mermaid">flowchart LR
+    A["Phase 1&lt;br/&gt;Dual Write&lt;br/&gt;(SQL + Cosmos)"] --&gt; B["Phase 2&lt;br/&gt;Backfill&lt;br/&gt;(historical data to Cosmos)"]
+    B --&gt; C["Phase 3&lt;br/&gt;Shadow Read&lt;br/&gt;(compare responses)"]
+    C --&gt; D["Phase 4&lt;br/&gt;Traffic Shift&lt;br/&gt;(feature flag %)"]
+    D --&gt; E["Phase 5&lt;br/&gt;Cutover&lt;br/&gt;(Cosmos primary)"]
+    E --&gt; F["Phase 6&lt;br/&gt;Rollback Plan&lt;br/&gt;(flip flag back)"]
+</div><h3 id="step-by-step">Step-by-Step </h3>
+<ol>
+<li>
+<p><strong>Design partition key</strong> — analyze query patterns; choose key that covers &gt; 90% of queries within a single partition. For player data: <code>playerId</code> (7M distinct values, even distribution, primary access pattern).</p>
+</li>
+<li>
+<p><strong>Create Cosmos container</strong> — enable change feed, set appropriate indexing policy (exclude large blob fields).</p>
+</li>
+<li>
+<p><strong>Dual-write phase</strong> — modify write path to write to both SQL (primary) and Cosmos (async, fire-and-forget with retry). Any Cosmos write failure logs to a dead-letter queue for replay. SQL remains the source of truth.</p>
+</li>
+<li>
+<p><strong>Backfill historical data</strong> — bulk-export from SQL, transform to document model, import via SDK with <code>AllowBulkExecution = true</code>. Monitor RU consumption; throttle to stay under provisioned RU/s.</p>
+</li>
+<li>
+<p><strong>Shadow reads</strong> — deploy shadow-read middleware: read from both sources, compare responses (ignoring expected field differences), log discrepancies. Target: 0 discrepancies at steady state.</p>
+</li>
+<li>
+<p><strong>Traffic shift</strong> — use feature flags (LaunchDarkly / custom <code>IConfiguration</code>) to route X% of reads to Cosmos. Start with 1% internal users, then 5%, 20%, 50%, 100% over days. Monitor p99, error rate, RU consumption.</p>
+</li>
+<li>
+<p><strong>Cosmos as primary</strong> — flip SQL reads to Cosmos. Stop dual-write to SQL (but keep SQL writes for rollback window of 1–2 weeks).</p>
+</li>
+<li>
+<p><strong>Rollback plan</strong> — feature flag flips back to SQL within seconds. Cosmos stays warm (writes still going there via change feed / CDC sync) for potential rollback period.</p>
+</li>
+<li>
+<p><strong>Decommission SQL path</strong> — after validation period, remove SQL write path. Archive SQL table.</p>
+</li>
+</ol>
+<h3 id="key-metrics-to-monitor">Key Metrics to Monitor </h3>
+<ul>
+<li>P99 read latency (target &lt; 50 ms from &lt; 200 ms)</li>
+<li>RU utilization (target &lt; 70% steady state)</li>
+<li>429 rate (target &lt; 0.1%)</li>
+<li>Change feed processor lag (target &lt; 1 s)</li>
+<li>Discrepancy count in shadow reads (target = 0)</li>
+</ul>
+<hr>
+<h2 id="interview-questions">Interview Questions </h2>
+<p><strong>Q1. What is the difference between a logical and physical partition in Cosmos DB?</strong><br>
+A: Logical partition = all items with the same partition key value; developer-visible; atomic transaction scope; max 20 GB / 10,000 RU/s. Physical partition = internal server group; hosts one or more logical partitions; Cosmos manages splitting transparently when physical partition grows or RU demand increases. Developers should think in logical partitions; Cosmos handles physical.</p>
+<p><strong>Q2. What happens when a single logical partition exceeds 20 GB?</strong><br>
+A: Cosmos returns a 413 (<code>RequestEntityTooLarge</code>) error — the partition is full. Items can no longer be inserted with that partition key. This is a hard limit. Prevention: choose a partition key with high cardinality and bounded growth per key. If a single entity genuinely grows &gt; 20 GB, use a synthetic key that spreads the entity across multiple logical partitions (e.g., append a time-bucket suffix).</p>
+<p><strong>Q3. Explain the five consistency levels and which you'd use as default.</strong><br>
+A: Strong (linearizable, 2× RU), Bounded Staleness (lag ≤ K ops / T sec, 2× RU), Session (read-your-writes per session, 1× RU), Consistent Prefix (ordered but stale, 1× RU), Eventual (any order, 1× RU). Default recommendation: <strong>Session</strong> — strong enough for most UX (user sees own writes), no extra RU cost, compatible with multi-region writes.</p>
+<p><strong>Q4. What is a cross-partition fan-out query and why is it expensive?</strong><br>
+A: A query without a partition key filter is routed to all physical partitions — each executes the query and returns partial results, which Cosmos aggregates. Cost multiplies by the number of physical partitions. At 5K RPS with 10 physical partitions, a fan-out query that costs 10 RU/partition costs 100 RU total per call. Fix: always include partition key in WHERE; redesign partition key to colocate query data.</p>
+<p><strong>Q5. How does autoscale differ from provisioned throughput? When would you use each?</strong><br>
+A: Provisioned: you set a fixed RU/s, billed regardless of actual usage — best for predictable steady-state load where you want cost predictability. Autoscale: you set a max RU/s; Cosmos scales from 10% of max to max dynamically — best for spiky or unpredictable load. Autoscale is billed at the highest RU/s reached per hour. For 5K RPS steady traffic: provisioned. For event-driven batch jobs: autoscale or serverless.</p>
+<p><strong>Q6. Describe how you'd use the change feed to build a materialized view.</strong><br>
+A: Source container: <code>Orders</code>. Target container: <code>OrderSummaryByUser</code>. Change feed processor reads each new/updated order and upserts a summary document (total spend, order count) into the target container. Processor is deployed as a hosted service with a lease container for distributed coordination. On startup, processor resumes from last processed position — no data loss on restart. Idempotency: use <code>order.id</code> as idempotency key; upsert is safe to reprocess.</p>
+<p><strong>Q7. How does Cosmos DB handle conflicts in multi-region write configurations?</strong><br>
+A: Two writes to different regions with the same item ID → conflict. Resolution options: (1) LWW (Last-Write-Wins) using <code>_ts</code> timestamp — whichever write has the higher timestamp wins. Risk: two writes within the same second could have equal <code>_ts</code>; configure a custom timestamp property with higher precision. (2) Custom merge procedure — server-side JS function receives both versions and produces a merged result. (3) Conflict feed — conflicts written to a separate feed for manual resolution.</p>
+<p><strong>Q8. What is the RU cost difference between a point read and a query on the same item?</strong><br>
+A: Point read (by <code>id</code> + partition key) = ~1 RU for a 1 KB item. Single-partition query (<code>SELECT * FROM c WHERE c.id = 'x'</code>) = ~2.5–5 RU minimum, even for one result — the query engine adds overhead. Use <code>container.ReadItemAsync</code> for known-ID lookups, not <code>GetItemQueryIterator</code>. At scale (5K RPS), the difference is 5K–20K extra RU/s.</p>
+<p><strong>Q9. How do you implement optimistic concurrency in Cosmos DB?</strong><br>
+A: Read the item — capture the <code>ETag</code> from the response. On replace/upsert, pass <code>IfMatchEtag = etag</code> in <code>ItemRequestOptions</code>. If the item was modified since the read, Cosmos returns HTTP 412 (<code>PreconditionFailed</code>) instead of overwriting. Application catches <code>CosmosException</code> with 412, reloads the item, re-applies the mutation, and retries. Same pattern as <code>rowversion</code> in SQL Server.</p>
+<p><strong>Q10. How does the transactional batch work and what are its limits?</strong><br>
+A: <code>TransactionalBatch</code> executes up to 100 operations atomically on items within the same logical partition (same partition key). Operations: create, read, upsert, replace, delete, patch. If any operation fails, all are rolled back. Limit: 100 operations, 2 MB total request size. Cross-partition batches are not supported — use saga for multi-partition atomic workflows.</p>
+<p><strong>Q11. You're seeing sustained 429 throttling at only 30% of provisioned RU/s. What's happening?</strong><br>
+A: Classic hot partition. Overall RU/s utilization is 30%, but a single logical partition is hitting its 10,000 RU/s limit. Diagnosis: <code>CosmosPartitionKeyRangeStatistics</code> metric in Azure Monitor → identify which PK value is hot. Fix: (1) If a specific user/entity is the hot key, redesign partition key (synthetic suffix, hierarchical PK). (2) Cache frequently read hot-partition documents in Redis to redirect RU pressure. (3) For hot-aggregate documents (view counts), use increment-friendly patterns (distributed counter / batch increment).</p>
+<p><strong>Q12. Walk me through your Cosmos DB migration. How did you achieve zero downtime?</strong><br>
+A: The Xbox Publisher platform migration involved 7M+ player records at 5K RPS. (1) Designed <code>playerId</code> as partition key — high cardinality, perfectly aligned with primary access pattern. (2) Dual-write: modified write service to write SQL (primary) + Cosmos (async) simultaneously. (3) Background backfill: exported SQL data via batched queries, imported to Cosmos with bulk execution. (4) Shadow reads: 100% of read traffic went to both SQL and Cosmos; compared responses; fixed 23 discrepancies from schema differences. (5) Gradual traffic shift via feature flags: 1% → 5% → 20% → 50% → 100% over 5 days, monitoring p99 and error rate. (6) Cosmos became primary after p99 dropped from 200 ms to 50 ms (4x). SQL writes continued for 2 weeks as rollback fallback. The key insight: the p99 improvement came from eliminating cross-partition fan-out queries that existed in the old design.</p>
+<p><strong>Q13. What is the Cosmos DB analytical store and how does Synapse Link work?</strong><br>
+A: Analytical store is a column-oriented replica of the transactional container, auto-synced from the row store. Synapse Link connects it to Azure Synapse Analytics — queries via Spark or SQL Serverless read from the analytical store directly, consuming zero OLTP RUs. Enables HTAP (hybrid transactional/analytical processing). Typical latency from write to analytical store availability: ~2 minutes. Use for BI dashboards, ML feature generation, audit reporting.</p>
+<p><strong>Q14. What session token is in Cosmos DB and how do you use it for consistency?</strong><br>
+A: Session consistency guarantees read-your-writes within a session. The session token is an opaque string returned in every response. Pass it in subsequent request options (<code>SessionToken = lastToken</code>) to tell Cosmos "I need to see at least this version." In practice, the SDK manages session tokens automatically within a client instance. For distributed systems where different service instances serve the same user, pass the session token via HTTP headers or store it in a short-lived cache keyed by userId.</p>
+<hr>
+<h2 id="quick-recap">Quick Recap </h2>
+<ul>
+<li>Resource hierarchy: Account → Database → Container → Logical Partition (max 20 GB / 10K RU/s) → Item (max 2 MB).</li>
+<li>Partition key: high cardinality, even RU distribution, immutable, aligned with query access pattern.</li>
+<li>Hot partition = one PK value consuming &gt; 10K RU/s → 429. Fix with synthetic key or hierarchical PK.</li>
+<li>RU costs: point read ≈ 1 RU; single-partition query ≈ 2.5–50+ RU; cross-partition query × N partitions.</li>
+<li>Consistency default: <strong>Session</strong> — read-your-writes, 1× RU cost, works with multi-region write.</li>
+<li>Strong consistency: 2× RU, linearizable, single-region write only.</li>
+<li>Change feed: ordered insert/update log per partition; use for materialized views, search sync, event pipelines.</li>
+<li>Autoscale: use for spiky load (scales 10×); provisioned for steady-state cost predictability.</li>
+<li>Zero-downtime migration: dual-write → backfill → shadow-read → feature-flag traffic shift → cutover → rollback window.</li>
+<li>ETag + <code>IfMatchEtag</code> = optimistic concurrency; 412 = conflict; reload + retry.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

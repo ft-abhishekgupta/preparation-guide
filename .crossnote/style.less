@@ -1,0 +1,712 @@
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Kalam:wght@300;400;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap");
+
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+
+.markdown-preview.markdown-preview {
+  // modify your style here
+  // eg: background-color: blue;
+
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+
+  /*====================================================
+  Color Palette
+=====================================================*/
+
+  & {
+    --bg: #0f111a;
+    --bg2: #1a1d2b;
+    --bg3: #24283b;
+
+    --text: #d7dae0;
+    --muted: #9ca3af;
+
+    --blue: #7aa2f7;
+    --cyan: #7dcfff;
+    --green: #9ece6a;
+    --yellow: #e0af68;
+    --orange: #ff9e64;
+    --red: #f7768e;
+    --purple: #bb9af7;
+    --pink: #ff79c6;
+
+    --border: #30364d;
+  }
+
+  /*====================================================
+  Main
+=====================================================*/
+
+  & {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Kalam", cursive;
+    line-height: 1.65;
+    font-size: 18px;
+
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 28px clamp(24px, 5vw, 72px);
+  }
+
+  /*====================================================
+  Headings
+=====================================================*/
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Caveat", "Kalam", cursive;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin: 0.15em 0 0.05em;
+    padding-top: 0;
+    padding-bottom: 4px;
+  }
+
+  h1 {
+    color: var(--blue);
+    font-size: 2.5em;
+  }
+
+  h2 {
+    color: var(--purple);
+    font-size: 2em;
+  }
+
+  h3 {
+    color: var(--green);
+    font-size: 1.65em;
+  }
+
+  h4 {
+    color: var(--yellow);
+    font-size: 1.35em;
+  }
+
+  h5 {
+    color: var(--orange);
+    font-size: 1.15em;
+  }
+
+  h6 {
+    color: var(--red);
+  }
+
+  /*====================================================
+  Text
+=====================================================*/
+
+  strong {
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  em {
+    color: var(--cyan);
+  }
+
+  del {
+    color: #777;
+  }
+
+  /*====================================================
+  Links
+=====================================================*/
+
+  a {
+    color: var(--cyan);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--pink);
+  }
+
+  /*====================================================
+  Lists
+=====================================================*/
+
+  li::marker {
+    color: var(--orange);
+  }
+
+  ul li {
+    margin: 4px 0;
+  }
+
+  /*====================================================
+  Blockquotes
+=====================================================*/
+
+  blockquote {
+    background: linear-gradient(
+      90deg,
+      rgba(122, 162, 247, 0.15),
+      rgba(187, 154, 247, 0.08)
+    );
+
+    border-left: 6px solid var(--blue);
+
+    padding: 3px 6px;
+
+    border-radius: 8px;
+
+    font-family: "Kalam", cursive;
+    font-size: 1.05em;
+
+    color: #dce6ff;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  }
+
+  blockquote p {
+    margin: 2px 0;
+  }
+
+  /*====================================================
+  Inline Code
+=====================================================*/
+
+  code {
+    font-family: "JetBrains Mono", monospace;
+
+    background: #20242f;
+
+    color: #c3e88d;
+
+    padding: 3px 8px;
+
+    border-radius: 8px;
+
+    border: 1px solid #3b4252;
+  }
+
+  /*====================================================
+  Code Blocks
+=====================================================*/
+
+  pre {
+    background: #1b1f27 !important;
+
+    color: #ffffff !important;
+
+    border-radius: 16px;
+
+    border: 1px solid #607d8b;
+
+    padding: 14px 16px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+
+    overflow-x: auto;
+  }
+
+  pre code {
+    display: block;
+
+    background: transparent !important;
+
+    border: none;
+
+    padding: 0;
+
+    color: #ffffff !important;
+
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    tab-size: 4;
+  }
+
+  pre code.hljs {
+    background: transparent !important;
+  }
+
+  pre code .hljs-comment,
+  pre code .hljs-quote,
+  pre code .token.comment,
+  pre code .token.prolog,
+  pre code .token.doctype {
+    color: #b0bec5 !important;
+    font-style: italic;
+  }
+
+  pre code .hljs-keyword,
+  pre code .hljs-selector-tag,
+  pre code .hljs-literal,
+  pre code .hljs-meta,
+  pre code .token.keyword,
+  pre code .token.boolean,
+  pre code .token.constant {
+    color: #d9a7ff !important;
+  }
+
+  pre code .hljs-string,
+  pre code .hljs-doctag,
+  pre code .hljs-regexp,
+  pre code .token.string,
+  pre code .token.char,
+  pre code .token.regex {
+    color: #c3e88d !important;
+  }
+
+  pre code .hljs-number,
+  pre code .hljs-symbol,
+  pre code .hljs-bullet,
+  pre code .token.number,
+  pre code .token.symbol {
+    color: #ffab91 !important;
+  }
+
+  pre code .hljs-title,
+  pre code .hljs-section,
+  pre code .hljs-function .hljs-title,
+  pre code .token.function,
+  pre code .token.method {
+    color: #82b1ff !important;
+  }
+
+  pre code .hljs-variable,
+  pre code .hljs-template-variable,
+  pre code .hljs-attr,
+  pre code .hljs-attribute,
+  pre code .token.property,
+  pre code .token.attr-name {
+    color: #ffe082 !important;
+  }
+
+  pre code .hljs-built_in,
+  pre code .hljs-class .hljs-title,
+  pre code .hljs-name,
+  pre code .hljs-type,
+  pre code .token.class-name,
+  pre code .token.builtin,
+  pre code .token.namespace {
+    color: #80d8ff !important;
+  }
+
+  pre code .hljs-params,
+  pre code .hljs-subst,
+  pre code .token.parameter {
+    color: #ffffff !important;
+  }
+
+  pre code .hljs-addition,
+  pre code .token.inserted {
+    color: #c3e88d !important;
+  }
+
+  pre code .hljs-deletion,
+  pre code .token.deleted {
+    color: #ff8a80 !important;
+  }
+
+  pre code .hljs-punctuation,
+  pre code .hljs-operator,
+  pre code .token.punctuation,
+  pre code .token.operator {
+    color: #84ffff !important;
+    opacity: 1 !important;
+  }
+
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+
+  hr {
+    border: none;
+
+    height: 1px;
+
+    background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+
+    margin: 16px 0;
+  }
+
+  /*====================================================
+  Tables
+=====================================================*/
+
+  table {
+    display: table;
+
+    width: auto;
+
+    max-width: 100%;
+
+    table-layout: auto;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    border: 1px solid var(--border);
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    margin: 16px 0;
+  }
+
+  th {
+    background: linear-gradient(90deg, #3b4261, #2b3050);
+
+    color: var(--yellow);
+
+    padding: 9px 12px;
+  }
+
+  th + th {
+    border-left: 1px solid var(--border);
+  }
+
+  td {
+    background: #171b28;
+
+    padding: 8px 12px;
+
+    border-top: 1px solid var(--border);
+  }
+
+  td + td {
+    border-left: 1px solid var(--border);
+  }
+
+  tr:nth-child(even) td {
+    background: #1b2132;
+  }
+
+  /*====================================================
+  Images
+=====================================================*/
+
+  img {
+    border-radius: 16px;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+
+    border: 2px solid var(--border);
+
+    margin: 14px auto 14px 0;
+
+    display: block;
+  }
+
+  /*====================================================
+  Task Lists
+=====================================================*/
+
+  input[type="checkbox"] {
+    transform: scale(1.4);
+
+    accent-color: var(--green);
+
+    margin-right: 10px;
+  }
+
+  /*====================================================
+  Selection
+=====================================================*/
+
+  ::selection {
+    background: var(--purple);
+
+    color: white;
+  }
+
+  /*====================================================
+  Scrollbar
+=====================================================*/
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #12151f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--blue), var(--purple));
+
+    border-radius: 20px;
+  }
+
+  /*====================================================
+  Mermaid
+=====================================================*/
+
+  .mermaid {
+    background: #1b2030;
+
+    padding: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  .mermaid svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .mermaid .edgePath path,
+  .mermaid .flowchart-link,
+  .mermaid .messageLine0,
+  .mermaid .messageLine1,
+  .mermaid .relationshipLine {
+    stroke: var(--cyan) !important;
+    stroke-width: 2px !important;
+  }
+
+  .mermaid marker path,
+  .mermaid .arrowheadPath {
+    fill: var(--cyan) !important;
+    stroke: var(--cyan) !important;
+  }
+
+  .mermaid .edgeLabel,
+  .mermaid .edgeLabel p,
+  .mermaid .edgeLabel span,
+  .mermaid .edgeLabel text,
+  .mermaid .edgeLabel tspan,
+  .mermaid .labelText,
+  .mermaid .messageText,
+  .mermaid .loopText,
+  .mermaid .relationshipLabel {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+  }
+
+  .mermaid .edgeLabel,
+  .mermaid .labelBkg {
+    background-color: #111827 !important;
+    fill: #111827 !important;
+  }
+
+  .mermaid .edgeLabel rect,
+  .mermaid .label-container {
+    background: #111827 !important;
+    fill: #111827 !important;
+    opacity: 1 !important;
+  }
+
+  .mermaid .edgeLabel p,
+  .mermaid .edgeLabel span,
+  .mermaid .edgeLabel div {
+    margin: 0 !important;
+    padding: 0 4px !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    line-height: 1.15 !important;
+    overflow: visible !important;
+  }
+
+  .mermaid foreignObject,
+  .mermaid .edgeLabel {
+    overflow: visible !important;
+  }
+
+  .mermaid .nodeLabel,
+  .mermaid .nodeLabel p,
+  .mermaid .nodeLabel span,
+  .mermaid .label text,
+  .mermaid .label tspan,
+  .mermaid text,
+  .mermaid tspan {
+    color: #f8fafc !important;
+    fill: #f8fafc !important;
+    opacity: 1 !important;
+  }
+
+  .mermaid .edgeLabel text,
+  .mermaid .edgeLabel tspan,
+  .mermaid .edgeLabel .label,
+  .mermaid .edgeLabel .label * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+  }
+
+  .mermaid rect.actor,
+  .mermaid .actor-box {
+    fill: #111827 !important;
+    stroke: var(--purple) !important;
+    stroke-width: 2px !important;
+  }
+
+  .mermaid text.actor,
+  .mermaid text.actor tspan,
+  .mermaid .actor text,
+  .mermaid .actor text tspan {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+  }
+
+  .mermaid .actor-line {
+    stroke: var(--purple) !important;
+    stroke-width: 1.5px !important;
+  }
+
+  .mermaid .node rect,
+  .mermaid .node polygon,
+  .mermaid .node .label-container {
+    fill: #111827 !important;
+    stroke: var(--purple) !important;
+    stroke-width: 2px !important;
+  }
+
+  .mermaid .node line {
+    stroke: var(--purple) !important;
+    stroke-width: 1.5px !important;
+  }
+
+  .mermaid .node text,
+  .mermaid .node tspan,
+  .mermaid .node .label,
+  .mermaid .node .label p,
+  .mermaid .node .label span,
+  .mermaid .node .label div {
+    fill: #f8fafc !important;
+    color: #f8fafc !important;
+  }
+
+  .mermaid .classGroup rect,
+  .mermaid .classLabel .box {
+    fill: #111827 !important;
+    stroke: var(--purple) !important;
+    stroke-width: 2px !important;
+  }
+
+  .mermaid .classGroup line {
+    stroke: var(--purple) !important;
+    stroke-width: 1.5px !important;
+  }
+
+  .mermaid .classGroup text,
+  .mermaid .classGroup tspan,
+  .mermaid .classLabel text,
+  .mermaid .classLabel tspan {
+    fill: #111827 !important;
+    color: #111827 !important;
+    opacity: 1 !important;
+  }
+
+  .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+  .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+  .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+  .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+  .mermaid svg[aria-roledescription*="class" i] text,
+  .mermaid svg[aria-roledescription*="class" i] tspan {
+    fill: #111827 !important;
+    color: #111827 !important;
+    opacity: 1 !important;
+  }
+
+  .mermaid .activation0,
+  .mermaid .activation1,
+  .mermaid .activation2 {
+    fill: #263238 !important;
+    stroke: var(--cyan) !important;
+  }
+
+  .mermaid .note {
+    fill: #263238 !important;
+    stroke: var(--yellow) !important;
+  }
+
+  .mermaid .noteText,
+  .mermaid .noteText tspan,
+  .mermaid .sequenceNumber {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+  }
+
+  .mermaid .loopLine,
+  .mermaid .labelBox {
+    fill: #1b2030 !important;
+    stroke: var(--purple) !important;
+  }
+
+  /*====================================================
+  Math
+=====================================================*/
+
+  .katex-display {
+    background: #181c28;
+
+    border-radius: 8px;
+
+    padding: 14px;
+  }
+
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+
+  p {
+    margin: 10px 0;
+  }
+}
+
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
