@@ -278,7 +278,9 @@ def render(page: Page, sections: list[Section], order: list[Page], known: set[st
     if removed:
         print(f"  unlinked {removed} dead link(s) in {page.rel}")
 
-    title = html.escape(f"{page.title} · {SITE_NAME}")
+    heading = page.title
+    full_title = heading if SITE_NAME.lower() in heading.lower() else f"{heading} · {SITE_NAME}"
+    title = html.escape(full_title)
     if TITLE_RE.search(source):
         source = TITLE_RE.sub(f"<title>{title}</title>", source, count=1)
     else:
