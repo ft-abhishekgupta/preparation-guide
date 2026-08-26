@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>01-LLM-Fundamentals</title>
+      <title>LLM Fundamentals · Interview Prep Notebook</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -653,9 +653,83 @@ Markdown Preview Enhanced index / sidebar
     // your code here
   });
 </script>
-    </head>
+<!-- site-chrome:start -->
+<style>
+  .site-bar, .site-footer {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --site-fg: #d7dae0;
+    --site-muted: #9ca3af;
+    --site-link: #7dcfff;
+    --site-hover: #ff79c6;
+    --site-border: #30364d;
+  }
+  .site-bar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    margin: 0; padding: 10px clamp(16px, 4vw, 40px);
+    background: #1a1d2b; color: var(--site-fg);
+    border-bottom: 1px solid var(--site-border);
+    font-size: 14px; line-height: 1.4;
+  }
+  .site-bar a { color: var(--site-fg); text-decoration: none; }
+  .site-bar a:hover { color: var(--site-hover); }
+  .site-bar__brand { font-weight: 600; color: #7aa2f7 !important; }
+  .site-bar__crumb { color: var(--site-muted); }
+  .site-bar__crumb a { color: var(--site-link) !important; }
+  .site-bar__spacer { margin-left: auto; color: var(--site-muted) !important; }
+  .site-menu { position: relative; }
+  .site-menu > summary {
+    cursor: pointer; list-style: none; padding: 3px 12px; border-radius: 6px;
+    border: 1px solid var(--site-border); background: #24283b; user-select: none;
+  }
+  .site-menu > summary::-webkit-details-marker { display: none; }
+  .site-menu > summary::after { content: " \25be"; }
+  .site-menu[open] > summary { border-color: var(--site-link); }
+  .site-menu ul {
+    position: absolute; left: 0; top: calc(100% + 8px); margin: 0; padding: 6px;
+    min-width: 340px; max-height: 72vh; overflow: auto; list-style: none;
+    background: #171a26; border: 1px solid var(--site-border); border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.55);
+  }
+  .site-menu li { margin: 0; }
+  .site-menu li a { display: block; padding: 6px 10px; border-radius: 6px; color: #b9c7e8 !important; }
+  .site-menu li a:hover { background: #24283b; color: var(--site-link) !important; }
+  .site-menu li a[aria-current="true"] { background: #24283b; color: var(--site-link) !important; font-weight: 600; }
+  html body[for=html-export]:not([data-presentation-mode]) .crossnote.markdown-preview {
+    min-height: 0;
+  }
+  .site-footer {
+    background: #151824; border-top: 1px solid var(--site-border);
+    color: var(--site-muted); font-size: 14px; line-height: 1.5;
+    padding: 20px clamp(16px, 4vw, 40px) 28px;
+  }
+  .site-footer__nav {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .site-footer a { color: var(--site-link); text-decoration: none; }
+  .site-footer a:hover { color: var(--site-hover); }
+  .site-footer__meta { max-width: 1100px; margin: 16px auto 0; }
+  @media print { .site-bar, .site-footer { display: none; } }
+</style>
+<!-- site-chrome:end -->
+</head>
     <body for="html-export">
-      <div class="crossnote markdown-preview  ">
+<!-- site-chrome:start -->
+<header class="site-bar">
+  <a class="site-bar__brand" href="../index.html">Interview Prep Notebook</a>
+  <details class="site-menu">
+    <summary>Sections</summary>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../01-DSA/00-README.html">Data Structures and Algorithms</a></li><li><a href="../02-CSharp-DotNet/00-README.html">C# and .NET Deep Dive</a></li><li><a href="../03-AspNet-Core/00-README.html">ASP.NET Core</a></li><li><a href="../04-Databases/00-README.html">Databases</a></li><li><a href="../05-System-Design-HLD/00-README.html">System Design — High Level Design</a></li><li><a href="../06-System-Design-Case-Studies/00-README.html">System Design Case Studies</a></li><li><a href="../07-LLD-and-Design-Patterns/00-README.html">Low Level Design and Design Patterns</a></li><li><a href="../08-Caching/00-README.html">Caching</a></li><li><a href="../09-Security/00-README.html">Security</a></li><li><a href="../10-OS-Networking-Concurrency/00-README.html">OS, Networking and Concurrency</a></li><li><a href="../11-Cloud-DevOps-Azure/00-README.html">Cloud and DevOps — Azure</a></li><li><a href="../12-Testing-and-Debugging/00-README.html">Testing and Debugging</a></li><li><a href="../13-Engineering-Fundamentals-and-Git/00-README.html">Engineering Fundamentals and Git</a></li><li><a href="../14-Frontend-React/00-README.html">Frontend — React</a></li><li><a href="../15-AI-Engineering/00-README.html" aria-current="true">AI Engineering</a></li><li><a href="../16-Behavioral-and-Leadership/00-README.html">Behavioral and Leadership</a></li><li><a href="../17-Resume-Deep-Dive/00-README.html">Resume Deep-Dive</a></li><li><a href="../18-Interview-Formats-and-Study-Plan/00-README.html">Interview Formats and Study Plan</a></li><li><a href="../99-Cheatsheets/00-README.html">Cheatsheets</a></li>
+    </ul>
+  </details>
+  <span class="site-bar__crumb"><a href="../15-AI-Engineering/00-README.html">AI Engineering</a> / LLM Fundamentals</span>
+  <a class="site-bar__spacer" href="https://github.com/ft-abhishekgupta/preparation-guide">GitHub repo</a>
+</header>
+<!-- site-chrome:end -->
+<div class="crossnote markdown-preview  ">
       
 <h1 id="1-llm-fundamentals">1. LLM Fundamentals </h1>
 <blockquote>
@@ -1138,8 +1212,25 @@ if (typeof(window['Reveal']) !== 'undefined') {
   })
 }
 </script>
-    
-    
-    
-  
-    </body></html>
+<!-- site-chrome:start -->
+<footer class="site-footer">
+  <div class="site-footer__nav"><a href="../15-AI-Engineering/00-README.html">&larr; AI Engineering</a><a href="../15-AI-Engineering/00-README.html">AI Engineering</a><a href="../15-AI-Engineering/02-Embeddings-Vector-Search-and-RAG.html">Embeddings, Vector Search and RAG &rarr;</a></div>
+  <p class="site-footer__meta">
+    Interview Prep Notebook &middot; <a href="https://github.com/ft-abhishekgupta/preparation-guide">source on GitHub</a>
+  </p>
+</footer>
+<script>
+  (function () {
+    function closeMenus(event) {
+      document.querySelectorAll("details.site-menu[open]").forEach(function (menu) {
+        if (!event || !menu.contains(event.target)) menu.removeAttribute("open");
+      });
+    }
+    document.addEventListener("click", closeMenus);
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeMenus(null);
+    });
+  })();
+</script>
+<!-- site-chrome:end -->
+</body></html>
