@@ -1,0 +1,14 @@
+{
+  "name": "preparation-notes-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Exports every Markdown note in the repository to HTML and refreshes index.html.",
+  "scripts": {
+    "export": "node export-html.cjs",
+    "export:no-index": "node export-html.cjs --skip-index"
+  },
+  "dependencies": {
+    "crossnote": "0.9.32",
+    "less": "4.9.0"
+  }
+}

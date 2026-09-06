@@ -1,0 +1,1626 @@
+<!DOCTYPE html><html><head>
+      <title>StandardProblems</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="color-scheme" content="light dark">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}@media (prefers-color-scheme: dark) {
+code[class*=language-],pre[class*=language-]{color:#c9d1d9;text-shadow:none;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::mozselection,code[class*=language-]::selection,pre[class*=language-]::mozselection,pre[class*=language-]::selection{text-shadow:none;background:#234879}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;background:#161b22}:not(pre)>code[class*=language-]{padding:.1em .3em;border-radius:.3em;color:#c9d1d9;background:#343942}pre[data-line]{position:relative}pre[class*=language-]>code[class*=language-]{position:relative;z-index:1}.line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:#2f2a1e;box-shadow:inset 5px 0 0 #674c16;z-index:0;pointer-events:none;line-height:inherit;white-space:pre}.namespace{opacity:.7}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8b949e}.token.punctuation{color:#c9d1d9}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#79c0ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a5d6ff}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#a5d6ff}.token.atrule,.token.attr-value,.token.keyword{color:#f97583}.token.function{color:#d2a8ff}.token.important,.token.regex,.token.variable{color:#79b8ff}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+}
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}@media (prefers-color-scheme: dark) {
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#ccc;background-color:#24292e;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#fff}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#a3a3a3}html body strong{color:#fff}html body del{color:#a3a3a3}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#a3a3a3;background-color:#363d45;border-left:4px solid #48525c}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#48525c;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#fff}html body table td,html body table th{border:1px solid #48525c;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#fff;background-color:#363d45;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#48525c;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#fff;border:1px solid #48525c;border-bottom:2px solid #3a424b;padding:2px 4px;background-color:#363d45;border-radius:3px}@media print{html body{background-color:#24292e}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#fff;page-break-after:avoid}html body blockquote{color:#a3a3a3}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}
+}
+.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h2 id="arrays">Arrays </h2>
+<h3 id="maximum-subarray-sum">Maximum Subarray Sum </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Iterate and calculate the running sum
+Reset whenever running sum &lt; current element
+</code></pre><h3 id="best-time-to-buy-and-sell-one-stock">Best time to buy and sell one stock </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Reverse iterate and calculate the max of (suffix max - current element)
+</code></pre><h3 id="majority-element---element-occuring-more-than-n2">Majority Element - Element occuring more than n/2 </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>candidate = null
+count = 0
+
+for each num:
+    if count == 0:
+        candidate = num
+
+    if num == candidate:
+        count++
+    else:
+        count--
+return candidate
+</code></pre><h3 id="product-of-array-except-self">Product of Array Except Self </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code> for the prefix and suffix arrays</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create prefix product and suffix product array
+Iterate and calculate prefix into suffix
+</code></pre><h3 id="max-product-subarray">Max Product Subarray </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Calculate prefix and suffix product. Reset to 1 whenever 0 encountered
+Calculate max
+</code></pre><h3 id="find-all-duplicates-in-array-of-1-to-n">Find all duplicates in array of 1 to n </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code> excluding the result</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Negate the index of element, if again negative found, mark duplicate
+</code></pre><h3 id="find-duplicate-number-in-o1-space">Find duplicate number in O(1) space </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Floyd Cycle Detection - Element Value Pointing to Index
+slow = nums[slow]
+fast = nums[nums[fast]]
+</code></pre><h3 id="sort-colors--dutch-national-flag---3-way-partition">Sort Colors / Dutch National Flag - 3 Way Partition </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>lo = 0, mid = 0, hi = A.Length - 1;
+while (mid &lt;= hi)
+    if (A[mid] == 0)      { Swap(A, lo++, mid++); }
+    else if (A[mid] == 1) { mid++; }
+    else                  { Swap(A, mid, hi--); }
+</code></pre><h3 id="rotate-array-by-k">Rotate Array by k </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>k %= A.Length;
+Reverse whole array;
+Reverse till k - 1
+Reverse from k to end
+</code></pre><h3 id="next-permutation">Next Permutation </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Start from end, find index position where num[i] &lt; num[i+1]
+Find rightmost element greater than index, swap
+Reverse index+1 to end
+</code></pre><h3 id="spiral-matrix">Spiral Matrix </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(1)</code> excluding the result</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Keep top, left, bottom, right limits
+while top &lt;= bottom and left &lt;= right
+    j: left to right, top++
+    i: top to bottom, right--
+    if top &lt;= bottom
+        j: right to left, bottom--
+    if left &lt;= right
+        i: bottom to top, left++
+</code></pre><h3 id="set-matrix-row-col-0-if-any-cell-0">Set matrix row col 0 if any cell 0 </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Mark 1st row and 1st column with 0
+</code></pre><h3 id="rotate-2d-array-by-90-degree-right">Rotate 2D Array by 90 degree right </h3>
+<p><strong>Time:</strong> <code>O(n^2)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>for i in 0 to len
+    for j in i to len
+        swap arr[i][j], arr[j][i]
+reverse each row
+</code></pre><h2 id="strings">Strings </h2>
+<h3 id="longest-common-prefix-in-all-strings">Longest common prefix in all strings </h3>
+<p><strong>Time:</strong> <code>O(C)</code> | <strong>Space:</strong> <code>O(1)</code> excluding the result, where <code>C</code> is the total number of characters examined</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Scan vertically for each position
+</code></pre><h3 id="encode-and-decode-list-of-strings">Encode and Decode List of Strings </h3>
+<p><strong>Time:</strong> <code>O(C)</code> | <strong>Space:</strong> <code>O(C)</code> for the encoded or decoded result, where <code>C</code> is the total character count</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Convert to (Length + "#" + String)
+</code></pre><h2 id="hashing">Hashing </h2>
+<h3 id="check-array-contains-duplicate">Check array contains duplicate </h3>
+<p><strong>Time:</strong> <code>O(n)</code> average | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Iterate and put elements in hashset
+</code></pre><h3 id="check-2-strings-anagram">Check 2 strings anagram </h3>
+<p><strong>Time:</strong> <code>O(n + m)</code> | <strong>Space:</strong> <code>O(k)</code>, where <code>k</code> is the character-set size</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create frequency map and check both equal
+</code></pre><h3 id="two-sum">Two Sum </h3>
+<p><strong>Time:</strong> <code>O(n)</code> average | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Put elements in hashset, check Target-num[i] in hashset
+</code></pre><h3 id="group-anagrams">Group anagrams </h3>
+<p><strong>Time:</strong> <code>O(n * k log k)</code> | <strong>Space:</strong> <code>O(n * k)</code>, where <code>k</code> is the maximum string length</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create map of string, list
+Put sorted string as key, and add all belonging string to that list
+</code></pre><h3 id="subarray-sum-equal-k">Subarray Sum Equal K </h3>
+<p><strong>Time:</strong> <code>O(n)</code> average | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Iterate and keep count of prefix sum
+Count all prefixSumCount(currentSum - k)
+
+prefixCount[0] = 1
+foreach int n in nums
+    sum += n
+    count += prefixCount[sum-k]
+    prefixCount[sum]++
+</code></pre><h3 id="longest-consecutive-sequence-in-array">Longest consecutive sequence in array </h3>
+<p><strong>Time:</strong> <code>O(n)</code> average | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Put all elements in hashset
+Iterate
+    if element-1 not in hashset then then start counting from this element and calculate max
+</code></pre><h3 id="three-sum">Three Sum </h3>
+<p><strong>Time:</strong> <code>O(n^2)</code> | <strong>Space:</strong> <code>O(n)</code> with a hash-based Two Sum, excluding the result</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Iterate over array and fix one element
+    Then run 2 sum on remaining array
+</code></pre><h2 id="2-pointers">2 Pointers </h2>
+<h3 id="is-palindrome">Is Palindrome </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create 2 pointers, 0 and len-1
+While pointers not equal
+    skip non alpha characters
+    if char at l and r equal then continue else return false
+</code></pre><h3 id="remove-duplicates-from-sorted-array">Remove duplicates from sorted array </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Slow and Fast Pointer at 0, replace fast elements with slow, skip duplicates
+Same technique can be used to move 0s to end
+</code></pre><h3 id="two-sum-on-sorted-array">Two sum on sorted array </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Two pointer at 0, len-1
+Move the pointer to move closer to target
+</code></pre><h3 id="container-with-most-water">Container with most water </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create 2 pointers, 0 and len-1
+While (l&lt;r)
+    Calculate area and max
+    Step the smaller length
+</code></pre><h3 id="trapping-rain-water">Trapping Rain Water </h3>
+<p><strong>Two pointers:</strong> Time <code>O(n)</code>, Space <code>O(1)</code> | <strong>Prefix/suffix arrays:</strong> Time <code>O(n)</code>, Space <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>2 Pointers at 0, len-1
+Running prefix and suffix max, Calculate outside max water from current height
+Advance lower height, water = max - current height
+
+while l &lt; r
+    if h[l] &lt; h[r]
+        maxL = Max(maxL, h[l])
+        water += maxL - h[l++]
+    else
+        maxR = Max(maxR, h[r])
+        water += maxR - h[r--]
+
+or
+Create prefixMax and suffixMax array
+Calculate water at each index: water += min(pMax[i],sMax[i]) - h[i]
+</code></pre><h3 id="palindromic-substrings---number-of-palindromic-substring">Palindromic Substrings - Number of Palindromic Substring </h3>
+<p><strong>Expand centers:</strong> Time <code>O(n^2)</code>, Space <code>O(1)</code> | <strong>DP:</strong> Time <code>O(n^2)</code>, Space <code>O(n^2)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Expand around each character as center using 2 pointers
+2 Cases - Odd Length, Even Length
+
+OR
+dp[][]
+</code></pre><h2 id="sliding-window">Sliding Window </h2>
+<h3 id="longest-substring-without-repeating-character">Longest substring without repeating character </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(k)</code>, where <code>k</code> is the character-set size</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Sliding window with variable width. Keep characters in hashset
+
+Optimized - Keep last occurrence, and skip to last occurrence
+</code></pre><h3 id="longest-substring-with-same-character-if-replacement-of-k-characters-possible">Longest substring with same character if replacement of k characters possible </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(k)</code>, where <code>k</code> is the character-set size</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create 2 pointers at 0
+Valid window condition = window size - max frequent character &lt;= k
+</code></pre><h3 id="minimum-window--substring-containing-all-character-of-t">Minimum window / substring containing all character of t </h3>
+<p><strong>Time:</strong> <code>O(|s| + |t|)</code> | <strong>Space:</strong> <code>O(k)</code>, where <code>k</code> is the character-set size</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Keep map of needed string and map of window
+Keep track of formed and required distinct characters to optimize map equality
+Sliding window technique
+</code></pre><h3 id="count-of-subarray-with-products-less-than-k-given-elements--1">Count of subarray with products less than k given elements &gt;= 1 </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Expand window till product k, calculate count of array starting at l
+</code></pre><pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token class-name"><span class="token keyword keyword-int">int</span></span> len <span class="token operator">=</span> nums<span class="token punctuation">.</span>Length<span class="token punctuation">;</span>
+<span class="token class-name"><span class="token keyword keyword-int">int</span></span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token keyword keyword-int">int</span></span> curr <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token keyword keyword-int">int</span></span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-while">while</span><span class="token punctuation">(</span>l <span class="token operator">&lt;</span> len <span class="token operator">&amp;&amp;</span> r <span class="token operator">&lt;</span> len<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    curr <span class="token operator">*=</span> nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-while">while</span><span class="token punctuation">(</span>curr <span class="token operator">&gt;=</span> k <span class="token operator">&amp;&amp;</span> l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        curr <span class="token operator">/=</span> nums<span class="token punctuation">[</span>l<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    count <span class="token operator">+=</span> <span class="token punctuation">(</span>curr <span class="token operator">&lt;</span> k<span class="token punctuation">)</span> <span class="token punctuation">?</span> r<span class="token operator">-</span>l<span class="token operator">+</span><span class="token number">1</span> <span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    r<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword keyword-return">return</span> count<span class="token punctuation">;</span>
+</code></pre><h2 id="stack-and-queue">Stack and Queue </h2>
+<h3 id="valid-paranthesis">Valid Paranthesis </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>If opening bracket, push closing bracket to stack
+If closing bracket, match and pop
+Stack should be empty at the end
+</code></pre><h3 id="evaluate-postfix">Evaluate Postfix </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Push operand to stack
+Pop 2 when operation, then push ans
+</code></pre><h3 id="min-stack">Min Stack </h3>
+<p><strong>Time:</strong> <code>O(1)</code> per operation | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create 2 stack, one for element and one for min seen till now.
+Push and Pop together
+</code></pre><h3 id="queue-with-2-stack">Queue with 2 Stack </h3>
+<p><strong>Time:</strong> Enqueue <code>O(1)</code>, dequeue <code>O(1)</code> amortized | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>2 Stacks - in and out
+Enqueue
+    Push to in
+Dequeu
+    if out is empty, pop everything from in to out
+    pop out
+</code></pre><h3 id="stack-with-1-queue">Stack with 1 Queue </h3>
+<p><strong>Time:</strong> Push <code>O(n)</code>, pop and peek <code>O(1)</code> | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Push
+    q.Enqueu
+    for all elements in q
+        q.Enqueue(q.Dequeue) // Rotate
+Pop
+    q.Dequeu
+Peek
+    q.Peek
+</code></pre><h3 id="sliding-window-maximum---calculate-all-max-element-for-all-window-of-size-k">Sliding Window Maximum - Calculate all max element for all window of size k </h3>
+<p><strong>Deque:</strong> Time <code>O(n)</code>, Space <code>O(k)</code> | <strong>Max heap:</strong> Time <code>O(n log n)</code>, Space <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create dequeue to put indices of monotonic decreasing elements
+Iterate
+    Remove expired element from front
+    Remove smaller than current elements from back
+    Add current index to back
+    front is max of current window
+
+or
+Use Max Heap, but O(NLogN)
+</code></pre><h3 id="next-greater-element-ii---circular-array-find-next-greater-element">Next Greater Element II - Circular array, Find next greater element </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Assume array of twice length and process whole
+</code></pre><h3 id="remove-k-digits-from-number-to-make-it-smallest">Remove k digits from number to make it smallest </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>&gt; If any number has some greater number on the left, remove it
+
+Iterate digits left to right
+Whenever the current digit is smaller than the previous kept digit in stack, remove the previous larger digit
+</code></pre><h3 id="largest-rectangle-in-histogram">Largest Rectangle in Histogram </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Calculate 2 array using monotonic stack for leftSmaller, rightSmaller
+for each element calculate area = height * width of left to right smaller
+</code></pre><h2 id="linked-list">Linked List </h2>
+<h3 id="merge-2-sorted-link-lists">Merge 2 sorted link lists </h3>
+<p><strong>Time:</strong> <code>O(n + m)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Take 2 pointers at heads of 2 list, p1 and p2
+Take another pointer to mark new head and curr pointer
+while p1 and p2 not null
+    Iterate and update the curr and p1 and p2
+Attach the non empty pointer to curr
+</code></pre><h3 id="remove-nth-node-from-end">Remove Nth Node from End </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Calculate length
+Go to len-N node and detach
+</code></pre><h3 id="check-link-list-palindrome">Check Link List Palindrome </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Find Middle
+Reverse Second Half
+Compare
+</code></pre><h3 id="reorder-link-list">Reorder Link List </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<p>l[0]-l[len-1]-l[1]-l[len-2]...</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Find middle
+Break
+Reverse 2nd half
+Merge 2 lists one by one
+</code></pre><h3 id="copy-list-with-random-pointer">Copy List with Random Pointer </h3>
+<p><strong>Dictionary:</strong> Time <code>O(n)</code>, Space <code>O(n)</code> | <strong>Interleaving:</strong> Time <code>O(n)</code>, Space <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Dictionary approach:
+    First pass creates a copy for every original node
+    Second pass assigns copy.next and copy.random through the map
+
+Interleaving approach:
+    Insert each copy directly after its original node
+    copy.random = original.random.next
+    Separate the original and copied lists
+</code></pre><h3 id="merge-k-sorted-link-list">Merge K Sorted Link List </h3>
+<p><strong>Time:</strong> <code>O(N log k)</code> | <strong>Space:</strong> <code>O(k)</code>, where <code>N</code> is the total node count</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create start and curr List Node
+Put all heads into min heap
+Iterate over heap
+    pop head and attach to curr
+    push head-&gt;next
+</code></pre><h3 id="lru-cache">LRU Cache </h3>
+<p><strong>Time:</strong> <code>O(1)</code> average for <code>Get</code> and <code>Put</code> | <strong>Space:</strong> <code>O(capacity)</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Use a dictionary from key to node and a doubly linked list
+The head side is most recently used; the tail side is least recently used
+
+Get: look up the node and move it to the front
+Put: update or insert at the front
+If over capacity, remove the tail node from both the list and dictionary
+</code></pre><h2 id="binary-search">Binary Search </h2>
+<h3 id="find-min-in-rotated-sorted-array">Find min in rotated sorted array </h3>
+<p><strong>Time:</strong> <code>O(log n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>One half sorted.
+while(l &lt; r)
+    if n[m] &gt; n[r]
+        l = m+1
+    else
+        r = m
+return n[r]
+</code></pre><h3 id="find-in-rotated-sorted-array">Find in rotated sorted array </h3>
+<p><strong>Time:</strong> <code>O(log n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Check the sorted half
+Then check if element in sorted half or not
+</code></pre><h3 id="koko-eating-bananas">Koko Eating Bananas </h3>
+<p>Koko has <code>n</code> piles and <code>h</code> hours. Find the minimum integer eating speed that finishes every pile within <code>h</code> hours.</p>
+<p><strong>Example:</strong> <code>piles = [3, 6, 7, 11], h = 8</code> → <code>4</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>BRUTE FORCE | O(N * max(piles)) | O(1)
+
+Try every speed from 1 through max(piles).
+
+-----------------------------------------------------------------------------
+
+BINARY SEARCH ON ANSWER | O(N log(max(piles))) | O(1)
+
+left = 1
+right = max(piles)
+while left &lt;= right:
+    speed = left + (right - left) / 2
+    hours = 0
+    for pile in piles:
+        hours += ceil(pile / speed)
+    if hours &lt;= h:
+        right = speed - 1
+    else:
+        left = speed + 1
+return left
+</code></pre><h2 id="heap">Heap </h2>
+<h3 id="top-k-frequent-elements">Top K Frequent Elements </h3>
+<p><strong>Min heap:</strong> Time <code>O(n log k)</code>, Space <code>O(n)</code> | <strong>Buckets:</strong> Time <code>O(n)</code>, Space <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create frequency map
+Create min heap of size k, and push all the elements in map
+
+OR
+
+Create frequency map
+Create buckets of size len
+Push element to correct bucket
+Iterate over bucket lists
+</code></pre><h3 id="running-median">Running Median </h3>
+<p><strong>Time:</strong> <code>O(log n)</code> per insertion and <code>O(1)</code> per median lookup | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create 2 heaps, min and max heap for upper and lower half of data
+Push to max heap if x &lt;= top
+Rebalance to keep max heap - min heap &lt;= 1
+
+</code></pre><h3 id="task-scheduler">Task Scheduler </h3>
+<p><strong>Heap simulation:</strong> Time <code>O(T log k)</code>, Space <code>O(k)</code> | <strong>Counting formula:</strong> Time <code>O(T + k)</code>, Space <code>O(k)</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Count each task frequency
+Always run the available task with the highest remaining frequency
+Keep cooling tasks in a queue with their next available time
+
+OR
+
+maxFreq = maximum frequency
+countMax = number of tasks with maxFreq
+answer = max(T, (maxFreq - 1) * (cooldown + 1) + countMax)
+</code></pre><h2 id="tree">Tree </h2>
+<h3 id="is-same-tree">Is Same Tree </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(h)</code> recursion stack, where <code>n</code> is the number of compared nodes</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>IsSame(p,q)
+    check p, q same or null
+    return IsSame(p.left, q.left) AND IsSame(p.right, q.right)
+</code></pre><h3 id="invert-binary-tree">Invert Binary Tree </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(h)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Invert(root)
+    (root.left, root.right) = (root.right, root.left)
+    Invert(root.left)
+    Invert(root.right)
+</code></pre><h3 id="path-sum---get-path-root-to-leaf-is-target">Path Sum - Get Path root to leaf is target </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(h)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>DFS and check sum
+</code></pre><h3 id="valid-bst">Valid BST </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(h)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Check root divides left and right subtree values and no duplicates
+
+IsValid(root)
+    check any null, return true
+    return IsValidRange(root, intMin, intMax)
+
+IsValidRange(root, min, max)
+    if null, return true
+    if root &lt;= min or root &gt;= max return false
+    return IsValidRange(root.left, min, root.val) AND IsValidRange(root.right, root.val, max)
+</code></pre><h3 id="kth-smallest-value-in-bst">Kth Smallest value in BST </h3>
+<p><strong>Time:</strong> <code>O(h + k)</code> | <strong>Space:</strong> <code>O(h)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>In order traversal gives sorted order, So traverse and stop at k
+</code></pre><h3 id="lca-of-bst">LCA of BST </h3>
+<p><strong>Time:</strong> <code>O(h)</code> | <strong>Space:</strong> <code>O(h)</code> recursive or <code>O(1)</code> iterative</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>LCA of tree should be dividing both p and q as left and right subtree
+
+LCA(root, p, q)
+    check any null, return null
+    if root less than both, check right
+    if root more than both, check left
+    return root
+</code></pre><h3 id="lca-of-binary-tree">LCA of Binary Tree </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(h)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>LCA should divide the p and q in different subtree
+
+LCA(root, p, q)
+    if root is null, p, q
+        return root
+    left = LCA root.left
+    right = LCA root.right
+    if left and right, then return root
+    return left ?? right
+</code></pre><h3 id="subtree-of-another-tree">Subtree of another tree </h3>
+<p><strong>Time:</strong> <code>O(N * M)</code> worst case | <strong>Space:</strong> <code>O(H + h)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>IsSubTree(r, sr)
+    check both null, return true
+    check either null, return false
+    return IsSame(r, sr) || IsSubTree(r.left, sr) || IsSubTree(r.right, sr)
+</code></pre><h3 id="construct-tree-from-preorder-and-inorder">Construct tree from Preorder and Inorder </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code> for the index map and recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>// Use a hashmap to store the indices of the inorder values for O(1) lookups. Recursively build the tree using the preorder array to determine the root nodes.
+
+BUILD(preorder, inorder):
+    inorderIndex = hashmap()
+    for i from 0 to inorder.length - 1:
+        inorderIndex[inorder[i]] = i
+    preorderIndex = 0
+    BUILD_TREE(left, right):
+        if left &gt; right:
+            return null
+        rootValue = preorder[preorderIndex]
+        preorderIndex++
+        root = new Node(rootValue)
+        mid = inorderIndex[rootValue]
+        root.left = BUILD_TREE(left, mid - 1)
+        root.right = BUILD_TREE(mid + 1, right)
+        return root
+    return BUILD_TREE(0, inorder.length - 1)
+</code></pre><h3 id="serialize-and-deserialize-tree">Serialize and Deserialize Tree </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code> for serialized data and deserialization tokens, plus <code>O(h)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Preorder
+// Serialize
+DFS(root)
+    if root is null
+        s += "null,"
+        return
+    s += root.val + ","
+    DFS root.left
+    DFS root.right
+
+// Deserialize
+q = Queue(s.split",")
+Build()
+    v = q.Dequeue
+    if v is null
+        return null
+    return new TreeNode(int(v), Build(), Build())
+</code></pre><h3 id="max-path-sum-through-any-node">Max Path Sum through any node </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(h)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>int _maxPath = int.MinValue;
+int MaxGain(TreeNode node)
+{
+    if (node == null) return 0;
+    int l = Math.Max(0, MaxGain(node.Left));   // ignore negative branches
+    int r = Math.Max(0, MaxGain(node.Right));
+    _maxPath = Math.Max(_maxPath, node.Val + l + r);
+    return node.Val + Math.Max(l, r);           // return single-branch gain
+}
+</code></pre><h2 id="graph">Graph </h2>
+<h3 id="number-of-island-in-grid-of-0s-and-1s">Number of Island in Grid of 0s and 1s </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(rows * cols)</code> worst case</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>DFS on all non visited 1s and in all 4 direction
+Number of DFS calls is number of components
+</code></pre><h3 id="clone-graph">Clone Graph </h3>
+<p><strong>Time:</strong> <code>O(V + E)</code> | <strong>Space:</strong> <code>O(V)</code> excluding the cloned graph</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create hashmap to track visited node
+Do DFS on graph, track visited and add cloned neighbour to clone nodes
+</code></pre><h3 id="rotten-oranges-determine-minimum-time-in-which-all-fresh-orange-becomes-rotten">Rotten Oranges, Determine minimum time in which all fresh orange becomes rotten </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(rows * cols)</code> worst case</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Multi Source BFS
+Add all rotten orranges in queue
+At each level, visit all nodes in that level and make adjacent rotten
+</code></pre><h3 id="bipartite-graph---0-1-coloring">Bipartite Graph - 0-1 Coloring </h3>
+<p><strong>Time:</strong> <code>O(V + E)</code> | <strong>Space:</strong> <code>O(V)</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>for every uncolored node:
+    color[node] = 0
+    BFS(node)
+        for neighbor:
+            if neighbor uncolored:
+                color[neighbor] = opposite color
+            else if color[neighbor] == color[node]:
+                return false
+return true
+</code></pre><h3 id="graph-valid-tree">Graph Valid Tree </h3>
+<p><strong>Time:</strong> <code>O(V + E)</code> | <strong>Space:</strong> <code>O(V)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Number of edges = N-1
+DFS/BFS if no cycle
+</code></pre><h3 id="redundant-connection---find-edge-creating-a-cycle">Redundant Connection - Find edge creating a cycle </h3>
+<p><strong>Time:</strong> <code>O(E * alpha(V))</code> | <strong>Space:</strong> <code>O(V)</code> for Union-Find</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Run Union Find on graph edges, is union returns false, that edge creates a cycle
+</code></pre><h3 id="pacific-atlantic-ocean---number-of-cells-that-can-reach-left-top-or-right-bottom-margin">Pacific Atlantic Ocean - Number of cells that can reach left-top or right-bottom margin </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(rows * cols)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>DFS from each cell on border - Left-Top and Right-Bottom in opposite direction
+Intersection gives results
+</code></pre><h3 id="word-ladder---given-source-and-destination-word-minimum-traversal-in-list-of-words-to-reach">Word Ladder - Given source and destination word, minimum traversal in list of words to reach </h3>
+<p><strong>Time:</strong> <code>O(N * L^2)</code> | <strong>Space:</strong> <code>O(N * L)</code>, where <code>N</code> is the word count and <code>L</code> is the word length</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Unweighted shortest path problem - BFS
+Words with one letter difference adjacent
+</code></pre><h3 id="network-delay-time">Network Delay Time </h3>
+<p><strong>Dijkstra:</strong> Time <code>O((V + E) log V)</code> | <strong>Space:</strong> <code>O(V + E)</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Build a weighted adjacency list
+Set distance[source] = 0 and push it into a min heap
+Repeatedly pop the closest unvisited node and relax its outgoing edges
+Return the maximum finite distance, or -1 if any node is unreachable
+</code></pre><h3 id="alien-dictionary---words-given-in-order-find-order-of-letters">Alien Dictionary - Words given in order, find order of letters </h3>
+<p><strong>Time:</strong> <code>O(C + V + E)</code> | <strong>Space:</strong> <code>O(V + E)</code>, where <code>C</code> is the total input character count</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Create edges and Topological Sorting
+</code></pre><h2 id="backtracking">Backtracking </h2>
+<h3 id="subsets">Subsets </h3>
+<p>Given an integer array nums of unique elements, return all possible subsets (the power set).</p>
+<p><strong>Example:</strong> <code>nums = [1, 2, 3]</code> → <code>[[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]</code></p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code>BACKTRACKING <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N <span class="token operator">*</span> <span class="token number">2</span><span class="token operator">^</span>N<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span>
+
+At <span class="token class-name">each</span> element<span class="token punctuation">,</span> choose to <span class="token class-name">include</span> it <span class="token keyword keyword-in">in</span> the current subset <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-not">not</span><span class="token punctuation">.</span> Recursively build all <span class="token return-type class-name">subsets<span class="token punctuation">.</span>
+
+function</span> <span class="token function">subsets</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    current <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword keyword-if">if</span> index <span class="token operator">==</span> <span class="token function">length</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            result<span class="token punctuation">.</span><span class="token keyword keyword-add">add</span><span class="token punctuation">(</span><span class="token function">copy</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword keyword-return">return</span>
+        <span class="token comment">// Choice 1: include nums[index]</span>
+        current<span class="token punctuation">.</span><span class="token keyword keyword-add">add</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">backtrack</span><span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        current<span class="token punctuation">.</span><span class="token function">removeLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment">// Choice 2: don't include nums[index]</span>
+        <span class="token function">backtrack</span><span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-return">return</span> result
+</code></pre><h3 id="subsets-ii">Subsets II </h3>
+<p>Given an integer array nums that may contain duplicates, return all possible subsets (the power set) without duplicate subsets.</p>
+<p><strong>Example:</strong> <code>nums = [1, 2, 2]</code> → <code>[[],[1],[2],[1,2],[2,2],[1,2,2]]</code></p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code>BACKTRACKING <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N <span class="token operator">*</span> <span class="token number">2</span><span class="token operator">^</span>N<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span>
+
+Sort the array to handle duplicates<span class="token punctuation">.</span> At <span class="token class-name">each</span> element<span class="token punctuation">,</span> choose to <span class="token class-name">include</span> it <span class="token keyword keyword-in">in</span> the current subset <span class="token keyword keyword-or">or</span> <span class="token keyword keyword-not">not</span><span class="token punctuation">,</span> skipping <span class="token return-type class-name">duplicates<span class="token punctuation">.</span>
+
+function</span> <span class="token function">subsetsWithDup</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    current <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        result<span class="token punctuation">.</span><span class="token keyword keyword-add">add</span><span class="token punctuation">(</span><span class="token function">copy</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword keyword-for">for</span> i <span class="token keyword keyword-from">from</span> start to n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token comment">// Skip duplicate choices</span>
+            <span class="token comment">// at the same recursion level.</span>
+            <span class="token keyword keyword-if">if</span> i <span class="token operator">&gt;</span> start AND nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> nums<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+                <span class="token keyword keyword-continue">continue</span>
+            <span class="token comment">// Choose</span>
+            current<span class="token punctuation">.</span><span class="token keyword keyword-add">add</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token comment">// Explore</span>
+            <span class="token function">backtrack</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token comment">// Undo</span>
+            current<span class="token punctuation">.</span><span class="token function">removeLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-return">return</span> result
+</code></pre><h3 id="permutations">Permutations </h3>
+<p>Given an integer array nums of unique elements, return all possible permutations.</p>
+<p><strong>Example:</strong> <code>nums = [1, 2, 3]</code> → <code>[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</code></p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code>BACKTRACKING <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N <span class="token operator">*</span> N<span class="token operator">!</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span>
+
+For <span class="token class-name">each</span> position <span class="token keyword keyword-in">in</span> <span class="token class-name">the</span> permutation<span class="token punctuation">,</span> choose an unused number <span class="token keyword keyword-from">from</span> nums <span class="token keyword keyword-and">and</span> recursively build the <span class="token return-type class-name">permutation<span class="token punctuation">.</span>
+
+function</span> <span class="token function">permutations</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    current <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    used <span class="token operator">=</span> array of <span class="token return-type class-name">false</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword keyword-if">if</span> current<span class="token punctuation">.</span>size <span class="token operator">==</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">:</span>
+            result<span class="token punctuation">.</span><span class="token keyword keyword-add">add</span><span class="token punctuation">(</span><span class="token function">copy</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword keyword-return">return</span>
+        <span class="token keyword keyword-for">for</span> i <span class="token keyword keyword-from">from</span> <span class="token number">0</span> to nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword keyword-if">if</span> used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                <span class="token keyword keyword-continue">continue</span>
+            <span class="token comment">// Choose</span>
+            used<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token return-type class-name">true</span>
+            current<span class="token punctuation">.</span><span class="token keyword keyword-add">add</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token comment">// Explore</span>
+            <span class="token function">backtrack</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token comment">// Undo</span>
+            current<span class="token punctuation">.</span><span class="token function">removeLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            used<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token return-type class-name">false</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-return">return</span> result
+
+
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+SWAP <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N <span class="token operator">*</span> N<span class="token operator">!</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token function">O</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span>
+
+<span class="token comment">// At each recursion level, swap the current index with each of the remaining indices to generate permutations.</span>
+
+<span class="token return-type class-name">function</span> <span class="token function">permutations</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword keyword-if">if</span> start <span class="token operator">==</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">:</span>
+            result<span class="token punctuation">.</span><span class="token keyword keyword-add">add</span><span class="token punctuation">(</span><span class="token function">copy</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword keyword-return">return</span>
+        <span class="token keyword keyword-for">for</span> i <span class="token keyword keyword-from">from</span> start to nums<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token function">backtrack</span><span class="token punctuation">(</span>start <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>  <span class="token comment">// undo</span>
+    <span class="token function">backtrack</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-return">return</span> result
+</code></pre><h3 id="combination-sum">Combination Sum </h3>
+<p>Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order. The same number may be chosen from candidates an unlimited number of times.</p>
+<p><strong>Example:</strong> <code>candidates = [2, 3, 6, 7], target = 7</code> → <code>[[2,2,3],[7]]</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>BACKTRACKING | O(N^(T/m)) | O(T/m)
+Where T is the target and m is the minimum value in candidates. The maximum depth of the recursion tree is T/m, and at each level, we have N choices (the number of candidates).
+
+function combinationSum(candidates, target):
+    sort(candidates)
+    result = []
+    current = []
+    backtrack(start, remaining):
+        if remaining == 0:
+            result.add(copy(current))
+            return
+        for i from start to n - 1:
+            if candidates[i] &gt; remaining:
+                break
+            current.add(candidates[i])
+            // i, not i+1
+            backtrack(i, remaining - candidates[i])
+            current.removeLast()
+    backtrack(0, target)
+    return result
+</code></pre><h3 id="combination-sum-ii">Combination Sum II </h3>
+<p>Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target. Each number in candidates may only be used once in the combination. Input may contain duplicates.</p>
+<p><strong>Example:</strong> <code>candidates = [10,1,2,7,6,1,5], target = 8</code> → <code>[[1,1,6],[1,2,5],[1,7],[2,6]]</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>BACKTRACKING | O(N * 2^N) | O(N)
+Every element is either taken or skipped, and copying each valid combination costs O(N).
+
+// Sort the candidates
+// Do not reuse the same element in the same recursion level
+// Skip duplicates in the same recursion level
+
+function combinationSum2(candidates, target):
+    sort(candidates)
+    result = []
+    current = []
+    backtrack(start, remaining):
+        if remaining == 0:
+            result.add(copy(current))
+            return
+        for i from start to n - 1:
+            // Skip duplicate choices
+            // at the same recursion level.
+            if i &gt; start AND
+               candidates[i] == candidates[i - 1]:
+                continue
+            // Since sorted, nothing after this can fit.
+            if candidates[i] &gt; remaining:
+                break
+            // Choose
+            current.add(candidates[i])
+            // Cannot reuse this element.
+            backtrack(i + 1, remaining - candidates[i])
+            // Undo
+            current.removeLast()
+    backtrack(0, target)
+    return result
+</code></pre><h3 id="search-word-in-2d-matrix">Search word in 2D Matrix </h3>
+<p><strong>Time:</strong> <code>O(rows * cols * 3^L)</code> worst case | <strong>Space:</strong> <code>O(L)</code> recursion stack</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token function">Backtrack</span><span class="token punctuation">(</span>board<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> r<span class="token punctuation">,</span> c<span class="token punctuation">,</span> word<span class="token punctuation">,</span> index<span class="token punctuation">)</span>
+    <span class="token comment">// Base case</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>index <span class="token operator">==</span> word<span class="token punctuation">.</span>Length<span class="token punctuation">)</span>
+        <span class="token keyword keyword-return">return</span> <span class="token boolean">true</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">c</span></span><span class="token punctuation">]</span> <span class="token operator">==</span> word<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment">// Mark</span>
+        b<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">c</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'#'</span>
+        <span class="token comment">// Backtrack in all 4 direction</span>
+        <span class="token range operator">..</span><span class="token punctuation">.</span>
+        <span class="token comment">// Undo</span>
+        b<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">c</span></span><span class="token punctuation">]</span> <span class="token operator">=</span> word<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+</code></pre><h3 id="generate-parentheses">Generate Parentheses </h3>
+<p>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.</p>
+<p><strong>Example:</strong> <code>n = 3</code> → <code>["((()))","(()())","(())()","()(())","()()()"]</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>BACKTRACKING | O(4^N / sqrt(N)) | O(N)
+The number of valid sequences is the Nth Catalan number, and each one costs O(N) to build.
+
+function generateParenthesis(n):
+    result = []
+    current = ""
+    backtrack(open, close):
+        if length(current) == 2 * n:
+            result.add(current)
+            return
+        if open &lt; n:
+            current += "("
+            backtrack(open + 1, close)
+            current remove last character
+        if close &lt; open:
+            current += ")"
+            backtrack(open, close + 1)
+            current remove last character
+    backtrack(0, 0)
+    return result
+</code></pre><h3 id="n-queens">N-Queens </h3>
+<p>Place n queens on an n × n chessboard so that no two queens attack each other. Return all distinct solutions.</p>
+<p><strong>Example:</strong> <code>n = 4</code> → <code>[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]</code></p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>BRUTE FORCE | O(N^N) | O(N)
+
+Try every column for every row and validate the full board at the end
+
+-----------------------------------------------------------------------------
+
+BACKTRACKING + CONFLICT SETS | O(N!) | O(N)
+
+// Place one queen per row, so only columns and the two diagonals can conflict
+// Anti-diagonal is constant along row + col
+// Main diagonal is constant along row - col
+
+function solveNQueens(n):
+    result = []
+    columns = empty set
+    diagonal = empty set          // row - col
+    antiDiagonal = empty set      // row + col
+    position = array of size n
+    backtrack(row):
+        if row == n:
+            result.add(board built from position)
+            return
+        for col from 0 to n - 1:
+            if col in columns
+               OR (row - col) in diagonal
+               OR (row + col) in antiDiagonal:
+                continue
+            // Choose
+            add col, row - col, row + col to the sets
+            position[row] = col
+            // Explore
+            backtrack(row + 1)
+            // Undo
+            remove col, row - col, row + col from the sets
+    backtrack(0)
+    return result
+</code></pre><blockquote>
+<ul>
+<li>N-Queens II only needs the count, so the board never has to be materialised.</li>
+<li>Bitmask version stores the three sets in integers and uses <code>available = ~(cols | diag | anti)</code>.</li>
+</ul>
+</blockquote>
+<h2 id="greedy-and-intervals">Greedy and Intervals </h2>
+<h3 id="meeting-rooms-i---check-no-overlap">Meeting Rooms I - Check No Overlap </h3>
+<p><strong>Time:</strong> <code>O(n log n)</code> | <strong>Space:</strong> <code>O(log n)</code> for the in-place sort stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Sort by start time, check adjacent end and start time
+</code></pre><h3 id="merge-intervals">Merge Intervals </h3>
+<p><strong>Time:</strong> <code>O(n log n)</code> | <strong>Space:</strong> <code>O(n)</code> for the heap and result</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Insert all in Max Heap on end time, Sort in decreasing order of end time
+Pop, if still intersect with top, pop again and push merged
+</code></pre><h3 id="insert-interval">Insert Interval </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code> for the result</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>3 Cases
+1. Interval totally before, append
+2. Interval in between, skip and calculate min and max for start and end, insert
+3. Interval totally after, append
+</code></pre><h3 id="max-number-of-non-overlapping-intervals">Max number of non overlapping intervals </h3>
+<p><strong>Time:</strong> <code>O(n log n)</code> | <strong>Space:</strong> <code>O(log n)</code> for the in-place sort stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Sort by end time
+Iterate and Greedily pick non overlapping interval
+</code></pre><h3 id="minimum-intervals-to-remove-to-make-others-non-overlapping">Minimum intervals to remove to make others non overlapping </h3>
+<p><strong>Time:</strong> <code>O(n log n)</code> | <strong>Space:</strong> <code>O(log n)</code> for the in-place sort stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Sort by END ascending
+↓
+Keep earliest-ending interval
+↓
+If next.start &lt; currentEnd → remove it
+↓
+Otherwise → keep it and update currentEnd
+</code></pre><h3 id="meeting-rooms-ii---number-of-meeting-rooms-required">Meeting Rooms II - Number of Meeting Rooms Required </h3>
+<p><strong>Time:</strong> <code>O(n log n)</code> | <strong>Space:</strong> <code>O(n)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Put +1 with start time, -1 with end time
+Put in same array and sort
+Iterate and keep the max count
+</code></pre><h3 id="minimum-number-of-arrows-to-burst-balloons">Minimum number of arrows to burst balloons </h3>
+<p><strong>Time:</strong> <code>O(n log n)</code> | <strong>Space:</strong> <code>O(log n)</code> for the in-place sort stack</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Sort the balloons by their end points
+shoot arrows at the end of each balloon, skipping any balloons that overlap with the last shot arrow.
+</code></pre><h3 id="jump-game---check-if-can-reach-the-end-if-max-jump-size-at-each-step-given">Jump Game - Check if can reach the end if max jump size at each step given </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Iterate and calculate max reach possible
+max = num[0]
+for i in 1 to len-1
+    if max &lt; i
+        break
+    max = Max(max, i + num[i])
+return (maxReach &gt;= len-1)
+</code></pre><h3 id="minimum-jumps-required-to-reach-end">Minimum Jumps required to reach end </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Keep track of the current range of reachable indices and the farthest index reachable in the next jump.
+
+jumps = 0                   // Number of jumps made so far
+currentEnd = 0              // The farthest index reachable with the current number of jumps
+farthest = 0                // The farthest index reachable with one more jump
+n = length(nums)
+for i from 0 to n - 2:
+    farthest = max(
+        farthest,
+        i + nums[i]
+    )
+    if i == currentEnd:
+        jumps++
+        currentEnd = farthest
+return jumps
+</code></pre><h3 id="check-which-gas-station-can-reach-all-station-in-circle">Check which gas station can reach all station in circle </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>If total gas ≥ total cost, a solution always exists. Start from any point where running sum drops below 0 → reset start to next index.
+If starting at start causes the tank to become negative at station i, then none of the stations between start and i can be a valid starting point either.
+</code></pre><h2 id="dp">DP </h2>
+<h3 id="climbing-stairs-number-of-ways-to-reach-end-if-1-or-2-steps">Climbing Stairs, Number of ways to reach end if 1 or 2 steps </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code>, reducible to <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>dp[0] = 0, dp[1] = 1, dp[2] = 2
+dp[i] = dp[i-1] + dp[i-2]
+</code></pre><h3 id="number-of-paths-from-top-left-to-bottom-right-in-a-grid-with-down-or-right-movement">Number of paths from top left to bottom right in a grid with down or right movement </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(rows * cols)</code>, reducible to <code>O(cols)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>dp[i][j] = dp[i-1][j] + dp[i][j-1];
+</code></pre><h3 id="minimum-sum-of-path-from-top-left-to-bottom-right-in-a-grid-with-down-or-right-movement">Minimum sum of path from top left to bottom right in a grid with down or right movement </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(rows * cols)</code>, reducible to <code>O(cols)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>dp[r][c] = minimum cost to reach (r,c)
+dp[r][c] = grid[r][c] + min(dp[r-1][c], dp[r][c-1])
+</code></pre><h3 id="house-robber---max-amount-that-can-be-robbed-without-adjacent-house-robbed">House Robber - Max amount that can be robbed without adjacent house robbed </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code>, reducible to <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>dp[i] = Math.Max
+        (nums[i] + dp[i-2], // Rob Current House
+        dp[i-1])            // Skip Current House
+</code></pre><h3 id="house-robber-2---house-arranged-in-circle">House Robber 2 - House arranged in circle </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code> as shown, reducible to <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>2 DPs : Rob House 1, Skip House 1
+
+dp[0] = nums[0];
+dp[1] = Math.Max(nums[0],nums[1]);
+dp2[0] = 0;
+dp2[1] = nums[1];
+for(int i = 2; i &lt; len; i++){
+    dp[i] = Math.Max(nums[i]+dp[i-2], dp[i-1]);
+    dp2[i] = Math.Max(nums[i]+dp2[i-2], dp2[i-1]);
+}
+return Math.Max(dp[len-2], dp2[len-1]);
+</code></pre><h3 id="house-robber-3---house-arranged-as-tree">House Robber 3 - House arranged as tree </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>DP | O(N) | O(H)
+
+// For each node calculate rob[node] and notRob[node].
+// rob = node.value + left.notRob + right.notRob
+// notRob = max(left.rob, left.notRob) + max(right.rob, right.notRob)
+
+HOUSE_ROBBER(root):
+    DFS(node):
+        if node is null:
+            return (0, 0)
+        left = DFS(node.left)
+        right = DFS(node.right)
+        rob = node.value + left.notRob + right.notRob
+        notRob = max(left.rob, left.notRob) + max(right.rob, right.notRob)
+        return (rob, notRob)
+    result = DFS(root)
+    return max(result.rob, result.notRob)
+</code></pre><h3 id="decode-ways---number-string-to-letters">Decode Ways - Number String to Letters </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(n)</code>, reducible to <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>dp[i] = number of ways to decode first i characters
+if One Digit: dp[i] += dp[i - 1]
+if Two Digits: dp[i] += dp[i - 2]
+</code></pre><h3 id="word-break---check-string-can-be-formed-using-words-in-dictionary">Word Break - Check string can be formed using words in dictionary </h3>
+<p><strong>Time:</strong> <code>O(n^2)</code> dictionary checks | <strong>Space:</strong> <code>O(n)</code> DP, excluding substring copies</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>bool dp[i] = whether first i characters can be segmented
+
+dp[0] = true
+for i = 1 to n:
+    for j = 0 to i - 1:
+        if dp[j] == true:
+            word = s[j...i]
+            if word in dictionary:
+                dp[i] = true
+                break
+return dp[n]
+</code></pre><h3 id="partition-array-into-subset-of-equal-sum">Partition array into subset of equal sum </h3>
+<p><strong>Time:</strong> <code>O(n * target)</code> | <strong>Space:</strong> <code>O(target)</code>, where <code>target = total / 2</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>0/1 Knapsack with sum = total / 2
+</code></pre><h3 id="convert-one-string-to-another-by-insert-delete-or-replace">Convert one string to another by insert, delete or replace </h3>
+<p><strong>Time:</strong> <code>O(m * n)</code> | <strong>Space:</strong> <code>O(m * n)</code>, reducible to <code>O(min(m, n))</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>dp[i][j] = minimum edit distance between first i characters of s1 and first j characters of s2
+
+for i = 0 to m:
+    dp[i][0] = i
+for j = 0 to n:
+    dp[0][j] = j
+for i = 1 to m:
+    for j = 1 to n:
+        if word1[i - 1] == word2[j - 1]:
+            dp[i][j] = dp[i - 1][j - 1]  // No operation needed
+        else:
+            dp[i][j] = 1 + min(
+                    dp[i - 1][j],     // delete
+                    dp[i][j - 1],     // insert
+                    dp[i - 1][j - 1])  // replace
+return dp[m][n]
+</code></pre><h3 id="best-time-to-buy-and-sell-stock-with-cooldown-of-1-day-after-selling">Best Time to Buy and Sell Stock with Cooldown of 1 day after selling </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>STATE MACHINE DP
+
+// Each day, we can be in one of three states. We track the maximum profit for each state.
+// hold = max profit if we are holding a stock
+// sold = max profit if we just sold a stock
+// rest = max profit if we are in cooldown or just waiting
+
+STOCK_WITH_COOLDOWN(prices):
+    hold = -infinity
+    sold = 0
+    rest = 0
+    for price in prices:
+        previousHold = hold
+        previousSold = sold
+        previousRest = rest
+        hold = max(previousHold, previousRest - price)
+        sold = previousHold + price
+        rest = max(previousRest, previousSold)
+    return max(sold, rest)
+</code></pre><h3 id="longest-increasing-path-in-matrix">Longest increasing path in matrix </h3>
+<p><strong>Time:</strong> <code>O(rows * cols)</code> | <strong>Space:</strong> <code>O(rows * cols)</code> for memoization and recursion</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>For every cell, do dp
+dp[r][c] = Length of longest path starting from r, c
+Do DFS with memo
+For each direction: best = max(best, 1 + DFS(nr, nc))
+</code></pre><h2 id="bit">Bit </h2>
+<h3 id="every-number-occurs-twice-except-one">Every number occurs twice except one </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Xor all elements
+</code></pre><h3 id="find-missing-number-1-to-n">Find missing number 1 to n </h3>
+<p><strong>Time:</strong> <code>O(n)</code> | <strong>Space:</strong> <code>O(1)</code></p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>xor all numbers 1 to n, then xor with array. Remaining is the missing
+A ^ A = 0, A ^ 0 = A
+</code></pre><h3 id="count-number-of-bits">Count number of bits </h3>
+<p><strong>Time:</strong> <code>O(p)</code> | <strong>Space:</strong> <code>O(1)</code>, where <code>p</code> is the number of set bits</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>n &amp; (n - 1) removes last set bit, count till n becomes 0
+</code></pre><h3 id="sum-2-integers">Sum 2 integers </h3>
+<p><strong>Time:</strong> <code>O(w)</code> | <strong>Space:</strong> <code>O(1)</code>, where <code>w</code> is the integer bit width</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>while b != 0:
+    carry = (a AND b) &lt;&lt; 1
+    a = a XOR b
+    b = carry
+return a
+</code></pre>
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
