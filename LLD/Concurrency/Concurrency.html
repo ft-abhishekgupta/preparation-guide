@@ -1,0 +1,1447 @@
+<!DOCTYPE html><html><head>
+      <title>Concurrency</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="color-scheme" content="light dark">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}@media (prefers-color-scheme: dark) {
+code[class*=language-],pre[class*=language-]{color:#c9d1d9;text-shadow:none;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::mozselection,code[class*=language-]::selection,pre[class*=language-]::mozselection,pre[class*=language-]::selection{text-shadow:none;background:#234879}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;background:#161b22}:not(pre)>code[class*=language-]{padding:.1em .3em;border-radius:.3em;color:#c9d1d9;background:#343942}pre[data-line]{position:relative}pre[class*=language-]>code[class*=language-]{position:relative;z-index:1}.line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:#2f2a1e;box-shadow:inset 5px 0 0 #674c16;z-index:0;pointer-events:none;line-height:inherit;white-space:pre}.namespace{opacity:.7}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8b949e}.token.punctuation{color:#c9d1d9}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#79c0ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a5d6ff}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#a5d6ff}.token.atrule,.token.attr-value,.token.keyword{color:#f97583}.token.function{color:#d2a8ff}.token.important,.token.regex,.token.variable{color:#79b8ff}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+}
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}@media (prefers-color-scheme: dark) {
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#ccc;background-color:#24292e;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#fff}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#a3a3a3}html body strong{color:#fff}html body del{color:#a3a3a3}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#a3a3a3;background-color:#363d45;border-left:4px solid #48525c}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#48525c;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#fff}html body table td,html body table th{border:1px solid #48525c;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#fff;background-color:#363d45;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#48525c;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#fff;border:1px solid #48525c;border-bottom:2px solid #3a424b;padding:2px 4px;background-color:#363d45;border-radius:3px}@media print{html body{background-color:#24292e}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#fff;page-break-after:avoid}html body blockquote{color:#a3a3a3}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}
+}
+.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h2 id="concurrency-and-thread-safety">Concurrency and Thread Safety </h2>
+<p>Concurrency occurs when 2 or more process/thread tries to change same resource</p>
+<p><strong>Process</strong> - An isolated container with its own address space and resources, to run a set of instructions.<br>
+<strong>Thread</strong> - Independent execution path inside a process</p>
+<ul>
+<li>Has its own program counter, registers, and stack</li>
+<li>But shares the heap, globals, and open resources with other threads in the same process</li>
+</ul>
+<blockquote>
+<p>Operation from different thread can interleave (Both in multiprocessor/single processor system)</p>
+</blockquote>
+<hr>
+<h2 id="problem-types">Problem Types </h2>
+<table>
+<thead>
+<tr>
+<th>Problem Type</th>
+<th>What Breaks</th>
+<th>Solutions</th>
+<th>Common Problems</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Correctness</strong></td>
+<td>Shared state is updated concurrently</td>
+<td>Locks, atomics, thread confinement</td>
+<td>Check-then-act, read-modify-write</td>
+</tr>
+<tr>
+<td><strong>Coordination</strong></td>
+<td>Threads need ordering or handoff</td>
+<td>Blocking queues, actors, event loops</td>
+<td>Async request processing, bursty traffic</td>
+</tr>
+<tr>
+<td><strong>Scarcity</strong></td>
+<td>Resources are limited</td>
+<td>Semaphores, resource pools</td>
+<td>Concurrent op limits, resource consumption, object reuse</td>
+</tr>
+</tbody>
+</table>
+<h2 id="correctness">Correctness </h2>
+<p>Prevent data corruption when multiple thread access shared state.</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><em>Coarse-grained locking</em> protects all related state with one lock</li>
+<li><em>Fine-grained locking</em> allows concurrent access to independent resources while protecting related ones</li>
+<li><em>Atomic variables</em> work for single variables but fail for multi-field invariants</li>
+<li><em>Thread confinement</em> eliminates concurrency entirely for related data</li>
+</ol>
+<h3 id="coarse-grained-locking-default-in-interviews">Coarse-grained locking [Default in Interviews] </h3>
+<p>Using one lock to block all operation. Creates a critical section where only one thread can execute at a time</p>
+<ul>
+<li>Both check and update should happen in this block</li>
+<li>Use same lock object for set of operations that needs to happen atomically</li>
+<li>CONS - Throughput becomes less as everything is blocked, even if non interfering</li>
+</ul>
+<p>Example - Ticket Booking</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">TicketBooking</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _bookingLock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> _seatOwners <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-bool">bool</span></span> <span class="token function">BookSeat</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> seatId<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> visitorId<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>_bookingLock<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>_seatOwners<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>seatId<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword keyword-return">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            _seatOwners<span class="token punctuation">[</span>seatId<span class="token punctuation">]</span> <span class="token operator">=</span> visitorId<span class="token punctuation">;</span>
+            <span class="token keyword keyword-return">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>C# Lock automatically releases lock on block end / exception</p>
+<p><strong>Read-Write Lock / Shared-exclusive lock</strong><br>
+For read heavy data store, like cache/config</p>
+<ul>
+<li>2 Modes: Read / Shared and Write / Exclusive</li>
+<li>Multiple readers can hold read lock simultaneously</li>
+<li>For write, once all read lock releaseed then block and writes</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">Cache</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ReaderWriterLockSlim</span> _rwLock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> _data <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-string">string</span></span> <span class="token function">Get</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _rwLock<span class="token punctuation">.</span><span class="token function">EnterReadLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-try">try</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-return">return</span> _data<span class="token punctuation">.</span>TryGetValue<span class="token class-name"><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-var">var</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span> <span class="token punctuation">?</span></span> <span class="token keyword keyword-value">value</span> <span class="token punctuation">:</span> <span class="token keyword keyword-null">null</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword keyword-finally">finally</span>
+        <span class="token punctuation">{</span>
+            _rwLock<span class="token punctuation">.</span><span class="token function">ExitReadLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Put</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> key<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _rwLock<span class="token punctuation">.</span><span class="token function">EnterWriteLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-try">try</span>
+        <span class="token punctuation">{</span>
+            _data<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword keyword-finally">finally</span>
+        <span class="token punctuation">{</span>
+            _rwLock<span class="token punctuation">.</span><span class="token function">ExitWriteLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="fine-grain-locking">Fine Grain Locking </h3>
+<p>Multiple locks, each lock protects smaller piece of data</p>
+<ul>
+<li>This method used for traffic at scale</li>
+<li>CONS - Causes complexities, deadlocks, Overhead of many locks</li>
+</ul>
+<p>Example - Ticket Booking - Lock per seat</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">TicketBookingFineGrained</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span> _seatLocks <span class="token operator">=</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> _seatOwners <span class="token operator">=</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token return-type class-name"><span class="token keyword keyword-object">object</span></span> <span class="token function">GetLock</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> seatId<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> _seatLocks<span class="token punctuation">.</span><span class="token function">GetOrAdd</span><span class="token punctuation">(</span>seatId<span class="token punctuation">,</span> _ <span class="token operator">=&gt;</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-bool">bool</span></span> <span class="token function">BookSeat</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> seatId<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> visitorId<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span><span class="token function">GetLock</span><span class="token punctuation">(</span>seatId<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>_seatOwners<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>seatId<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword keyword-return">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            _seatOwners<span class="token punctuation">[</span>seatId<span class="token punctuation">]</span> <span class="token operator">=</span> visitorId<span class="token punctuation">;</span>
+            <span class="token keyword keyword-return">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="atomic-values">Atomic Values </h3>
+<p>Uses CPU instruction to read-modify-write variable in single uninterruptible step</p>
+<ul>
+<li>Works only for single variable</li>
+<li>like counters, flags, or statistics</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">BookingStats</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> _bookedCount <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">OnSeatBooked</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Interlocked<span class="token punctuation">.</span><span class="token function">Increment</span><span class="token punctuation">(</span><span class="token keyword keyword-ref">ref</span> _bookedCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-int">int</span></span> <span class="token function">GetBookedCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> Interlocked<span class="token punctuation">.</span><span class="token function">CompareExchange</span><span class="token punctuation">(</span><span class="token keyword keyword-ref">ref</span> _bookedCount<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>C# : Decrement(), Add(), Exchange(), and CompareExchange()</li>
+<li>Works on int, long, reference type</li>
+</ul>
+<p><strong>Complex Updates</strong></p>
+<ul>
+<li>CAS Loop used.</li>
+<li>Optimistically assume no one else will interfere, do your work, and only retry if that assumption was wrong</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">ConcurrencyTracker</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> _maxConcurrent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">UpdateMaxConcurrent</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> current<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-int">int</span></span> observed<span class="token punctuation">;</span>
+        <span class="token keyword keyword-do">do</span>
+        <span class="token punctuation">{</span>
+            observed <span class="token operator">=</span> _maxConcurrent<span class="token punctuation">;</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>current <span class="token operator">&lt;=</span> observed<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span>Interlocked<span class="token punctuation">.</span><span class="token function">CompareExchange</span><span class="token punctuation">(</span><span class="token keyword keyword-ref">ref</span> _maxConcurrent<span class="token punctuation">,</span> current<span class="token punctuation">,</span> observed<span class="token punctuation">)</span> <span class="token operator">!=</span> observed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>Interlocked.CompareExchange(ref location, newValue, expected) returns the original value.</li>
+</ul>
+<h3 id="thread-confinement-shared-nothing">Thread confinement (Shared Nothing) </h3>
+<p>Partition the data so each thread owns its slice</p>
+<ul>
+<li>CONS - Load Imbalance, Cross Partition Data Query Issues</li>
+</ul>
+<h2 id="bugs-pattern">Bugs Pattern </h2>
+<h3 id="check-then-act">Check-Then-Act </h3>
+<p>Check a value, Act on it : Another thread work updates the condition in between<br>
+SOLUTION - Make Check and Act Atomic - Coarse Grain Locking</p>
+<p>Examples</p>
+<ul>
+<li>Checking connection pool</li>
+<li>Checking cache size</li>
+<li>File downloading</li>
+<li>Parking lot</li>
+</ul>
+<h3 id="read-modify-write">Read-Modify-Write </h3>
+<p>Read a value, Process, Write : Another thread modifies<br>
+SOLUTION - Atomic Variable for single variable, Lock for multiple</p>
+<p>Example</p>
+<ul>
+<li>Hit counter</li>
+<li>Bank Account</li>
+<li>Metrics</li>
+<li>Inventory System</li>
+</ul>
+<p><img src="image.png" alt="alt text"></p>
+<hr>
+<h2 id="coordination">Coordination </h2>
+<p>Coordination is threads communicating with each other<br>
+<img src="image-1.png" alt="alt text"></p>
+<h3 id="issues">Issues </h3>
+<h4 id="when-consumers-are-faster">When consumers are faster </h4>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token comment">// Busy Waiting</span>
+<span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>queue<span class="token punctuation">.</span>Count <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> task <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">Dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">Execute</span><span class="token punctuation">(</span>task<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>CPU cycle wasted for waiting for work</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token comment">// Sleep Poling</span>
+<span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>queue<span class="token punctuation">.</span>Count <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> task <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">Dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">Execute</span><span class="token punctuation">(</span>task<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-else">else</span>
+    <span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>Latency increases to begin the work</li>
+</ul>
+<h4 id="when-producers-are-faster">When producers are faster </h4>
+<ul>
+<li>Queue keeps on growing in size</li>
+<li>Everything crashes on Out of Memory Error</li>
+</ul>
+<p><strong>Solution needed for</strong></p>
+<ul>
+<li>Efficient Waiting</li>
+<li>Backpressure</li>
+<li>Thread Safety</li>
+</ul>
+<h3 id="solution">Solution </h3>
+<ul>
+<li><em>Shared State Coordination</em> - Shared data structure between threads</li>
+<li><em>Message Passing Coordination</em> - Each component independent and communicate via messages</li>
+</ul>
+<h4 id="shared-state-coordination">Shared State Coordination </h4>
+<p>Queue - Shared State</p>
+<p><strong>Wait/Notify</strong><br>
+Thread waits for condition to become true, otherwise sleeps</p>
+<blockquote>
+<p>Not used in interviews</p>
+</blockquote>
+<p><strong>Blocking Queues</strong><br>
+Thread safe queue with special behavior when empty/full</p>
+<ul>
+<li>On trying to consume empty queue, thread waits, wakes when some item</li>
+<li>On trying to push to full queue, thread waits, wakes when slot</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">TaskScheduler</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>Action<span class="token punctuation">&gt;</span></span> _queue <span class="token operator">=</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">BlockingCollection<span class="token punctuation">&lt;</span>Action<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token named-parameter punctuation">boundedCapacity</span><span class="token punctuation">:</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">SubmitTask</span><span class="token punctuation">(</span><span class="token class-name">Action</span> task<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _queue<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>task<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Blocks if queue is full</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">WorkerLoop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name"><span class="token keyword keyword-var">var</span></span> task <span class="token operator">=</span> _queue<span class="token punctuation">.</span><span class="token function">Take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Blocks if queue is empty</span>
+            <span class="token function">task</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>Sync handled so concurrent operation possible without corrupting data</li>
+<li>Efficient producer-consumer problems</li>
+</ul>
+<p>Options on When queue fills up:</p>
+<ol>
+<li>Block Producers</li>
+<li>Timeout and Reject</li>
+<li>Drop and Log</li>
+</ol>
+<p>Graceful shutdown when threads in take() blocked mode</p>
+<ol>
+<li>Interrupt the worker thread - Interrupt the thread, worker catches it and exits cleanly</li>
+<li>Poll with timeout - Worker gets blocked with timeout, after which it checks for shutdown status</li>
+<li>Poison Pill - Sentinel task "Shutdown", when requested poison pill submitted to workers. Worker exists its loop and shuts down</li>
+</ol>
+<h4 id="message-passing-coordination">Message Passing Coordination </h4>
+<p>Threads independent (Actor), 3 properties each</p>
+<ul>
+<li>Mailbox - Queue of incomming message</li>
+<li>Process message one at a time - No internal concurrency issues</li>
+<li>Sends message to other actor</li>
+</ul>
+<p>Queue handles concurrent accesses<br>
+In blocking queue, different thread can act on same data (Locks needed), but here, each thread owns its own data</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-abstract">abstract</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">Actor<span class="token punctuation">&lt;</span>T<span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>T<span class="token punctuation">&gt;</span></span> _mailbox <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">CancellationTokenSource</span> _cts <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-protected">protected</span> <span class="token function">Actor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Task<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">Run</span><span class="token punctuation">(</span>_cts<span class="token punctuation">.</span>Token<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Send</span><span class="token punctuation">(</span><span class="token class-name">T</span> message<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _mailbox<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-protected">protected</span> <span class="token keyword keyword-abstract">abstract</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">OnReceive</span><span class="token punctuation">(</span><span class="token class-name">T</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _cts<span class="token punctuation">.</span><span class="token function">Cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _mailbox<span class="token punctuation">.</span><span class="token function">CompleteAdding</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Run</span><span class="token punctuation">(</span><span class="token class-name">CancellationToken</span> token<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-try">try</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-foreach">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> message <span class="token keyword keyword-in">in</span> _mailbox<span class="token punctuation">.</span><span class="token function">GetConsumingEnumerable</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token function">OnReceive</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword keyword-catch">catch</span> <span class="token punctuation">(</span><span class="token class-name">OperationCanceledException</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Email Service with Actors</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-record">record</span> <span class="token class-name">EmailRequest</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> To<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> Subject<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> Body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">EmailActor</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">Actor<span class="token punctuation">&lt;</span>EmailRequest<span class="token punctuation">&gt;</span></span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">EmailClient</span> _emailClient <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-protected">protected</span> <span class="token keyword keyword-override">override</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">OnReceive</span><span class="token punctuation">(</span><span class="token class-name">EmailRequest</span> request<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _emailClient<span class="token punctuation">.</span><span class="token function">Send</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span>To<span class="token punctuation">,</span> request<span class="token punctuation">.</span>Subject<span class="token punctuation">,</span> request<span class="token punctuation">.</span>Body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Usage: no shared state, no locks needed</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">SignupHandler</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">EmailActor</span> _emailActor <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">UserRepository</span> _userRepository<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">HandleSignup</span><span class="token punctuation">(</span><span class="token class-name">SignupRequest</span> request<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> user <span class="token operator">=</span> _userRepository<span class="token punctuation">.</span><span class="token function">Save</span><span class="token punctuation">(</span><span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">User</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span>Email<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Send message to actor - returns immediately</span>
+        _emailActor<span class="token punctuation">.</span><span class="token function">Send</span><span class="token punctuation">(</span><span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">EmailRequest</span><span class="token punctuation">(</span>
+            user<span class="token punctuation">.</span>Email<span class="token punctuation">,</span>
+            <span class="token string">"Welcome!"</span><span class="token punctuation">,</span>
+            <span class="token string">"Thanks for signing up..."</span>
+        <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Challenges</strong></p>
+<ul>
+<li>Mailbox overflow</li>
+<li>Message ordering difficult to maintain at global state</li>
+<li>Debugging complex</li>
+<li>Async communication - Request response model</li>
+</ul>
+<p><strong>When to use actors</strong></p>
+<ul>
+<li>Use Blocking Queue by default - Process tasks in background</li>
+<li>Use actor when many independent entities occasionally communicate</li>
+<li>Scales well</li>
+<li>Example - Game System, Trading System, Chat System</li>
+</ul>
+<h3 id="common-problems">COMMON PROBLEMS </h3>
+<p><strong>Process Request Async</strong></p>
+<ul>
+<li>Image Upload Service</li>
+<li>Payment Processing</li>
+<li>Report Generation</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-record">record</span> <span class="token class-name">EmailTask</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> Recipient<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> Template<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> Data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">EmailService</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>EmailTask<span class="token punctuation">&gt;</span></span> _emailQueue <span class="token operator">=</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">BlockingCollection<span class="token punctuation">&lt;</span>EmailTask<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token named-parameter punctuation">boundedCapacity</span><span class="token punctuation">:</span> <span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// API handler (producer)</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Signup</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> email<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> name<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Fast: Save user to database</span>
+        _userRepository<span class="token punctuation">.</span><span class="token function">Save</span><span class="token punctuation">(</span>email<span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Fast: Enqueue background work</span>
+        _emailQueue<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">EmailTask</span><span class="token punctuation">(</span>email<span class="token punctuation">,</span> <span class="token string">"welcome"</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Return immediately - user sees instant response</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Worker thread (consumer)</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">EmailWorker</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name"><span class="token keyword keyword-var">var</span></span> task <span class="token operator">=</span> _emailQueue<span class="token punctuation">.</span><span class="token function">Take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// Slow: Connect to email server and send</span>
+            _emailClient<span class="token punctuation">.</span><span class="token function">Send</span><span class="token punctuation">(</span>task<span class="token punctuation">.</span>Recipient<span class="token punctuation">,</span> task<span class="token punctuation">.</span>Template<span class="token punctuation">,</span> task<span class="token punctuation">.</span>Data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Handle Bursty Traffic</strong></p>
+<ul>
+<li>News site</li>
+<li>Email campaign</li>
+<li>Batch job completion</li>
+<li>Webhooks</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-record">record</span> <span class="token class-name">PurchaseRequest</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> UserId<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> EventId<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> Quantity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">TicketService</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Sized for 10-second burst at 10,000 req/s</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>PurchaseRequest<span class="token punctuation">&gt;</span></span> _purchaseQueue <span class="token operator">=</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">BlockingCollection<span class="token punctuation">&lt;</span>PurchaseRequest<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token named-parameter punctuation">boundedCapacity</span><span class="token punctuation">:</span> <span class="token number">100000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// API handler (producer) - handles bursts</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">PurchaseTicket</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> userId<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> eventId<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> quantity<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> request <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">PurchaseRequest</span><span class="token punctuation">(</span>userId<span class="token punctuation">,</span> eventId<span class="token punctuation">,</span> quantity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Enqueue request - returns immediately even during spike</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>_purchaseQueue<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> TimeSpan<span class="token punctuation">.</span><span class="token function">FromMilliseconds</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-throw">throw</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">ServiceUnavailableException</span><span class="token punctuation">(</span><span class="token string">"Too many requests, try again"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Worker pool sized for normal load (100 workers)</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">PurchaseWorker</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name"><span class="token keyword keyword-var">var</span></span> request <span class="token operator">=</span> _purchaseQueue<span class="token punctuation">.</span><span class="token function">Take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// Process at normal rate - database, payment, inventory</span>
+            <span class="token function">ProcessPurchase</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="conclusion">Conclusion </h3>
+<p><img src="image-2.png" alt="alt text"></p>
+<hr>
+<h2 id="scarcity">Scarcity </h2>
+<p>Scarcity is about managing limited resources when demand exceeds supply</p>
+<ul>
+<li>Database connections, Memory for buffers, Expensive Resources</li>
+</ul>
+<h3 id="problem">Problem </h3>
+<ul>
+<li>Limited resource, needs to be released properly by threads for efficient use</li>
+</ul>
+<h3 id="solution-1">Solution </h3>
+<ul>
+<li><em>Semaphores</em> - Limit number of threads holding resources simul</li>
+<li><em>Resource Pooling</em>- Gives actual resource objects not just permission</li>
+</ul>
+<h3 id="semaphores-default-choice">Semaphores (Default Choice) </h3>
+<p>A semaphore is a counter that limits how many threads can do something at once</p>
+<blockquote>
+<p>OS premitives puts thread to sleep if permits unavailable, wakes them with permits are released</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">APIClient</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">SemaphoreSlim</span> _requestPermits <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">SemaphoreSlim</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-async">async</span> <span class="token return-type class-name">Task<span class="token punctuation">&lt;</span>Response<span class="token punctuation">&gt;</span></span> <span class="token function">MakeRequestAsync</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> endpoint<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-await">await</span> _requestPermits<span class="token punctuation">.</span><span class="token function">WaitAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword keyword-return">return</span> <span class="token keyword keyword-await">await</span> _httpClient<span class="token punctuation">.</span><span class="token function">GetAsync</span><span class="token punctuation">(</span>endpoint<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
+            _requestPermits<span class="token punctuation">.</span><span class="token function">Release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><ul>
+<li>Use <code>WaitAsync()</code> for async code or <code>Wait()</code> for synchronous</li>
+<li>If exception raised, finally block auto releases permission</li>
+</ul>
+<h3 id="resource-pooling-with-blocking-queue">Resource Pooling (with Blocking Queue) </h3>
+<p>Connection pools needs to be handed out to threads instead of just keeping the count. Needs to be reused</p>
+<ul>
+<li>Queue holds the actual connection objects and dispense them</li>
+<li>When scarce resources has state, use blocking queue</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">ConnectionPool</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>Connection<span class="token punctuation">&gt;</span></span> _availableConnections<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">ConnectionPool</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> poolSize<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        _availableConnections <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">BlockingCollection<span class="token punctuation">&lt;</span>Connection<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>poolSize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> poolSize<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            _availableConnections<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token function">CreateNewConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Connection</span> <span class="token function">Acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> _availableConnections<span class="token punctuation">.</span><span class="token function">Take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Blocks if empty</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Release</span><span class="token punctuation">(</span><span class="token class-name">Connection</span> conn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        _availableConnections<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">ExecuteQuery</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> query<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> conn <span class="token operator">=</span> <span class="token function">Acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
+            conn<span class="token punctuation">.</span><span class="token function">Execute</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
+            <span class="token function">Release</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Challenge</strong></p>
+<ul>
+<li>All connection initialized in begining - Slow start
+<ul>
+<li>Solution - Lazy Initialization</li>
+<li>In interview, create all upfront, in constructor - Simpler</li>
+</ul>
+</li>
+<li>What if some connection broken
+<ul>
+<li>Check before handing out</li>
+</ul>
+</li>
+<li>Connection blocked on slow queries, or thread blocks indefinetly
+<ul>
+<li>Solution - Use timeouts when take()</li>
+<li>Exception thrown if not received a connection within timeout</li>
+</ul>
+</li>
+</ul>
+<p>Timeout based queueu</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">ConnectionPoolWithTimeout</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>Connection<span class="token punctuation">&gt;</span></span> _availableConnections<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">TimeSpan</span> _timeout<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">ConnectionPoolWithTimeout</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> poolSize<span class="token punctuation">,</span> <span class="token class-name">TimeSpan</span> timeout<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        _availableConnections <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">BlockingCollection<span class="token punctuation">&lt;</span>Connection<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>poolSize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _timeout <span class="token operator">=</span> timeout<span class="token punctuation">;</span>
+        <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> poolSize<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            _availableConnections<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token function">CreateNewConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Connection</span> <span class="token function">Acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>_availableConnections<span class="token punctuation">.</span><span class="token function">TryTake</span><span class="token punctuation">(</span><span class="token keyword keyword-out">out</span> <span class="token class-name"><span class="token keyword keyword-var">var</span></span> conn<span class="token punctuation">,</span> _timeout<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword keyword-return">return</span> conn<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword keyword-throw">throw</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">TimeoutException</span><span class="token punctuation">(</span><span class="token interpolation-string"><span class="token string">$"No connection available within </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">_timeout<span class="token punctuation">.</span>TotalMilliseconds</span><span class="token punctuation">}</span></span><span class="token string">ms"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">ExecuteQuery</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> query<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> conn <span class="token operator">=</span> <span class="token function">Acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
+            conn<span class="token punctuation">.</span><span class="token function">Execute</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
+            _availableConnections<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="common-problems-1">Common Problems </h3>
+<ol>
+<li>Limit concurrent operations (semaphore with N permits)</li>
+<li>Limit aggregate consumption (semaphore with permits = resource units)</li>
+<li>Reuse expensive objects (blocking queue of actual objects)</li>
+</ol>
+<p><strong>Limit Concurrent Operations</strong> - Semaphore</p>
+<blockquote>
+<p>Number of concurrent operations within limits</p>
+</blockquote>
+<ul>
+<li>Rate limited API Wrapper</li>
+<li>Image processing pipeline</li>
+<li>Video Transcoding Service</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>IO</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">DownloadManager</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">SemaphoreSlim</span> _downloadSlots <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">SemaphoreSlim</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-async">async</span> <span class="token return-type class-name">Task</span> <span class="token function">DownloadAsync</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> url<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> destination<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-await">await</span> _downloadSlots<span class="token punctuation">.</span><span class="token function">WaitAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name"><span class="token keyword keyword-var">var</span></span> data <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> _httpClient<span class="token punctuation">.</span><span class="token function">DownloadAsync</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword keyword-await">await</span> File<span class="token punctuation">.</span><span class="token function">WriteAllBytesAsync</span><span class="token punctuation">(</span>destination<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
+            _downloadSlots<span class="token punctuation">.</span><span class="token function">Release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Limit Aggregate Consumption</strong> - Semaphore</p>
+<blockquote>
+<p>Resource utilization within limits. Variable resource consumption per operation</p>
+</blockquote>
+<ul>
+<li>In flight data limiter</li>
+<li>Memory Budget for buffer</li>
+</ul>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>IO</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">DiskWriter</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-const">const</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> MB <span class="token operator">=</span> <span class="token number">1024</span> <span class="token operator">*</span> <span class="token number">1024</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> _available <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span> <span class="token comment">// 100 MB</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-async">async</span> <span class="token return-type class-name">Task</span> <span class="token function">WriteFileAsync</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-byte">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> data<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> path<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword keyword-int">int</span></span> permits <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">Max</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>data<span class="token punctuation">.</span>Length <span class="token operator">+</span> MB <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> MB<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>_lock<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span>_available <span class="token operator">&lt;</span> permits<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                Monitor<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span>_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            _available <span class="token operator">-=</span> permits<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword keyword-await">await</span> File<span class="token punctuation">.</span><span class="token function">WriteAllBytesAsync</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
+            <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>_lock<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                _available <span class="token operator">+=</span> permits<span class="token punctuation">;</span>
+                Monitor<span class="token punctuation">.</span><span class="token function">PulseAll</span><span class="token punctuation">(</span>_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Reuse Expensive Objects</strong> - Blocking Queues</p>
+<ul>
+<li>Database connection pool</li>
+<li>GPU Task Scheduler</li>
+</ul>
+<p><strong>Maximizing Utilization</strong></p>
+<ul>
+<li>Fast and slow processes inefficiently using the resource permits</li>
+</ul>
+<p>SOLUTIONS</p>
+<ol>
+<li>Work Stealing - Idle workers can steal tasks from another workers queues</li>
+<li>Batching - Batch db writes together, hight throughput but high latency as well</li>
+<li>Adaptive sizing - Pool capacity based on demand</li>
+</ol>
+<h3 id="conclusion-1">Conclusion </h3>
+<p><img src="image-3.png" alt="alt text"></p>
+<hr>
+<h2 id="final-concurrency-decision-guide">Final Concurrency Decision Guide </h2>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>START: What concurrency problem are you solving?
+|
++-- 1. CORRECTNESS: Shared state may be corrupted
+|   |
+|   +-- Can shared mutable state be avoided?
+|   |   +-- Yes -&gt; Use immutable data or thread confinement
+|   |   +-- No  -&gt; What must change atomically?
+|   |       +-- One independent value
+|   |       |   -&gt; Use atomic operations or a CAS loop
+|   |       +-- Multiple values or one invariant
+|   |           +-- Moderate contention / cannot partition
+|   |           |   -&gt; Use one coarse-grained lock [default]
+|   |           +-- High contention / can partition by resource
+|   |               -&gt; Use fine-grained locking
+|   |
+|   +-- Examples: counters, seat booking, inventory, bank accounts
+|
++-- 2. COORDINATION: Work needs ordering, waiting, or handoff
+|   |
+|   +-- Must the work run asynchronously?
+|   |   +-- No  -&gt; Handle it inline
+|   |   +-- Yes -&gt; What kind of coordination is needed?
+|   |       +-- Simple task handoff or burst buffering
+|   |       |   -&gt; Use a bounded blocking queue [default]
+|   |       +-- Many independent stateful entities communicating
+|   |           -&gt; Consider the actor model
+|   |
+|   +-- Examples: background jobs, email delivery, bursty requests
+|
++-- 3. SCARCITY: Demand exceeds limited capacity
+    |
+    +-- Is the goal to enforce a limit?
+    |   +-- Limit concurrent operations
+    |   |   +-- Need to hand out actual reusable resources?
+    |   |       +-- Yes -&gt; Use a blocking queue as a resource pool
+    |   |       +-- No  -&gt; Use a semaphore with N permits [default]
+    |   +-- Limit total resource consumption
+    |       -&gt; Use semaphore permits as resource units
+    |
+    +-- Is the goal to improve utilization?
+        +-- Uneven task duration  -&gt; Work stealing
+        +-- Many small operations -&gt; Batching
+        +-- Load changes over time -&gt; Adaptive sizing
+
+    Examples: connection pools, API limits, memory budgets, worker pools
+</code></pre><h3 id="final-checklist">Final Checklist </h3>
+<ul>
+<li>Prefer no shared mutable state; otherwise protect the complete invariant.</li>
+<li>Bound queues and pools, define backpressure, and use timeouts or cancellation.</li>
+<li>Release locks, permits, and pooled resources in <code>finally</code> blocks.</li>
+<li>Define graceful shutdown for workers and actors.</li>
+<li>Measure contention, queue depth, wait time, throughput, and resource utilization before optimizing.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
