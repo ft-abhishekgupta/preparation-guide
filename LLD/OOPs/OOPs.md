@@ -581,6 +581,14 @@ User user = await GetUserAsync();
 ### Exception Handling
 
 ```cs
+throw new Exception("Exception Message");
+throw new CustomException("Exception Message");
+
+public class CustomException : Exception
+{
+    public CustomException(string message) : base(message) { }
+}
+
 try
 {
     ProcessPayment();
@@ -593,6 +601,14 @@ finally
 {
     Cleanup();
 }
+```
+
+### DateTime
+
+```cs
+DateTime dt = new();
+dt.UtcNow()
+(dt - dc).TotalHours
 ```
 
 ## Concurrency

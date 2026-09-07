@@ -1326,7 +1326,15 @@ Console<span class="token punctuation">.</span><span class="token function">Writ
 <span class="token punctuation">}</span>
 <span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">GetUserAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><h3 id="exception-handling">Exception Handling </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-try">try</span>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-throw">throw</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">Exception</span><span class="token punctuation">(</span><span class="token string">"Exception Message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-throw">throw</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">CustomException</span><span class="token punctuation">(</span><span class="token string">"Exception Message"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">CustomException</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">Exception</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-public">public</span> <span class="token function">CustomException</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword keyword-base">base</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-try">try</span>
 <span class="token punctuation">{</span>
     <span class="token function">ProcessPayment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -1338,6 +1346,10 @@ Console<span class="token punctuation">.</span><span class="token function">Writ
 <span class="token punctuation">{</span>
     <span class="token function">Cleanup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
+</code></pre><h3 id="datetime">DateTime </h3>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token class-name">DateTime</span> dt <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dt<span class="token punctuation">.</span><span class="token function">UtcNow</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span>dt <span class="token operator">-</span> dc<span class="token punctuation">)</span><span class="token punctuation">.</span>TotalHours
 </code></pre><h2 id="concurrency">Concurrency </h2>
 <h3 id="atomics">Atomics </h3>
 <p>Thread safe operation on single variable without locks</p>
