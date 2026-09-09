@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>Notes</title>
+      <title>LoggingSystem</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="color-scheme" content="light dark">
@@ -662,57 +662,344 @@ Markdown Preview Enhanced index / sidebar
     <body for="html-export">
       <div class="crossnote markdown-preview  ">
       
-<h1 id="lld-notes">LLD Notes </h1>
-<h3 id="create-the-lock-variable-as-instance-of-a-class-not-inside-a-method-so-that-everyone-shares-that-lock">Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">ClassName</span>
+<h1 id="logging-system">Logging System </h1>
+<p>Design a logging system with configurable log levels and output destination.</p>
+<h2 id="requirement">Requirement </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>The logging framework should support different log levels, such as DEBUG, INFO, WARNING, ERROR, and FATAL.
+It should allow logging messages with a timestamp, log level, and message content.
+The framework should support multiple output destinations, such as console, file, and database.
+It should provide a configuration mechanism to set the log level and output destination.
+The logging framework should be thread-safe to handle concurrent logging from multiple threads.
+It should be extensible to accommodate new log levels and output destinations in the future.
+</code></pre><h2 id="class-design">Class Design </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>enum LogLevel
+    Debug
+    Info
+    Warning
+    Error
+    Fatal
+
+class LogMessage
+    - timestamp: DateTime
+    - level: LogLevel
+    - message: string
+
+interface ILogDestination
+    + Write(log: LogMessage)
+
+class ConsoleDestination implements ILogDestination
+    + Write(log)
+
+class FileDestination implements ILogDestination
+    - filePath: string
+    - lock: object
+    + Write(log)
+
+class DatabaseDestination implements ILogDestination
+    + Write(log)
+
+class LogProcessorWorker
+    - queue: BlockingCollection&lt;LogMessage&gt;
+    - destinations: List&lt;ILogDestination&gt;
+    - workerTask: Task
+
+    + Start()
+    + Stop()
+
+    - ProcessLogs()
+    - ProcessLog(log)
+
+class LoggingSystem
+    - queue: BlockingCollection&lt;LogMessage&gt;
+    - destinations: List&lt;ILogDestination&gt;
+    - workers: List&lt;LogProcessorWorker&gt;
+    - minimumLevel: LogLevel
+
+    + LoggingSystem(...)
+    + Debug(message)
+    + Info(message)
+    + Warning(message)
+    + Error(message)
+    + Fatal(message)
+    + Dispose()
+
+    - Log(level, message)
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>        LoggingSystem
+             |
+ owns       / \
+           /   \
+          ↓     ↓
+     Blocking   List&lt;ILogDestination&gt;
+     Collection       |
+                      |
+           ┌──────────┼──────────┐
+           ↓          ↓          ↓
+       Console      File      Database
+
+PRODUCER-CONSUMER
+
+Application
+    |
+    | Info("User logged in")
+    ↓
+LoggingSystem
+    |
+    | queue.Add(log)
+    ↓
+BlockingCollection&lt;LogMessage&gt;
+    |
+    | queue.Take()
+    ↓
+Worker Thread
+    |
+    ↓
+ILogDestination
+</code></pre><h2 id="implementation">Implementation </h2>
+<p>LogLevel</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token namespace">System</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Concurrent</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>IO</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Linq</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-using">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading<span class="token punctuation">.</span>Tasks</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-enum">enum</span> <span class="token class-name">LogLevel</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token comment">// constructor and methods</span>
+    Debug<span class="token punctuation">,</span>
+    Info<span class="token punctuation">,</span>
+    Warning<span class="token punctuation">,</span>
+    Error<span class="token punctuation">,</span>
+    Fatal
 <span class="token punctuation">}</span>
-</code></pre><h3 id="fine-grain-locking">Fine Grain Locking </h3>
-<ul>
-<li>Order the elements to prevent deadlock</li>
-<li>Release in reverse order</li>
-</ul>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">Showtime</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">IDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span> _locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">Showtime</span><span class="token punctuation">(</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> availableSeats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            _locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Reservation</span> <span class="token function">BookSeats</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">IList<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> seats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> orderedSeat <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>seats<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Array<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>orderedSeat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> orderedSeat<span class="token punctuation">)</span>
-            locks<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>_locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>LogMessage</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">LogMessage</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">DateTime</span> Timestamp <span class="token punctuation">{</span> <span class="token keyword keyword-get">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">LogLevel</span> Level <span class="token punctuation">{</span> <span class="token keyword keyword-get">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-string">string</span></span> Message <span class="token punctuation">{</span> <span class="token keyword keyword-get">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
 
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> l <span class="token keyword keyword-in">in</span> locks<span class="token punctuation">)</span>
-            Monitor<span class="token punctuation">.</span><span class="token function">Enter</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
-            <span class="token range operator">..</span><span class="token punctuation">.</span> booking flow
-        <span class="token punctuation">}</span>
-        <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
-            <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> locks<span class="token punctuation">.</span>Count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-                Monitor<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span>locks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
+    <span class="token keyword keyword-public">public</span> <span class="token function">LogMessage</span><span class="token punctuation">(</span><span class="token class-name">LogLevel</span> level<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Timestamp <span class="token operator">=</span> DateTime<span class="token punctuation">.</span>UtcNow<span class="token punctuation">;</span>
+        Level <span class="token operator">=</span> level<span class="token punctuation">;</span>
+        Message <span class="token operator">=</span> message<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-</code></pre><h3 id="use-concurrentdictionary-for-thread-safe-writes-if-multiple-thread-can-share-a-map">Use ConcurrentDictionary for thread safe writes, if multiple thread can share a map </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span> dict <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryRemove</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">AddOrUpdate</span><span class="token punctuation">(</span>
-    key<span class="token punctuation">,</span>
-    addValue<span class="token punctuation">,</span>
-    <span class="token punctuation">(</span>key<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> newValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>Destination</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-interface">interface</span> <span class="token class-name">ILogDestination</span>
+<span class="token punctuation">{</span>
+    <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Write</span><span class="token punctuation">(</span><span class="token class-name">LogMessage</span> log<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>ConsoleDestination</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">ConsoleDestination</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ILogDestination</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Write</span><span class="token punctuation">(</span><span class="token class-name">LogMessage</span> log<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>
+            <span class="token interpolation-string"><span class="token string">$"[</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Timestamp</span><span class="token format-string"><span class="token punctuation">:</span>O</span><span class="token punctuation">}</span></span><span class="token string">] "</span></span> <span class="token operator">+</span>
+            <span class="token interpolation-string"><span class="token string">$"[</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Level</span><span class="token punctuation">}</span></span><span class="token string">] "</span></span> <span class="token operator">+</span>
+            <span class="token interpolation-string"><span class="token string">$"</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Message</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>FileDestination</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">FileDestination</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ILogDestination</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-string">string</span></span> _filePath<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">FileDestination</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> filePath<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _filePath <span class="token operator">=</span> filePath<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Write</span><span class="token punctuation">(</span><span class="token class-name">LogMessage</span> log<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>_lock<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            File<span class="token punctuation">.</span><span class="token function">AppendAllText</span><span class="token punctuation">(</span>
+                _filePath<span class="token punctuation">,</span>
+                <span class="token interpolation-string"><span class="token string">$"[</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Timestamp</span><span class="token format-string"><span class="token punctuation">:</span>O</span><span class="token punctuation">}</span></span><span class="token string">] "</span></span> <span class="token operator">+</span>
+                <span class="token interpolation-string"><span class="token string">$"[</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Level</span><span class="token punctuation">}</span></span><span class="token string">] "</span></span> <span class="token operator">+</span>
+                <span class="token interpolation-string"><span class="token string">$"</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Message</span><span class="token punctuation">}</span></span><span class="token string">"</span></span> <span class="token operator">+</span>
+                Environment<span class="token punctuation">.</span>NewLine<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>DatabaseDestination</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">DatabaseDestination</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ILogDestination</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Write</span><span class="token punctuation">(</span><span class="token class-name">LogMessage</span> log<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Insert log into database</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>
+            <span class="token interpolation-string"><span class="token string">$"DB: [</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Level</span><span class="token punctuation">}</span></span><span class="token string">] </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">log<span class="token punctuation">.</span>Message</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>LoggingProcessorWorker</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">LogProcessorWorker</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>LogMessage<span class="token punctuation">&gt;</span></span> _queue<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">IReadOnlyList<span class="token punctuation">&lt;</span>ILogDestination<span class="token punctuation">&gt;</span></span> _destinations<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token class-name">Task<span class="token punctuation">?</span></span> _workerTask<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">LogProcessorWorker</span><span class="token punctuation">(</span>
+        <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>LogMessage<span class="token punctuation">&gt;</span></span> queue<span class="token punctuation">,</span>
+        <span class="token class-name">IEnumerable<span class="token punctuation">&lt;</span>ILogDestination<span class="token punctuation">&gt;</span></span> destinations<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _queue <span class="token operator">=</span> queue<span class="token punctuation">;</span>
+        _destinations <span class="token operator">=</span> destinations<span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _workerTask <span class="token operator">=</span> Task<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span>ProcessLogs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">ProcessLogs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-try">try</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment">// Blocks until a log is available.</span>
+                <span class="token class-name"><span class="token keyword keyword-var">var</span></span> log <span class="token operator">=</span> _queue<span class="token punctuation">.</span><span class="token function">Take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token function">ProcessLog</span><span class="token punctuation">(</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword keyword-catch">catch</span> <span class="token punctuation">(</span><span class="token class-name">InvalidOperationException</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment">// Queue completed and empty.</span>
+                <span class="token keyword keyword-break">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">ProcessLog</span><span class="token punctuation">(</span><span class="token class-name">LogMessage</span> log<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-foreach">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> destination <span class="token keyword keyword-in">in</span> _destinations<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-try">try</span>
+            <span class="token punctuation">{</span>
+                destination<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword keyword-catch">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> ex<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment">// One destination should not</span>
+                <span class="token comment">// kill the worker.</span>
+                Console<span class="token punctuation">.</span>Error<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>
+                    <span class="token interpolation-string"><span class="token string">$"Destination failed: </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">ex<span class="token punctuation">.</span>Message</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _workerTask<span class="token punctuation">?.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>LoggingSystem</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">LoggingSystem</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IDisposable</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">BlockingCollection<span class="token punctuation">&lt;</span>LogMessage<span class="token punctuation">&gt;</span></span> _queue<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">List<span class="token punctuation">&lt;</span>ILogDestination<span class="token punctuation">&gt;</span></span> _destinations<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">List<span class="token punctuation">&lt;</span>LogProcessorWorker<span class="token punctuation">&gt;</span></span> _workers<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">LogLevel</span> _minimumLevel<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">LoggingSystem</span><span class="token punctuation">(</span>
+        <span class="token class-name">LogLevel</span> minimumLevel<span class="token punctuation">,</span>
+        <span class="token class-name">IEnumerable<span class="token punctuation">&lt;</span>ILogDestination<span class="token punctuation">&gt;</span></span> destinations<span class="token punctuation">,</span>
+        <span class="token class-name"><span class="token keyword keyword-int">int</span></span> workerCount <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _minimumLevel <span class="token operator">=</span> minimumLevel<span class="token punctuation">;</span>
+
+        _destinations <span class="token operator">=</span> destinations<span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        _queue <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">BlockingCollection<span class="token punctuation">&lt;</span>LogMessage<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>
+            <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">ConcurrentQueue<span class="token punctuation">&lt;</span>LogMessage<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        _workers <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>LogProcessorWorker<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token function">StartWorkers</span><span class="token punctuation">(</span>workerCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">StartWorkers</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> workerCount<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> workerCount<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name"><span class="token keyword keyword-var">var</span></span> worker <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">LogProcessorWorker</span><span class="token punctuation">(</span>
+                _queue<span class="token punctuation">,</span>
+                _destinations<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            worker<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            _workers<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>worker<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Debug</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span>
+        <span class="token operator">=&gt;</span> <span class="token function">Log</span><span class="token punctuation">(</span>LogLevel<span class="token punctuation">.</span>Debug<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Info</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span>
+        <span class="token operator">=&gt;</span> <span class="token function">Log</span><span class="token punctuation">(</span>LogLevel<span class="token punctuation">.</span>Info<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Warning</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span>
+        <span class="token operator">=&gt;</span> <span class="token function">Log</span><span class="token punctuation">(</span>LogLevel<span class="token punctuation">.</span>Warning<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span>
+        <span class="token operator">=&gt;</span> <span class="token function">Log</span><span class="token punctuation">(</span>LogLevel<span class="token punctuation">.</span>Error<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Fatal</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span>
+        <span class="token operator">=&gt;</span> <span class="token function">Log</span><span class="token punctuation">(</span>LogLevel<span class="token punctuation">.</span>Fatal<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Log</span><span class="token punctuation">(</span>
+        <span class="token class-name">LogLevel</span> level<span class="token punctuation">,</span>
+        <span class="token class-name"><span class="token keyword keyword-string">string</span></span> message<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>level <span class="token operator">&lt;</span> _minimumLevel<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> log <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">LogMessage</span><span class="token punctuation">(</span>
+            level<span class="token punctuation">,</span>
+            message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        _queue<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>log<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// No more messages can be added.</span>
+        _queue<span class="token punctuation">.</span><span class="token function">CompleteAdding</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Workers finish remaining logs.</span>
+        <span class="token keyword keyword-foreach">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> worker <span class="token keyword keyword-in">in</span> _workers<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            worker<span class="token punctuation">.</span><span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        _queue<span class="token punctuation">.</span><span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><h2 id="usage">Usage </h2>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-using">using</span> <span class="token class-name"><span class="token keyword keyword-var">var</span></span> logger <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">LoggingSystem</span><span class="token punctuation">(</span>
+    LogLevel<span class="token punctuation">.</span>Debug<span class="token punctuation">,</span>
+    <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">ILogDestination<span class="token punctuation">[</span><span class="token punctuation">]</span></span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">ConsoleDestination</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">FileDestination</span><span class="token punctuation">(</span><span class="token string">"application.log"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">DatabaseDestination</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">workerCount</span><span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+logger<span class="token punctuation">.</span><span class="token function">Debug</span><span class="token punctuation">(</span><span class="token string">"Application started"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+logger<span class="token punctuation">.</span><span class="token function">Info</span><span class="token punctuation">(</span><span class="token string">"User logged in"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+logger<span class="token punctuation">.</span><span class="token function">Warning</span><span class="token punctuation">(</span><span class="token string">"Memory usage is high"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+logger<span class="token punctuation">.</span><span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">"Payment failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+logger<span class="token punctuation">.</span><span class="token function">Fatal</span><span class="token punctuation">(</span><span class="token string">"Database unavailable"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
       </div>
       

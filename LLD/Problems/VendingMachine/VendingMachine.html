@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>Notes</title>
+      <title>VendingMachine</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="color-scheme" content="light dark">
@@ -662,58 +662,104 @@ Markdown Preview Enhanced index / sidebar
     <body for="html-export">
       <div class="crossnote markdown-preview  ">
       
-<h1 id="lld-notes">LLD Notes </h1>
-<h3 id="create-the-lock-variable-as-instance-of-a-class-not-inside-a-method-so-that-everyone-shares-that-lock">Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">ClassName</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token comment">// constructor and methods</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="fine-grain-locking">Fine Grain Locking </h3>
-<ul>
-<li>Order the elements to prevent deadlock</li>
-<li>Release in reverse order</li>
-</ul>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">Showtime</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">IDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span> _locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">Showtime</span><span class="token punctuation">(</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> availableSeats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            _locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Reservation</span> <span class="token function">BookSeats</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">IList<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> seats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> orderedSeat <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>seats<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Array<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>orderedSeat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> orderedSeat<span class="token punctuation">)</span>
-            locks<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>_locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h1 id="vending-machine">Vending Machine </h1>
+<h2 id="requirements">Requirements </h2>
+<h2 id="class-design">Class Design </h2>
+<p>class Product<br>
+- id: string<br>
+- name: string<br>
+- price: decimal</p>
+<p>enum MoneyType<br>
+Coin<br>
+Note</p>
+<p>class Money<br>
+- denomination: decimal<br>
+- type: MoneyType</p>
+<p>class Inventory<br>
+- products: ConcurrentDictionary&lt;string, Product&gt;<br>
+- quantities: ConcurrentDictionary&lt;string, int&gt;</p>
+<pre class="language-text">+ AddProduct(product, quantity)
++ RemoveProduct(productId): bool
++ GetProduct(productId): Product
++ GetQuantity(productId): int
++ IsAvailable(productId): bool
+</pre>
+<p>class CashManager<br>
+- cash: Dictionary&lt;decimal, int&gt;<br>
+- lock: object</p>
+<pre class="language-text">+ AddMoney(money)
++ CalculateChange(amount): List&lt;Money&gt;
++ RemoveChange(change)
++ GetTotalCash(): decimal
++ CollectAllMoney(): List&lt;Money&gt;
+</pre>
+<p>interface IVendingMachineState<br>
++ SelectProduct(machine, productId)<br>
++ InsertMoney(machine, money)<br>
++ Dispense(machine)<br>
++ Cancel(machine)</p>
+<p>class IdleState : IVendingMachineState<br>
+class ProductSelectedState : IVendingMachineState<br>
+class AcceptingMoneyState : IVendingMachineState<br>
+class DispensingState : IVendingMachineState<br>
+class ReturningChangeState : IVendingMachineState</p>
+<p>class VendingMachine<br>
+- state: IVendingMachineState<br>
+- inventory: Inventory<br>
+- cashManager: CashManager</p>
+<pre class="language-text">- selectedProduct: Product?
+- insertedAmount: decimal
 
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> l <span class="token keyword keyword-in">in</span> locks<span class="token punctuation">)</span>
-            Monitor<span class="token punctuation">.</span><span class="token function">Enter</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+- transactionLock: object
 
-        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
-            <span class="token range operator">..</span><span class="token punctuation">.</span> booking flow
-        <span class="token punctuation">}</span>
-        <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
-            <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> locks<span class="token punctuation">.</span>Count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-                Monitor<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span>locks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
++ SelectProduct(productId)
++ InsertMoney(money)
++ Dispense()
++ Cancel()
 
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="use-concurrentdictionary-for-thread-safe-writes-if-multiple-thread-can-share-a-map">Use ConcurrentDictionary for thread safe writes, if multiple thread can share a map </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span> dict <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryRemove</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">AddOrUpdate</span><span class="token punctuation">(</span>
-    key<span class="token punctuation">,</span>
-    addValue<span class="token punctuation">,</span>
-    <span class="token punctuation">(</span>key<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> newValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
++ Restock(productId, quantity)
++ CollectMoney(): List&lt;Money&gt;
+
++ SetState(state)
+
++ GetSelectedProduct(): Product?
++ GetInsertedAmount(): decimal
++ AddInsertedAmount(amount)
++ ResetTransaction()
+</pre>
+<pre data-role="codeBlock" data-info="" class="language-text"><code></code></pre><p>┌──────────────┐<br>
+│    Idle      │<br>
+└──────┬───────┘<br>
+│ select product<br>
+↓<br>
+┌──────────────┐<br>
+│  Product     │<br>
+│  Selected    │<br>
+└──────┬───────┘<br>
+│ insert money<br>
+↓<br>
+┌──────────────┐<br>
+│  Accepting   │<br>
+│    Money     │<br>
+└──────┬───────┘<br>
+│ sufficient money<br>
+↓<br>
+┌──────────────┐<br>
+│  Dispensing  │<br>
+└──────┬───────┘<br>
+│<br>
+↓<br>
+┌──────────────┐<br>
+│ Return       │<br>
+│ Change       │<br>
+└──────┬───────┘<br>
+│<br>
+↓<br>
+Idle</p>
+<p>Out of stock       → Idle<br>
+Insufficient money → AcceptingMoney / Selected<br>
+Cancel             → ReturnChange → Idle</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code></code></pre>
       </div>
       
       

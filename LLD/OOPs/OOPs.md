@@ -611,6 +611,23 @@ dt.UtcNow()
 (dt - dc).TotalHours
 ```
 
+### LINQ
+
+```cs
+var pending = orders.Where(order => order.Status == OrderStatus.Created).ToList();
+var customerIds = orders.Select(order => order.CustomerId).ToList();
+Order? order = orders.FirstOrDefault(order => order.Id == orderId);
+bool hasPending = orders.Any(order => order.Status == OrderStatus.Created);
+bool allPaid = orders.All(order => order.IsPaid);
+int paidCount = orders.Count(order => order.IsPaid);
+decimal total = orders.Sum(order => order.TotalAmount);
+var sorted = orders.OrderBy(order => order.CreatedAt).ToList();
+var latestFirst = orders.OrderByDescending(order => order.CreatedAt).ToList();
+var grouped = orders.GroupBy(order => order.Status);
+var uniqueCustomerIds = orders.Select(order => order.CustomerId).Distinct().ToList();
+var ordersById = orders.ToDictionary(order => order.Id);
+```
+
 ## Concurrency
 
 ### Atomics

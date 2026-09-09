@@ -1,6 +1,6 @@
 # LLD Notes
 
-Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock
+### Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock
 
 ```cs
 class ClassName
@@ -11,7 +11,7 @@ class ClassName
 }
 ```
 
-Fine Grain Locking
+### Fine Grain Locking
 
 - Order the elements to prevent deadlock
 - Release in reverse order
@@ -46,4 +46,16 @@ class Showtime {
 
     }
 }
+```
+
+### Use ConcurrentDictionary for thread safe writes, if multiple thread can share a map
+```cs
+private readonly ConcurrentDictionary<string, int> dict = new();
+dict.TryRemove(key, out value);
+dict.TryAdd(key, value);
+dict.TryGetValue(key, out value);
+dict.AddOrUpdate(
+    key,
+    addValue,
+    (key, oldValue) => newValue);
 ```

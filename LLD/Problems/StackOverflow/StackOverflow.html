@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>Notes</title>
+      <title>StackOverflow</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="color-scheme" content="light dark">
@@ -662,57 +662,206 @@ Markdown Preview Enhanced index / sidebar
     <body for="html-export">
       <div class="crossnote markdown-preview  ">
       
-<h1 id="lld-notes">LLD Notes </h1>
-<h3 id="create-the-lock-variable-as-instance-of-a-class-not-inside-a-method-so-that-everyone-shares-that-lock">Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">ClassName</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token comment">// constructor and methods</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="fine-grain-locking">Fine Grain Locking </h3>
-<ul>
-<li>Order the elements to prevent deadlock</li>
-<li>Release in reverse order</li>
-</ul>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">Showtime</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">IDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span> _locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">Showtime</span><span class="token punctuation">(</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> availableSeats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            _locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Reservation</span> <span class="token function">BookSeats</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">IList<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> seats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> orderedSeat <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>seats<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Array<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>orderedSeat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> orderedSeat<span class="token punctuation">)</span>
-            locks<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>_locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h1 id="stackoverflow">StackOverflow </h1>
+<h2 id="requirements">Requirements </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Users can post questions, answer questions, and comment on questions and answers.
+Users can vote on questions and answers.
+Questions should have tags associated with them.
+Users can search for questions based on keywords, tags, or user profiles.
+The system should assign reputation score to users based on their activity and the quality of their contributions.
+The system should handle concurrent access and ensure data consistency.
+</code></pre><h2 id="class-design">Class Design </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>class User
+    - id: long
+    - name: string
+    - reputation: int
 
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> l <span class="token keyword keyword-in">in</span> locks<span class="token punctuation">)</span>
-            Monitor<span class="token punctuation">.</span><span class="token function">Enter</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    + UpdateReputation(amount: int)
 
-        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
-            <span class="token range operator">..</span><span class="token punctuation">.</span> booking flow
-        <span class="token punctuation">}</span>
-        <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
-            <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> locks<span class="token punctuation">.</span>Count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-                Monitor<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span>locks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+abstract class Post
+    - id: long
+    - author: User
+    - body: string
+    - createdAt: DateTime
 
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="use-concurrentdictionary-for-thread-safe-writes-if-multiple-thread-can-share-a-map">Use ConcurrentDictionary for thread safe writes, if multiple thread can share a map </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span> dict <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryRemove</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">AddOrUpdate</span><span class="token punctuation">(</span>
-    key<span class="token punctuation">,</span>
-    addValue<span class="token punctuation">,</span>
-    <span class="token punctuation">(</span>key<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> newValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    - votes: ConcurrentDictionary&lt;long, Vote&gt;
+    - comments: List&lt;Comment&gt;
+
+    + AddVote(vote: Vote): bool
+    + RemoveVote(userId: long): bool
+    + GetVotes(): List&lt;Vote&gt;
+
+    + AddComment(comment: Comment)
+    + GetComments(): List&lt;Comment&gt;
+
+class Question : Post
+    - title: string
+    - tags: List&lt;Tag&gt;
+    - answers: List&lt;Answer&gt;
+    - acceptedAnswer: Answer?
+
+    + AddAnswer(answer: Answer)
+    + GetAnswers(): List&lt;Answer&gt;
+
+    + AcceptAnswer(answer: Answer)
+    + GetAcceptedAnswer(): Answer?
+
+class Answer : Post
+    - question: Question
+    - isAccepted: bool
+
+    + MarkAccepted()
+
+class Comment
+    - id: long
+    - author: User
+    - body: string
+    - createdAt: DateTime
+
+class Tag
+    - name: string
+
+class Vote
+    - user: User
+    - type: VoteType
+
+enum VoteType
+    Upvote
+    Downvote
+
+class VotingService
+    - eventPublisher: PostEventPublisher
+
+    + Vote(
+        user: User,
+        post: Post,
+        type: VoteType
+      )
+    
+class CommentService
+    - commentIdGenerator
+
+    + AddComment(
+        user: User,
+        post: Post,
+        body: string
+      ): Comment
+
+class AnswerService
+    - eventPublisher: PostEventPublisher
+
+    + AddAnswer(
+        user: User,
+        question: Question,
+        body: string
+      ): Answer
+
+    + AcceptAnswer(
+        user: User,
+        answer: Answer
+      )
+
+class SearchService
+    - questions: ConcurrentDictionary&lt;long, Question&gt;
+
+    + AddQuestion(question: Question)
+
+    + SearchByKeyword(
+        keyword: string
+      ): List&lt;Question&gt;
+
+    + SearchByTag(
+        tag: string
+      ): List&lt;Question&gt;
+
+    + SearchByUser(
+        user: User
+      ): List&lt;Question&gt;
+
+class VoteEvent
+    - post: Post
+    - voter: User
+    - voteType: VoteType
+
+interface IPostEventObserver
+    + OnVote(event: VoteEvent)
+    + OnAnswerAccepted(answer: Answer)
+
+class PostEventPublisher
+    - observers: List&lt;IPostEventObserver&gt;
+
+    + Subscribe(observer: IPostEventObserver)
+    + PublishVote(event: VoteEvent)
+    + PublishAnswerAccepted(answer: Answer)
+
+class ReputationService : IPostEventObserver
+    + OnVote(event: VoteEvent)
+    + OnAnswerAccepted(answer: Answer)
+
+class StackOverflowSystem
+    - votingService: VotingService
+    - commentService: CommentService
+    - answerService: AnswerService
+    - searchService: SearchService
+
+    + CreateQuestion(user: User, title: string, body: string, tags: List&lt;Tag&gt;): Question
+    + AddAnswer(user: User, question: Question, body: string): Answer
+    + AddComment(user: User, post: Post, body: string): Comment
+    + Vote(user: User, post: Post, type: VoteType)
+    + AcceptAnswer(user: User, answer: Answer)
+    + SearchByKeyword(keyword: string): List&lt;Question&gt;
+    + SearchByTag(tag: string): List&lt;Question&gt;
+    + SearchByUser(user: User): List&lt;Question&gt;
+</code></pre><pre data-role="codeBlock" data-info="" class="language-text"><code>                         StackOverflowSystem
+                                  |
+          +-----------------------+-----------------------+
+          |                       |                       |
+          ↓                       ↓                       ↓
+   VotingService          CommentService           AnswerService
+          |                                               |
+          |                                               |
+          ↓                                               ↓
+   PostEventPublisher                               Question
+          |
+     +----+----------------+
+     |                     |
+     ↓                     ↓
+ReputationService   NotificationService
+     |
+     ↓
+    User
+
+              ┌──────────────────┐
+              │       Post       │
+              │    &lt;&lt;abstract&gt;&gt;  │
+              └────────┬─────────┘
+                       |
+             +---------+---------+
+             |                   |
+             ↓                   ↓
+        ┌──────────┐       ┌──────────┐
+        │ Question │       │  Answer  │
+        └────┬─────┘       └────┬─────┘
+             |                  |
+             | 1               | 1
+             |                 |
+             | *               | *
+             ↓                 ↓
+          Answer             Comment
+             |
+             *
+             ↓
+            Tag
+
+
+Post
+ ├── votes: ConcurrentDictionary&lt;UserId, Vote&gt;
+ └── comments: List&lt;Comment&gt;
+
+Question
+ ├── answers: List&lt;Answer&gt;
+ ├── tags: List&lt;Tag&gt;
+ └── acceptedAnswer: Answer?
 </code></pre>
       </div>
       

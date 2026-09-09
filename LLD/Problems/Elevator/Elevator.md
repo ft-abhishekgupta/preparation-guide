@@ -1,8 +1,13 @@
 # Elevator
+
 An elevator system manages multiple elevators serving different floors in a building. When someone requests an elevator, the system decides which one to dispatch. Once inside, passengers select their destination floors. The system needs to move elevators efficiently while handling multiple concurrent requests.
+
 ## Prompt
+
 "Design an elevator control system for a building. The system should handle multiple elevators, floor requests, and move elevators efficiently to service requests."
+
 ## Clarifying Questions
+
 - How many elevators and floors. Fixed or Variable
 - Up / Down call on elevator or floor call
 - Can we select multiple destinations
@@ -10,7 +15,9 @@ An elevator system manages multiple elevators serving different floors in a buil
 - Invalid Requests
 - Elevator capacity, overload
 - Simulation or actual calls from external service
+
 ## Requirements
+
 ```
 1. System manages 3 elevators serving 10 floors (0-9)
 2. Users can request an elevator from any floor (hall call). System decides which elevator to dispatch.
@@ -31,14 +38,19 @@ Out of scope:
 - Dynamic floor/elevator configuration
 - UI/rendering layer
 ```
+
 ## Core Entities
+
 Floor : No state or rules, Does not need to be entity
+
 ```
 ElevatorController : Orchestrator
 Elevator : Single Elevator
 Request : Call
 ```
+
 ## Class Design
+
 ![alt text](image.png)
 
 ![alt text](image-1.png)
@@ -46,6 +58,7 @@ Request : Call
 ![alt text](image-2.png)
 
 ![alt text](image-3.png)
+
 ```
 class ElevatorController:
     - elevators: List<Elevator>
@@ -83,8 +96,11 @@ enum RequestType:
     PICKUP_DOWN
     DESTINATION
 ```
+
 ## Implementation
+
 ### Pseudo Code
+
 #### Elevator Controller
 
 ```
@@ -138,10 +154,12 @@ step()
     for e in elevators
         e.step()
 ```
-findMovingToward : It has an issue, if the selected elevator has a request in its queue that changes the direction, then that elevator will turn before selecting the current request. 
+
+findMovingToward : It has an issue, if the selected elevator has a request in its queue that changes the direction, then that elevator will turn before selecting the current request.
 BETTER: Direction and Request Queue Analysis
 
 #### Elevator
+
 ```
 step()
     // Case 1: Nothing to do
@@ -207,8 +225,11 @@ addRequest(request)
         return true  // already here; treat as no-op
     return requests.add(request)
 ```
+
 ### Verification
+
 Elevator is on floor 3, going UP, with requests Request(5, PICKUP_UP) and Request(7, DESTINATION).
+
 ```
 Tick 0: currentFloor=3, direction=UP, requests={Request(5, PICKUP_UP), Request(7, DESTINATION)}
   - Not at a stop, move up
@@ -229,7 +250,9 @@ Tick 5: currentFloor=7, direction=UP, requests={Request(7, DESTINATION)}
 Tick 6: currentFloor=7, direction=IDLE, requests={}
   - No requests, stay idle
 ```
+
 Now someone on floor 2 presses the call button going DOWN.
+
 ```
 Tick 7: currentFloor=7, direction=IDLE, requests={Request(2, PICKUP_DOWN)}
   - requests not empty, pick direction
@@ -242,8 +265,11 @@ Tick 9: currentFloor=5, direction=DOWN, requests={Request(2, PICKUP_DOWN)}
   - Not at a stop, move down
 ...continues until reaching floor 2...
 ```
+
 ### Code
+
 Elevator
+
 ```cs
 using System;
 using System.Collections.Generic;
@@ -300,7 +326,7 @@ public class Elevator
             // Find nearest request to establish initial direction (deterministic)
             Request nearest = null;
             int minDistance = int.MaxValue;
-            
+
             foreach (var req in _requests)
             {
                 int distance = Math.Abs(req.GetFloor() - _currentFloor);
@@ -310,7 +336,7 @@ public class Elevator
                     nearest = req;
                 }
             }
-            
+
             _direction = nearest.GetFloor() > _currentFloor ? Direction.Up : Direction.Down;
         }
 
@@ -389,7 +415,9 @@ public class Elevator
     public Direction Direction => _direction;
 }
 ```
+
 Elevator Controller
+
 ```cs
 using System;
 using System.Collections.Generic;
@@ -413,7 +441,7 @@ public class ElevatorController
     // Validate the floor number
     // Pick which elevator should handle this request
     // Tell that elevator to add the floor to its stops
-    // 
+    //
     // Edge cases
     // Floor out of bounds (less than 0 or greater than 9)
     // Invalid direction
@@ -537,7 +565,9 @@ public class ElevatorController
     }
 }
 ```
+
 Request
+
 ```cs
 using System;
 
@@ -586,8 +616,11 @@ public class Request
     }
 }
 ```
+
 ## Extensibility
+
 ### "How would you add priority floors or an express elevator?"
+
 ```
 class ElevatorController:
     - elevators: List<Elevator>
@@ -616,13 +649,18 @@ selectBestElevator(request)
         return expressElevator
     // ... normal selection logic for regular elevators
 ```
+
 ### "How would you add undo to cancel a floor request?"
+
 ```
 removeRequest(request)
     requests.remove(request)  // That's it - just remove from the set
 ```
+
 ### "What if multiple hall calls come in at the same time?"
+
 Lock
+
 ```
 requestElevator(floor, type)
     lock.acquire()
@@ -634,7 +672,9 @@ step()
     ...
     lock.release()
 ```
+
 Concurrent Queue
+
 ```
 addRequest(request)
     pendingRequests.enqueue(request)  // thread-safe queue
@@ -645,3 +685,20 @@ step()
     // all logic uses activeRequests
     ...
 ```
+
+### What if building has 100 elevators with 1000 floors
+
+The core `Elevator` behavior does not need to change. Scale the system through the dispatch layer:
+
+1. **Make the elevator count configurable** so the same design supports 3, 10, or 100 elevators.
+2. **Move selection logic into an `IElevatorSelectionStrategy`** so algorithms can change without modifying the controller.
+3. **Reduce the candidates** by grouping elevators by floor zone or state (`IDLE`, `UP`, `DOWN`) instead of checking all 100.
+4. **Choose the elevator with the lowest ETA**, considering its current floor, direction, and pending stops. The nearest elevator may not be the fastest.
+
+```text
+ElevatorController -> ElevatorManager -> SelectionStrategy -> Best Elevator
+```
+
+> Key Interview Point
+
+Keep `Elevator` focused on elevator behavior. Put scaling and selection in the orchestration layer. This follows the **Single Responsibility** and **Open/Closed** principles.

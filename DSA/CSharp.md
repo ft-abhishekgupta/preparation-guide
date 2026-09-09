@@ -234,6 +234,7 @@ list.Insert(0, 9);                              // O(n) — shifts right
 list.InsertRange(0, new[] { 7, 8 });
 
 list[0] = 5;                                    // O(1) set
+list[^1]                                        // Last Node
 
 list.RemoveAt(0);                               // O(n) — by index
 list.Remove(5);                                 // O(n) — removes first match
@@ -287,6 +288,9 @@ ll.AddFirst(1);                         // O(1)
 ll.AddLast(2);                          // O(1)
 int firstV = ll.First!.Value;
 int lastV  = ll.Last!.Value;
+LinkedListNode<int> ln = ll.First!;
+var nextNode = ln.Next;
+var prevNode = ln.Previous;
 ll.RemoveFirst();                       // O(1)
 ll.RemoveLast();                        // O(1)
 int llCnt = ll.Count;

@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>Notes</title>
+      <title>LRUCache</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="color-scheme" content="light dark">
@@ -662,57 +662,209 @@ Markdown Preview Enhanced index / sidebar
     <body for="html-export">
       <div class="crossnote markdown-preview  ">
       
-<h1 id="lld-notes">LLD Notes </h1>
-<h3 id="create-the-lock-variable-as-instance-of-a-class-not-inside-a-method-so-that-everyone-shares-that-lock">Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">ClassName</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token comment">// constructor and methods</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="fine-grain-locking">Fine Grain Locking </h3>
+<h1 id="lru-cache">LRU Cache </h1>
+<h2 id="requirements">Requirements </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>- The LRU cache should support the following operations:
+- put(key, value): Insert a key-value pair into the cache. If the cache is at capacity, remove the least recently used item before inserting the new item.
+- get(key): Get the value associated with the given key. If the key exists in the cache, move it to the front of the cache (most recently used) and return its value. If the key does not exist, return -1.
+- The cache should have a fixed capacity, specified during initialization.
+- The cache should be thread-safe, allowing concurrent access from multiple threads.
+- The cache should be efficient in terms of time complexity for both put and get operations, ideally O(1).
+</code></pre><h2 id="class-design">Class Design </h2>
 <ul>
-<li>Order the elements to prevent deadlock</li>
-<li>Release in reverse order</li>
+<li>We use Dictionary and Doubly Linked List</li>
+<li>Doubly Linked Liste to maintain priority</li>
+<li>Map for random pointers to LL Nodes</li>
 </ul>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">Showtime</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">IDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span> _locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">Showtime</span><span class="token punctuation">(</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> availableSeats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            _locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
+<h2 id="using-built-in-linked-list">Using Built In Linked List </h2>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">LRUCache</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> capacity<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> LinkedListNode<span class="token punctuation">&lt;</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> key<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> map<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">LinkedList<span class="token punctuation">&lt;</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> key<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">&gt;</span></span> list<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">LRUCache</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> capacity<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>capacity <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token keyword keyword-throw">throw</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">ArgumentException</span><span class="token punctuation">(</span><span class="token string">"Capacity must be greater than 0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
+
+        map <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        list <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Reservation</span> <span class="token function">BookSeats</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">IList<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> seats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> orderedSeat <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>seats<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Array<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>orderedSeat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> orderedSeat<span class="token punctuation">)</span>
-            locks<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>_locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> l <span class="token keyword keyword-in">in</span> locks<span class="token punctuation">)</span>
-            Monitor<span class="token punctuation">.</span><span class="token function">Enter</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-int">int</span></span> <span class="token function">Get</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>_lock<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>map<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token class-name"><span class="token keyword keyword-var">var</span></span> node<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword keyword-return">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
 
-        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
-            <span class="token range operator">..</span><span class="token punctuation">.</span> booking flow
+            <span class="token comment">// Move to front (most recently used)</span>
+            list<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            list<span class="token punctuation">.</span><span class="token function">AddFirst</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword keyword-return">return</span> node<span class="token punctuation">.</span>Value<span class="token punctuation">.</span><span class="token keyword keyword-value">value</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
-        <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
-            <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> locks<span class="token punctuation">.</span>Count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-                Monitor<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span>locks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Put</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> key<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>_lock<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">// Key already exists</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token class-name"><span class="token keyword keyword-var">var</span></span> node<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                node<span class="token punctuation">.</span>Value <span class="token operator">=</span> <span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// Move to front</span>
+                list<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                list<span class="token punctuation">.</span><span class="token function">AddFirst</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// Add new key</span>
+            <span class="token class-name"><span class="token keyword keyword-var">var</span></span> newNode <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">AddFirst</span><span class="token punctuation">(</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            map<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> newNode<span class="token punctuation">;</span>
+
+            <span class="token comment">// Evict least recently used</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span>Count <span class="token operator">&gt;</span> capacity<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token class-name"><span class="token keyword keyword-var">var</span></span> lru <span class="token operator">=</span> list<span class="token punctuation">.</span>Last<span class="token operator">!</span><span class="token punctuation">;</span>
+
+                list<span class="token punctuation">.</span><span class="token function">RemoveLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                map<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span>lru<span class="token punctuation">.</span>Value<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-</code></pre><h3 id="use-concurrentdictionary-for-thread-safe-writes-if-multiple-thread-can-share-a-map">Use ConcurrentDictionary for thread safe writes, if multiple thread can share a map </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span> dict <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryRemove</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">AddOrUpdate</span><span class="token punctuation">(</span>
-    key<span class="token punctuation">,</span>
-    addValue<span class="token punctuation">,</span>
-    <span class="token punctuation">(</span>key<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> newValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><h2 id="using-custom-dll-implementation">Using Custom DLL Implementation </h2>
+<p>Node</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">K</span> key<span class="token punctuation">;</span>
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">V</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> prev<span class="token punctuation">;</span>
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> next<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">Node</span><span class="token punctuation">(</span><span class="token class-name">K</span> key<span class="token punctuation">,</span> <span class="token class-name">V</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key<span class="token punctuation">;</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token keyword keyword-value">value</span> <span class="token operator">=</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Doubly Linked List</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">DoublyLinkedList<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> head<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> tail<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">DoublyLinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        head <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token keyword keyword-default">default</span><span class="token punctuation">(</span><span class="token type-expression class-name">K</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword keyword-default">default</span><span class="token punctuation">(</span><span class="token type-expression class-name">V</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tail <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token keyword keyword-default">default</span><span class="token punctuation">(</span><span class="token type-expression class-name">K</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword keyword-default">default</span><span class="token punctuation">(</span><span class="token type-expression class-name">V</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        head<span class="token punctuation">.</span>next <span class="token operator">=</span> tail<span class="token punctuation">;</span>
+        tail<span class="token punctuation">.</span>prev <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">AddFirst</span><span class="token punctuation">(</span><span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> node<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        node<span class="token punctuation">.</span>next <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        node<span class="token punctuation">.</span>prev <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>prev <span class="token operator">=</span> node<span class="token punctuation">;</span>
+        head<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Remove</span><span class="token punctuation">(</span><span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> node<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        node<span class="token punctuation">.</span>prev<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        node<span class="token punctuation">.</span>next<span class="token punctuation">.</span>prev <span class="token operator">=</span> node<span class="token punctuation">.</span>prev<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">MoveToFront</span><span class="token punctuation">(</span><span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> node<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">Remove</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">AddFirst</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> <span class="token function">RemoveLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>tail<span class="token punctuation">.</span>prev <span class="token operator">==</span> head<span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span> <span class="token keyword keyword-null">null</span><span class="token punctuation">;</span>
+        <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> last <span class="token operator">=</span> tail<span class="token punctuation">.</span>prev<span class="token punctuation">;</span>
+        <span class="token function">Remove</span><span class="token punctuation">(</span>last<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-return">return</span> last<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>LRU Cache</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">LRUCache<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-int">int</span></span> capacity<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> map<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">DoublyLinkedList<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> dll<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> lockObject <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token function">LRUCache</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> capacity<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>map <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>dll <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">DoublyLinkedList<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">V</span> <span class="token function">Get</span><span class="token punctuation">(</span><span class="token class-name">K</span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>lockObject<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>map<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span> <span class="token keyword keyword-default">default</span><span class="token punctuation">(</span><span class="token type-expression class-name">V</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> node <span class="token operator">=</span> map<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            dll<span class="token punctuation">.</span><span class="token function">MoveToFront</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword keyword-return">return</span> node<span class="token punctuation">.</span><span class="token keyword keyword-value">value</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Put</span><span class="token punctuation">(</span><span class="token class-name">K</span> key<span class="token punctuation">,</span> <span class="token class-name">V</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>lockObject<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> node <span class="token operator">=</span> map<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                node<span class="token punctuation">.</span><span class="token keyword keyword-value">value</span> <span class="token operator">=</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">;</span>
+                dll<span class="token punctuation">.</span><span class="token function">MoveToFront</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword keyword-else">else</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>map<span class="token punctuation">.</span>Count <span class="token operator">==</span> capacity<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> lru <span class="token operator">=</span> dll<span class="token punctuation">.</span><span class="token function">RemoveLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>lru <span class="token operator">!=</span> <span class="token keyword keyword-null">null</span><span class="token punctuation">)</span> map<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span>lru<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> newNode <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                dll<span class="token punctuation">.</span><span class="token function">AddFirst</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                map<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> newNode<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name"><span class="token keyword keyword-void">void</span></span> <span class="token function">Remove</span><span class="token punctuation">(</span><span class="token class-name">K</span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword keyword-lock">lock</span> <span class="token punctuation">(</span>lockObject<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>map<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
+            <span class="token class-name">Node<span class="token punctuation">&lt;</span>K<span class="token punctuation">,</span> V<span class="token punctuation">&gt;</span></span> node <span class="token operator">=</span> map<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            dll<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            map<span class="token punctuation">.</span><span class="token function">Remove</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>Usage</p>
+<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token class-name">LRUCache<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span> cache <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">LRUCache<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cache<span class="token punctuation">.</span><span class="token function">Put</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cache<span class="token punctuation">.</span><span class="token function">Put</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cache<span class="token punctuation">.</span><span class="token function">Put</span><span class="token punctuation">(</span><span class="token string">"c"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>cache<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1</span>
 </code></pre>
       </div>
       

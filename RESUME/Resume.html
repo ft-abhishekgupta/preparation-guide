@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>Notes</title>
+      <title>Resume</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="color-scheme" content="light dark">
@@ -662,58 +662,79 @@ Markdown Preview Enhanced index / sidebar
     <body for="html-export">
       <div class="crossnote markdown-preview  ">
       
-<h1 id="lld-notes">LLD Notes </h1>
-<h3 id="create-the-lock-variable-as-instance-of-a-class-not-inside-a-method-so-that-everyone-shares-that-lock">Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">ClassName</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token comment">// constructor and methods</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="fine-grain-locking">Fine Grain Locking </h3>
-<ul>
-<li>Order the elements to prevent deadlock</li>
-<li>Release in reverse order</li>
-</ul>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">Showtime</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">IDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span> _locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">Showtime</span><span class="token punctuation">(</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> availableSeats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            _locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Reservation</span> <span class="token function">BookSeats</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">IList<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> seats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> orderedSeat <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>seats<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Array<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>orderedSeat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> orderedSeat<span class="token punctuation">)</span>
-            locks<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>_locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h1 id="resume">Resume </h1>
+<h2 id="about-yourself">About Yourself </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>I'm a backend software engineer and technical lead with more than six years of experience at Microsoft Xbox. I specialize in building scalable distributed systems with C#, .NET, and Azure, and I own services end to end, from architecture and design through production operations.
 
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> l <span class="token keyword keyword-in">in</span> locks<span class="token punctuation">)</span>
-            Monitor<span class="token punctuation">.</span><span class="token function">Enter</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+I've built backend platforms that serve more than 7 million players and thousands of game publishers, handling around 5,000 requests per second with 99.99% availability. My work has involved Cosmos DB, Redis, Azure Service Bus, and event-driven architectures. In my current role, I lead a team of four engineers and own the architecture and delivery of the Xbox News Feed system.
 
-        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
-            <span class="token range operator">..</span><span class="token punctuation">.</span> booking flow
-        <span class="token punctuation">}</span>
-        <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
-            <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> locks<span class="token punctuation">.</span>Count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-                Monitor<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span>locks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+I've also worked on AI-powered content-processing systems and developer-productivity platforms, while contributing to frontend development when needed. I'm now looking for a backend role where I can solve challenging distributed-systems problems at scale, own products end to end, and continue growing as a technical leader.
+</code></pre><h2 id="career-path">Career Path </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>I did my B.Tech in Computer Science from IET Lucknow and qualified GATE to pursue my master's at IIT Kanpur. After developing an interest in web and application development through college projects, I joined Microsoft Xbox. I began with React-based platforms for pricing, sales, and game publishing, then expanded into frontend architecture, Azure hosting, accessibility, and API operations.
 
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="use-concurrentdictionary-for-thread-safe-writes-if-multiple-thread-can-share-a-map">Use ConcurrentDictionary for thread safe writes, if multiple thread can share a map </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span> dict <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryRemove</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">AddOrUpdate</span><span class="token punctuation">(</span>
-    key<span class="token punctuation">,</span>
-    addValue<span class="token punctuation">,</span>
-    <span class="token punctuation">(</span>key<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> newValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
+I deliberately moved into backend and platform engineering through the Game Certification System, building services, infrastructure, and event-driven workflows while mentoring junior engineers. After my promotion to Software Engineer II, I took on larger distributed systems, cross-team initiatives, and multi-region reliability and security work.
+
+Most recently, I led the replacement of the legacy Xbox Engagement Events and News Feed services with a new system built from the ground up. Overall, my career has progressed from feature delivery to end-to-end system ownership and cross-team technical leadership, while remaining hands-on.
+</code></pre><h2 id="why-the-switch">Why the switch </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>I've had strong opportunities at Microsoft Xbox, and I'm proud of the scale and impact of my work there. After more than six years, I was ready to explore new domains and challenges with broader technical ownership. Although I was affected by the recent layoffs, I had already begun considering my next step. I'm now looking for an environment where I can apply my experience in high-scale services, platform engineering, and technical leadership to create even greater impact.
+
+&gt;&gt; End with something specific to company and role
+</code></pre><h2 id="why-do-you-want-to-join-this-company--role">Why do you want to join this company / role </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>&gt;&gt; Connect response with company
+&gt;&gt; Connect response with role
+</code></pre><h2 id="strength">Strength </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Technical Ownership
+- I take end-to-end ownership, from clarifying requirements and designing the architecture to implementation, production rollout, and operational support.
+
+Problem Solving
+- I break ambiguous problems into manageable pieces, evaluate alternatives, and use prototypes to validate ideas early. This approach has helped me align teams and drive decisions on complex cross-team projects.
+
+Team Player
+- I build strong working relationships, communicate risks and challenges early, and help teammates get unblocked. I focus on shared outcomes, knowledge sharing, and creating an environment where the team can succeed together.
+</code></pre><h2 id="what-motivates-you">What motivates you </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>- Solving ambiguous, technically challenging problems through structured thinking.
+- Continuously learning and expanding my technical capabilities.
+- Working in a healthy, collaborative environment where people openly share ideas and support one another.
+- Creating meaningful impact and receiving constructive feedback that helps me improve.
+</code></pre><h2 id="weakness--area-you-are-working-on">Weakness / Area you are working on </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>I'm working on balancing depth with speed. I naturally seek an end-to-end understanding of systems and explore edge cases and failure scenarios. While this is valuable for production systems, it can slow lower-risk decisions. I now prioritize critical risks, make the simplest sound decision, and go deeper only when the scale or impact justifies it.
+</code></pre><h2 id="disagreement-with-team--manager">Disagreement with Team / Manager </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>During planning for the News Feed replacement, the product team proposed dropping all existing posts at cutover to reduce migration time and cost. I understood the delivery pressure but disagreed because popular games had thousands of posts, and losing them could damage the experience for both players and publishers.
+
+I raised the concern with engineering leadership and the product team, using concrete examples to explain the customer impact. I proposed validating the decision with key publishers and offered a dual-feed alternative: continue serving legacy posts while publishers onboarded and began publishing through the new platform.
+
+When I disagree, I focus on the problem and trade-offs rather than on who is right. I seek to understand the other perspective, present evidence and practical alternatives, and then commit to the final decision so the team can move forward.
+</code></pre><h2 id="biggest-achievement">Biggest Achievement </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>One of my biggest achievements was leading the development of Xbox's unified News Feed platform. I led the team and owned the system end to end, from architecture and implementation to migration and production rollout.
+
+The platform replaced more than 20 legacy systems and unified content from hundreds of publishers for millions of players across Xbox storefronts, handling around 5,000 requests per second.
+
+I also redesigned the data-access and caching strategy using Cosmos DB and Redis. This reduced p99 read latency from approximately 600 milliseconds to 150 milliseconds and lowered gateway load by 87%.
+
+This achievement is particularly meaningful because it combined large-scale modernization, measurable performance gains, and hands-on technical leadership throughout the product lifecycle.
+</code></pre><h2 id="biggest-challenge">Biggest Challenge </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>One of my biggest challenges was migrating a critical production service away from complex legacy dependencies without disrupting live traffic. The existing system had limited documentation and no clear owners, while also contributing significantly to latency and gateway load. I used AI-assisted analysis to accelerate my understanding of the system before designing its replacement.
+
+I led a phased, zero-downtime migration. We redesigned the data model and partitioning strategy, introduced a new Cosmos DB path with Redis caching, and gradually shifted traffic using feature flags and configuration controls. Throughout the rollout, we monitored both paths closely to protect correctness and reliability.
+
+The migration reduced p99 read latency from approximately 600 milliseconds to 150 milliseconds and lowered gateway load by 87%. My key learning was that, for critical distributed systems, a safe migration strategy is just as important as the target architecture.
+</code></pre><h2 id="failure-faced">Failure Faced </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code></code></pre><h2 id="complex-production-issue">Complex Production Issue </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code></code></pre><h2 id="where-do-you-see-yourself-in-5-years">Where do you see yourself in 5 years </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Over the next three to five years, I want to grow into a stronger senior or staff-level technical leader while remaining hands-on. I aim to own increasingly complex distributed systems, make sound architectural decisions, and influence outcomes across teams. I also want to help other engineers grow through mentoring and technical guidance, combining deep engineering work with broader organizational impact.
+</code></pre><h2 id="question-for-them">Question for them </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>"What are the most challenging technical problems the team is currently working on?"
+
+"How are architecture and technical decisions typically made within the team?"
+
+"What would success look like for someone in this role in the first six months?"
+
+"What are the biggest scalability or reliability challenges the team expects to tackle over the next year?"
+</code></pre><h2 id="projects">Projects </h2>
+<blockquote>
+<p>Problem → Requirements → Architecture → Your contribution → Key design decisions → Tradeoffs → Scale → Failure handling → Performance → Monitoring → Biggest challenge → Result</p>
+</blockquote>
+
       </div>
       
       

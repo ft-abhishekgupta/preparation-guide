@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>Notes</title>
+      <title>Generic</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="color-scheme" content="light dark">
@@ -662,58 +662,556 @@ Markdown Preview Enhanced index / sidebar
     <body for="html-export">
       <div class="crossnote markdown-preview  ">
       
-<h1 id="lld-notes">LLD Notes </h1>
-<h3 id="create-the-lock-variable-as-instance-of-a-class-not-inside-a-method-so-that-everyone-shares-that-lock">Create the lock variable as instance of a class, not inside a method, so that everyone shares that lock </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">ClassName</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name"><span class="token keyword keyword-object">object</span></span> _lock <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token comment">// constructor and methods</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="fine-grain-locking">Fine Grain Locking </h3>
+<p>For LLD interviews, you can memorize the following <strong>problem → core relationships → design pattern</strong> cheat sheet. The goal is not to memorize every class, but to quickly identify <strong>"who owns/uses/contains whom"</strong>.</p>
+<h2 id="1-parking-lot">1. Parking Lot </h2>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>ParkingLot
+ ├── * ParkingFloor
+ │      └── * ParkingSpot
+ │
+ ├── * Entrance
+ └── * Exit
+
+Vehicle ──&gt; ParkingSpot
+Ticket ──&gt; Vehicle + ParkingSpot
+Payment ──&gt; Ticket
+</code></pre><p><strong>Patterns:</strong></p>
 <ul>
-<li>Order the elements to prevent deadlock</li>
-<li>Release in reverse order</li>
+<li><strong>Strategy</strong> → pricing/payment calculation</li>
+<li><strong>Factory</strong> → create different vehicle/spot types</li>
+<li><strong>Observer</strong> → available spot notifications (optional)</li>
 </ul>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-class">class</span> <span class="token class-name">Showtime</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">IDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span> _locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">Showtime</span><span class="token punctuation">(</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> availableSeats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-            _locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name"><span class="token keyword keyword-object">object</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token range operator">..</span><span class="token punctuation">.</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-public">public</span> <span class="token return-type class-name">Reservation</span> <span class="token function">BookSeats</span><span class="token punctuation">(</span><span class="token class-name">User</span> user<span class="token punctuation">,</span> <span class="token class-name">IList<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">&gt;</span></span> seats<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> orderedSeat <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>seats<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Array<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>orderedSeat<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name"><span class="token keyword keyword-var">var</span></span> locks <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword keyword-object">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> s <span class="token keyword keyword-in">in</span> orderedSeat<span class="token punctuation">)</span>
-            locks<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>_locks<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<hr>
+<h1 id="2-elevator-system">2. Elevator System </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>ElevatorSystem
+ └── * Elevator
+        ├── ElevatorState
+        └── ElevatorDoor
 
-        <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> l <span class="token keyword keyword-in">in</span> locks<span class="token punctuation">)</span>
-            Monitor<span class="token punctuation">.</span><span class="token function">Enter</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Floor
+ └── ElevatorRequest
 
-        <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
-            <span class="token range operator">..</span><span class="token punctuation">.</span> booking flow
-        <span class="token punctuation">}</span>
-        <span class="token keyword keyword-finally">finally</span> <span class="token punctuation">{</span>
-            <span class="token keyword keyword-foreach">foreach</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-int">int</span></span> i <span class="token operator">=</span> locks<span class="token punctuation">.</span>Count<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-                Monitor<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span>locks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+ElevatorSystem ──&gt; SchedulingStrategy
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>State</strong> → Idle / Moving / Maintenance</li>
+<li><strong>Strategy</strong> → elevator selection/scheduling</li>
+<li><strong>Command</strong> → elevator requests (optional)</li>
+</ul>
+<hr>
+<h1 id="3-vending-machine">3. Vending Machine </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>VendingMachine
+ ├── * Product
+ ├── Inventory
+ ├── Payment
+ └── VendingMachineState
 
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre><h3 id="use-concurrentdictionary-for-thread-safe-writes-if-multiple-thread-can-share-a-map">Use ConcurrentDictionary for thread safe writes, if multiple thread can share a map </h3>
-<pre data-role="codeBlock" data-info="cs" class="language-csharp cs"><code><span class="token keyword keyword-private">private</span> <span class="token keyword keyword-readonly">readonly</span> <span class="token class-name">ConcurrentDictionary<span class="token punctuation">&lt;</span><span class="token keyword keyword-string">string</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">&gt;</span></span> dict <span class="token operator">=</span> <span class="token keyword keyword-new">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryRemove</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryAdd</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">TryGetValue</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword keyword-out">out</span> <span class="token keyword keyword-value">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-dict<span class="token punctuation">.</span><span class="token function">AddOrUpdate</span><span class="token punctuation">(</span>
-    key<span class="token punctuation">,</span>
-    addValue<span class="token punctuation">,</span>
-    <span class="token punctuation">(</span>key<span class="token punctuation">,</span> oldValue<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> newValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
+VendingMachine ──&gt; VendingMachineState
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>State</strong> → Idle, HasMoney, Dispensing, etc.</li>
+<li><strong>Strategy</strong> → payment/change calculation</li>
+<li><strong>Factory</strong> → product/payment creation (optional)</li>
+</ul>
+<hr>
+<h1 id="4-library-management">4. Library Management </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Library
+ ├── BookCatalog
+ │      └── * Book
+ │
+ ├── * Member
+ │      └── * Loan
+ │              └── Book
+ │
+ └── BorrowingPolicy
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → borrowing policies</li>
+<li><strong>Factory</strong> → book/item creation (optional)</li>
+<li><strong>Observer</strong> → due-date notifications (optional)</li>
+</ul>
+<hr>
+<h1 id="5-movie-ticket-booking">5. Movie Ticket Booking </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Movie
+ └── * Showtime
+        └── * Seat
+
+Theater
+ └── * Screen
+        └── * Seat
+
+Booking
+ ├── User
+ ├── Showtime
+ └── * Seat
+</code></pre><p>Important relationship:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Booking ──&gt; Showtime ──&gt; Seats
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → pricing</li>
+<li><strong>State</strong> → booking/payment state</li>
+<li><strong>Observer</strong> → booking notifications</li>
+<li><strong>Factory</strong> → payment method</li>
+</ul>
+<p><strong>Critical:</strong> Seat booking must be <strong>thread-safe/atomic</strong>.</p>
+<hr>
+<h1 id="6-car-rental-system">6. Car Rental System </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>RentalSystem
+ ├── * Vehicle
+ ├── * Location
+ ├── * Reservation
+ │       ├── User
+ │       └── Vehicle
+ └── Payment
+</code></pre><pre data-role="codeBlock" data-info="text" class="language-text text"><code>Vehicle
+ └── VehicleStatus
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → pricing</li>
+<li><strong>Factory</strong> → vehicle creation</li>
+<li><strong>State</strong> → Available / Reserved / Rented / Maintenance</li>
+</ul>
+<hr>
+<h1 id="7-hotel-booking">7. Hotel Booking </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Hotel
+ └── * Room
+
+Room
+ └── RoomType
+
+Reservation
+ ├── User
+ ├── Room
+ └── Payment
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → pricing</li>
+<li><strong>State</strong> → room availability</li>
+<li><strong>Factory</strong> → room/reservation creation</li>
+<li><strong>Observer</strong> → notifications</li>
+</ul>
+<hr>
+<h1 id="8-food-delivery">8. Food Delivery </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>User
+ └── * Order
+        ├── * OrderItem
+        │      └── RestaurantItem
+        ├── Restaurant
+        ├── Payment
+        └── Delivery
+
+Restaurant
+ └── * MenuItem
+
+Delivery
+ └── DeliveryPartner
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>State</strong> → Order lifecycle</li>
+<li><strong>Strategy</strong> → delivery partner assignment</li>
+<li><strong>Strategy</strong> → pricing</li>
+<li><strong>Observer</strong> → order status notifications</li>
+</ul>
+<hr>
+<h1 id="9-ride-sharing--uber">9. Ride Sharing / Uber </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>User
+ ├── Rider
+ └── Driver
+
+Ride
+ ├── Rider
+ ├── Driver
+ └── Location
+
+RideService
+ └── MatchingStrategy
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>Strategy</strong> → driver matching</li>
+<li><strong>State</strong> → Requested → Accepted → Started → Completed</li>
+<li><strong>Observer</strong> → ride status</li>
+<li><strong>Factory</strong> → ride creation</li>
+</ul>
+<hr>
+<h1 id="10-atm">10. ATM </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>ATM
+ ├── CardReader
+ ├── CashDispenser
+ ├── BankService
+ └── ATMState
+
+Transaction
+ ├── Withdrawal
+ ├── Deposit
+ └── BalanceInquiry
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>State</strong> → CardInserted / Authenticated / etc.</li>
+<li><strong>Strategy</strong> → cash dispensing algorithm</li>
+<li><strong>Chain of Responsibility</strong> → denomination dispensing</li>
+<li><strong>Command</strong> → transactions</li>
+</ul>
+<hr>
+<h1 id="11-splitwise">11. Splitwise </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>User
+ └── * Expense
+
+Expense
+ ├── PaidBy → User
+ └── * Split
+
+Split
+ └── User
+
+Group
+ └── * User
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>Strategy</strong> → Equal / Exact / Percentage split</li>
+<li><strong>Factory</strong> → split creation</li>
+</ul>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>ISplitStrategy
+ ├── EqualSplit
+ ├── ExactSplit
+ └── PercentageSplit
+</code></pre><hr>
+<h1 id="12-chess">12. Chess </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Game
+ ├── Board
+ │      └── * Cell
+ │             └── Piece
+ │
+ ├── Player
+ └── GameState
+</code></pre><pre data-role="codeBlock" data-info="text" class="language-text text"><code>Piece
+ ├── King
+ ├── Queen
+ ├── Rook
+ ├── Bishop
+ └── Knight
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → movement rules</li>
+<li><strong>State</strong> → game state</li>
+<li><strong>Command</strong> → moves / undo</li>
+<li><strong>Factory</strong> → piece creation</li>
+</ul>
+<hr>
+<h1 id="13-tic-tac-toe">13. Tic-Tac-Toe </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Game
+ ├── Board
+ │      └── * Cell
+ └── * Player
+
+Player
+ └── Symbol
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → winning strategy</li>
+<li><strong>State</strong> → game state</li>
+<li><strong>Factory</strong> → player creation</li>
+</ul>
+<hr>
+<h1 id="14-snake--ladder">14. Snake &amp; Ladder </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Game
+ ├── Board
+ │      └── * Cell
+ ├── * Player
+ └── Dice
+
+Board
+ ├── * Snake
+ └── * Ladder
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → dice strategy</li>
+<li><strong>State</strong> → game state</li>
+<li><strong>Factory</strong> → board/player creation</li>
+</ul>
+<hr>
+<h1 id="15-deck-of-cards">15. Deck of Cards </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Deck
+ └── * Card
+
+Card
+ ├── Suit
+ └── Rank
+
+Game
+ └── Deck
+</code></pre><p>For Blackjack:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Game
+ ├── Dealer
+ ├── * Player
+ └── Deck
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → scoring</li>
+<li><strong>Factory</strong> → card/deck creation</li>
+</ul>
+<hr>
+<h1 id="16-logger">16. Logger </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Logger
+ └── LogHandler
+        └── next → LogHandler
+</code></pre><pre data-role="codeBlock" data-info="text" class="language-text text"><code>LogHandler
+ ├── ConsoleHandler
+ ├── FileHandler
+ └── DatabaseHandler
+</code></pre><p><strong>Pattern:</strong></p>
+<ul>
+<li>⭐ <strong>Chain of Responsibility</strong></li>
+</ul>
+<p>Also:</p>
+<ul>
+<li><strong>Singleton</strong> → logger instance, if explicitly required</li>
+<li><strong>Factory</strong> → handler creation</li>
+</ul>
+<hr>
+<h1 id="17-notification-system">17. Notification System </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>NotificationService
+ └── NotificationSender
+
+NotificationSender
+ ├── EmailSender
+ ├── SMSSender
+ └── PushSender
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>Strategy</strong> → notification channel</li>
+<li><strong>Factory</strong> → sender creation</li>
+<li><strong>Observer</strong> → event-based notifications</li>
+</ul>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>INotificationSender
+ ├── Email
+ ├── SMS
+ └── Push
+</code></pre><hr>
+<h1 id="18-file-system">18. File System </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>FileSystem
+ └── Directory
+
+Directory
+ └── * FileSystemEntity
+
+FileSystemEntity
+ ├── File
+ └── Directory
+</code></pre><p><strong>Pattern:</strong></p>
+<ul>
+<li>⭐ <strong>Composite</strong></li>
+</ul>
+<p>Because:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Directory
+ ├── File
+ ├── File
+ └── Directory
+       ├── File
+       └── File
+</code></pre><hr>
+<h1 id="19-coffee-machine">19. Coffee Machine </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>CoffeeMachine
+ ├── Inventory
+ ├── Payment
+ └── CoffeeMachineState
+
+Coffee
+ ├── Espresso
+ ├── Latte
+ └── Cappuccino
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>State</strong></li>
+<li><strong>Strategy</strong> → pricing</li>
+<li>⭐ <strong>Factory</strong> → coffee creation</li>
+</ul>
+<hr>
+<h1 id="20-meeting-room-booking">20. Meeting Room Booking </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Building
+ └── * Room
+
+Room
+ └── * Booking
+
+Booking
+ ├── User
+ ├── Room
+ └── TimeSlot
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Strategy</strong> → room selection</li>
+<li><strong>Observer</strong> → notifications</li>
+<li><strong>State</strong> → booking status</li>
+</ul>
+<p><strong>Important:</strong> concurrent booking requires locking/atomic reservation.</p>
+<hr>
+<h1 id="21-shopping-cart--e-commerce">21. Shopping Cart / E-Commerce </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>User
+ └── Cart
+       └── * CartItem
+              └── Product
+
+Order
+ └── * OrderItem
+        └── Product
+
+Order
+ ├── Payment
+ └── Shipment
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>State</strong> → Order lifecycle</li>
+<li><strong>Strategy</strong> → pricing/discount</li>
+<li><strong>Strategy</strong> → payment</li>
+<li><strong>Factory</strong> → payment method</li>
+<li><strong>Observer</strong> → order notifications</li>
+</ul>
+<hr>
+<h1 id="22-stock-trading-system">22. Stock Trading System </h1>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>TradingSystem
+ ├── * User
+ ├── OrderBook
+ │      ├── BuyOrders
+ │      └── SellOrders
+ └── * Order
+
+Order
+ └── User
+</code></pre><p><strong>Patterns:</strong></p>
+<ul>
+<li>⭐ <strong>Strategy</strong> → order matching</li>
+<li><strong>State</strong> → order lifecycle</li>
+<li><strong>Observer</strong> → price/order notifications</li>
+<li><strong>Command</strong> → place/cancel order</li>
+</ul>
+<p>Concurrency is particularly important here.</p>
+<hr>
+<h1 id="23-cache--lru--lfu">23. Cache — LRU / LFU </h1>
+<h3 id="lru">LRU </h3>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>LRUCache
+ ├── Dictionary&lt;Key, Node&gt;
+ └── LinkedList&lt;Node&gt;
+</code></pre><p><strong>Pattern:</strong></p>
+<ul>
+<li>Usually <strong>no formal GoF pattern</strong></li>
+<li><strong>Strategy</strong> can be used if supporting multiple eviction policies.</li>
+</ul>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>IEvictionPolicy
+ ├── LRUPolicy
+ ├── LFUPolicy
+ └── FIFOPolicy
+</code></pre><hr>
+<h1 id="24-parking--vending--elevator--remember-these-three">24. Parking / Vending / Elevator — remember these three </h1>
+<p>These are extremely common because they test different concepts:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Parking Lot
+→ Strategy + Factory
+
+Vending Machine
+→ ⭐ State + Strategy
+
+Elevator
+→ ⭐ State + Strategy
+</code></pre><hr>
+<h1 id="pattern--problems-cheat-sheet">Pattern → Problems Cheat Sheet </h1>
+<p>This is probably the <strong>most useful thing to memorize</strong> before an LLD interview.</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>When to identify it</th>
+<th>Common LLD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⭐ <strong>Strategy</strong></td>
+<td>Multiple interchangeable algorithms</td>
+<td>Parking, Uber, Splitwise, Payment, Pricing</td>
+</tr>
+<tr>
+<td>⭐ <strong>State</strong></td>
+<td>Object behavior changes based on state</td>
+<td>Vending, Elevator, ATM, Order</td>
+</tr>
+<tr>
+<td>⭐ <strong>Factory</strong></td>
+<td>Object creation varies</td>
+<td>Payment, Vehicle, Notification</td>
+</tr>
+<tr>
+<td>⭐ <strong>Observer</strong></td>
+<td>One event → many subscribers</td>
+<td>Notification, Stock, Order</td>
+</tr>
+<tr>
+<td>⭐ <strong>Composite</strong></td>
+<td>Tree / part-whole hierarchy</td>
+<td>File System</td>
+</tr>
+<tr>
+<td>⭐ <strong>Chain of Responsibility</strong></td>
+<td>Request passes through handlers</td>
+<td>Logger, ATM</td>
+</tr>
+<tr>
+<td><strong>Command</strong></td>
+<td>Encapsulate an action/request</td>
+<td>Chess, ATM, Trading</td>
+</tr>
+<tr>
+<td><strong>Decorator</strong></td>
+<td>Dynamically add behavior</td>
+<td>Coffee, Pizza, Notifications</td>
+</tr>
+<tr>
+<td><strong>Adapter</strong></td>
+<td>Make incompatible interfaces work</td>
+<td>Payment integrations</td>
+</tr>
+<tr>
+<td><strong>Template Method</strong></td>
+<td>Same algorithm, varying steps</td>
+<td>Payment/processing workflows</td>
+</tr>
+<tr>
+<td><strong>Singleton</strong></td>
+<td>Exactly one shared instance required</td>
+<td>Logger, Configuration</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-relationship-patterns-you-should-memorize">The relationship patterns you should memorize </h2>
+<p>When designing any LLD, first ask these five questions:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>1. IS-A?
+   ↓
+Inheritance
+
+2. HAS-A?
+   ↓
+Composition / Aggregation
+
+3. USES?
+   ↓
+Association / Dependency
+
+4. MANY implementations of same behavior?
+   ↓
+Interface + Strategy
+
+5. Object behavior changes based on state?
+   ↓
+State Pattern
+</code></pre><p>And the <strong>most common relationship structure</strong> you'll see is:</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Service
+   │
+   ├── manages → Entities
+   │
+   ├── uses → Repository
+   │
+   ├── uses → Strategy
+   │
+   └── notifies → Observers
+</code></pre><p>For your interview preparation, I'd prioritize <strong>Strategy, State, Factory, Observer, Composite, and Chain of Responsibility</strong>. Those six cover a very large percentage of the pattern-oriented LLD questions you're likely to encounter.</p>
+
       </div>
       
       

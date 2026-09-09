@@ -946,7 +946,7 @@ Tick 9: currentFloor=5, direction=DOWN, requests={Request(2, PICKUP_DOWN)}
             <span class="token comment">// Find nearest request to establish initial direction (deterministic)</span>
             <span class="token class-name">Request</span> nearest <span class="token operator">=</span> <span class="token keyword keyword-null">null</span><span class="token punctuation">;</span>
             <span class="token class-name"><span class="token keyword keyword-int">int</span></span> minDistance <span class="token operator">=</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">.</span>MaxValue<span class="token punctuation">;</span>
-            
+
             <span class="token keyword keyword-foreach">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword keyword-var">var</span></span> req <span class="token keyword keyword-in">in</span> _requests<span class="token punctuation">)</span>
             <span class="token punctuation">{</span>
                 <span class="token class-name"><span class="token keyword keyword-int">int</span></span> distance <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">Abs</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">GetFloor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> _currentFloor<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -956,7 +956,7 @@ Tick 9: currentFloor=5, direction=DOWN, requests={Request(2, PICKUP_DOWN)}
                     nearest <span class="token operator">=</span> req<span class="token punctuation">;</span>
                 <span class="token punctuation">}</span>
             <span class="token punctuation">}</span>
-            
+
             _direction <span class="token operator">=</span> nearest<span class="token punctuation">.</span><span class="token function">GetFloor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> _currentFloor <span class="token punctuation">?</span> Direction<span class="token punctuation">.</span>Up <span class="token punctuation">:</span> Direction<span class="token punctuation">.</span>Down<span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
 
@@ -1057,7 +1057,7 @@ Tick 9: currentFloor=5, direction=DOWN, requests={Request(2, PICKUP_DOWN)}
     <span class="token comment">// Validate the floor number</span>
     <span class="token comment">// Pick which elevator should handle this request</span>
     <span class="token comment">// Tell that elevator to add the floor to its stops</span>
-    <span class="token comment">// </span>
+    <span class="token comment">//</span>
     <span class="token comment">// Edge cases</span>
     <span class="token comment">// Floor out of bounds (less than 0 or greater than 9)</span>
     <span class="token comment">// Invalid direction</span>
@@ -1278,7 +1278,20 @@ step()
         activeRequests.add(pendingRequests.dequeue())
     // all logic uses activeRequests
     ...
-</code></pre>
+</code></pre><h3 id="what-if-building-has-100-elevators-with-1000-floors">What if building has 100 elevators with 1000 floors </h3>
+<p>The core <code>Elevator</code> behavior does not need to change. Scale the system through the dispatch layer:</p>
+<ol>
+<li><strong>Make the elevator count configurable</strong> so the same design supports 3, 10, or 100 elevators.</li>
+<li><strong>Move selection logic into an <code>IElevatorSelectionStrategy</code></strong> so algorithms can change without modifying the controller.</li>
+<li><strong>Reduce the candidates</strong> by grouping elevators by floor zone or state (<code>IDLE</code>, <code>UP</code>, <code>DOWN</code>) instead of checking all 100.</li>
+<li><strong>Choose the elevator with the lowest ETA</strong>, considering its current floor, direction, and pending stops. The nearest elevator may not be the fastest.</li>
+</ol>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>ElevatorController -&gt; ElevatorManager -&gt; SelectionStrategy -&gt; Best Elevator
+</code></pre><blockquote>
+<p>Key Interview Point</p>
+</blockquote>
+<p>Keep <code>Elevator</code> focused on elevator behavior. Put scaling and selection in the orchestration layer. This follows the <strong>Single Responsibility</strong> and <strong>Open/Closed</strong> principles.</p>
+
       </div>
       
       
