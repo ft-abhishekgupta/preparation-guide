@@ -32,7 +32,7 @@ public class LFUCache
     }
 
     private readonly int capacity;
-    private int ;
+    private int minFrequency;
 
     // key -> LinkedListNode<Node> (holds O(1) pointers)
     private readonly Dictionary<int, LinkedListNode<Node>> map;
