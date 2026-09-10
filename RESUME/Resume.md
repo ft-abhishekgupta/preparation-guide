@@ -1,5 +1,7 @@
 # Resume
 
+[GeneratedContent](./xbox-services-guide/index.html)
+
 ## About Yourself
 
 ```

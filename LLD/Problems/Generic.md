@@ -1,10 +1,8 @@
+# Generic Problems
+
 For LLD interviews, you can memorize the following **problem → core relationships → design pattern** cheat sheet. The goal is not to memorize every class, but to quickly identify **"who owns/uses/contains whom"**.
 
 ## 1. Parking Lot
-
-
-
-
 
 ```text
 ParkingLot
@@ -21,18 +19,13 @@ Payment ──> Ticket
 
 **Patterns:**
 
-* **Strategy** → pricing/payment calculation
-* **Factory** → create different vehicle/spot types
-* **Observer** → available spot notifications (optional)
+- **Strategy** → pricing/payment calculation
+- **Factory** → create different vehicle/spot types
+- **Observer** → available spot notifications (optional)
 
 ---
 
 # 2. Elevator System
-
-
-
-
-
 
 ```text
 ElevatorSystem
@@ -48,9 +41,9 @@ ElevatorSystem ──> SchedulingStrategy
 
 **Patterns:**
 
-* **State** → Idle / Moving / Maintenance
-* **Strategy** → elevator selection/scheduling
-* **Command** → elevator requests (optional)
+- **State** → Idle / Moving / Maintenance
+- **Strategy** → elevator selection/scheduling
+- **Command** → elevator requests (optional)
 
 ---
 
@@ -68,9 +61,9 @@ VendingMachine ──> VendingMachineState
 
 **Patterns:**
 
-* ⭐ **State** → Idle, HasMoney, Dispensing, etc.
-* **Strategy** → payment/change calculation
-* **Factory** → product/payment creation (optional)
+- ⭐ **State** → Idle, HasMoney, Dispensing, etc.
+- **Strategy** → payment/change calculation
+- **Factory** → product/payment creation (optional)
 
 ---
 
@@ -90,9 +83,9 @@ Library
 
 **Patterns:**
 
-* **Strategy** → borrowing policies
-* **Factory** → book/item creation (optional)
-* **Observer** → due-date notifications (optional)
+- **Strategy** → borrowing policies
+- **Factory** → book/item creation (optional)
+- **Observer** → due-date notifications (optional)
 
 ---
 
@@ -121,10 +114,10 @@ Booking ──> Showtime ──> Seats
 
 **Patterns:**
 
-* **Strategy** → pricing
-* **State** → booking/payment state
-* **Observer** → booking notifications
-* **Factory** → payment method
+- **Strategy** → pricing
+- **State** → booking/payment state
+- **Observer** → booking notifications
+- **Factory** → payment method
 
 **Critical:** Seat booking must be **thread-safe/atomic**.
 
@@ -149,9 +142,9 @@ Vehicle
 
 **Patterns:**
 
-* **Strategy** → pricing
-* **Factory** → vehicle creation
-* **State** → Available / Reserved / Rented / Maintenance
+- **Strategy** → pricing
+- **Factory** → vehicle creation
+- **State** → Available / Reserved / Rented / Maintenance
 
 ---
 
@@ -172,10 +165,10 @@ Reservation
 
 **Patterns:**
 
-* **Strategy** → pricing
-* **State** → room availability
-* **Factory** → room/reservation creation
-* **Observer** → notifications
+- **Strategy** → pricing
+- **State** → room availability
+- **Factory** → room/reservation creation
+- **Observer** → notifications
 
 ---
 
@@ -199,10 +192,10 @@ Delivery
 
 **Patterns:**
 
-* **State** → Order lifecycle
-* **Strategy** → delivery partner assignment
-* **Strategy** → pricing
-* **Observer** → order status notifications
+- **State** → Order lifecycle
+- **Strategy** → delivery partner assignment
+- **Strategy** → pricing
+- **Observer** → order status notifications
 
 ---
 
@@ -224,10 +217,10 @@ RideService
 
 **Patterns:**
 
-* ⭐ **Strategy** → driver matching
-* **State** → Requested → Accepted → Started → Completed
-* **Observer** → ride status
-* **Factory** → ride creation
+- ⭐ **Strategy** → driver matching
+- **State** → Requested → Accepted → Started → Completed
+- **Observer** → ride status
+- **Factory** → ride creation
 
 ---
 
@@ -248,10 +241,10 @@ Transaction
 
 **Patterns:**
 
-* ⭐ **State** → CardInserted / Authenticated / etc.
-* **Strategy** → cash dispensing algorithm
-* **Chain of Responsibility** → denomination dispensing
-* **Command** → transactions
+- ⭐ **State** → CardInserted / Authenticated / etc.
+- **Strategy** → cash dispensing algorithm
+- **Chain of Responsibility** → denomination dispensing
+- **Command** → transactions
 
 ---
 
@@ -274,8 +267,8 @@ Group
 
 **Patterns:**
 
-* ⭐ **Strategy** → Equal / Exact / Percentage split
-* **Factory** → split creation
+- ⭐ **Strategy** → Equal / Exact / Percentage split
+- **Factory** → split creation
 
 ```text
 ISplitStrategy
@@ -309,10 +302,10 @@ Piece
 
 **Patterns:**
 
-* **Strategy** → movement rules
-* **State** → game state
-* **Command** → moves / undo
-* **Factory** → piece creation
+- **Strategy** → movement rules
+- **State** → game state
+- **Command** → moves / undo
+- **Factory** → piece creation
 
 ---
 
@@ -330,9 +323,9 @@ Player
 
 **Patterns:**
 
-* **Strategy** → winning strategy
-* **State** → game state
-* **Factory** → player creation
+- **Strategy** → winning strategy
+- **State** → game state
+- **Factory** → player creation
 
 ---
 
@@ -352,9 +345,9 @@ Board
 
 **Patterns:**
 
-* **Strategy** → dice strategy
-* **State** → game state
-* **Factory** → board/player creation
+- **Strategy** → dice strategy
+- **State** → game state
+- **Factory** → board/player creation
 
 ---
 
@@ -383,8 +376,8 @@ Game
 
 **Patterns:**
 
-* **Strategy** → scoring
-* **Factory** → card/deck creation
+- **Strategy** → scoring
+- **Factory** → card/deck creation
 
 ---
 
@@ -405,12 +398,12 @@ LogHandler
 
 **Pattern:**
 
-* ⭐ **Chain of Responsibility**
+- ⭐ **Chain of Responsibility**
 
 Also:
 
-* **Singleton** → logger instance, if explicitly required
-* **Factory** → handler creation
+- **Singleton** → logger instance, if explicitly required
+- **Factory** → handler creation
 
 ---
 
@@ -428,9 +421,9 @@ NotificationSender
 
 **Patterns:**
 
-* ⭐ **Strategy** → notification channel
-* **Factory** → sender creation
-* **Observer** → event-based notifications
+- ⭐ **Strategy** → notification channel
+- **Factory** → sender creation
+- **Observer** → event-based notifications
 
 ```text
 INotificationSender
@@ -457,7 +450,7 @@ FileSystemEntity
 
 **Pattern:**
 
-* ⭐ **Composite**
+- ⭐ **Composite**
 
 Because:
 
@@ -488,9 +481,9 @@ Coffee
 
 **Patterns:**
 
-* ⭐ **State**
-* **Strategy** → pricing
-* ⭐ **Factory** → coffee creation
+- ⭐ **State**
+- **Strategy** → pricing
+- ⭐ **Factory** → coffee creation
 
 ---
 
@@ -511,9 +504,9 @@ Booking
 
 **Patterns:**
 
-* **Strategy** → room selection
-* **Observer** → notifications
-* **State** → booking status
+- **Strategy** → room selection
+- **Observer** → notifications
+- **State** → booking status
 
 **Important:** concurrent booking requires locking/atomic reservation.
 
@@ -538,11 +531,11 @@ Order
 
 **Patterns:**
 
-* ⭐ **State** → Order lifecycle
-* **Strategy** → pricing/discount
-* **Strategy** → payment
-* **Factory** → payment method
-* **Observer** → order notifications
+- ⭐ **State** → Order lifecycle
+- **Strategy** → pricing/discount
+- **Strategy** → payment
+- **Factory** → payment method
+- **Observer** → order notifications
 
 ---
 
@@ -562,10 +555,10 @@ Order
 
 **Patterns:**
 
-* ⭐ **Strategy** → order matching
-* **State** → order lifecycle
-* **Observer** → price/order notifications
-* **Command** → place/cancel order
+- ⭐ **Strategy** → order matching
+- **State** → order lifecycle
+- **Observer** → price/order notifications
+- **Command** → place/cancel order
 
 Concurrency is particularly important here.
 
@@ -583,8 +576,8 @@ LRUCache
 
 **Pattern:**
 
-* Usually **no formal GoF pattern**
-* **Strategy** can be used if supporting multiple eviction policies.
+- Usually **no formal GoF pattern**
+- **Strategy** can be used if supporting multiple eviction policies.
 
 ```text
 IEvictionPolicy
@@ -616,19 +609,19 @@ Elevator
 
 This is probably the **most useful thing to memorize** before an LLD interview.
 
-| Pattern                       | When to identify it                    | Common LLD                                 |
-| ----------------------------- | -------------------------------------- | ------------------------------------------ |
+| Pattern                        | When to identify it                    | Common LLD                                 |
+| ------------------------------ | -------------------------------------- | ------------------------------------------ |
 | ⭐ **Strategy**                | Multiple interchangeable algorithms    | Parking, Uber, Splitwise, Payment, Pricing |
 | ⭐ **State**                   | Object behavior changes based on state | Vending, Elevator, ATM, Order              |
 | ⭐ **Factory**                 | Object creation varies                 | Payment, Vehicle, Notification             |
 | ⭐ **Observer**                | One event → many subscribers           | Notification, Stock, Order                 |
 | ⭐ **Composite**               | Tree / part-whole hierarchy            | File System                                |
 | ⭐ **Chain of Responsibility** | Request passes through handlers        | Logger, ATM                                |
-| **Command**                   | Encapsulate an action/request          | Chess, ATM, Trading                        |
-| **Decorator**                 | Dynamically add behavior               | Coffee, Pizza, Notifications               |
-| **Adapter**                   | Make incompatible interfaces work      | Payment integrations                       |
-| **Template Method**           | Same algorithm, varying steps          | Payment/processing workflows               |
-| **Singleton**                 | Exactly one shared instance required   | Logger, Configuration                      |
+| **Command**                    | Encapsulate an action/request          | Chess, ATM, Trading                        |
+| **Decorator**                  | Dynamically add behavior               | Coffee, Pizza, Notifications               |
+| **Adapter**                    | Make incompatible interfaces work      | Payment integrations                       |
+| **Template Method**            | Same algorithm, varying steps          | Payment/processing workflows               |
+| **Singleton**                  | Exactly one shared instance required   | Logger, Configuration                      |
 
 ## The relationship patterns you should memorize
 
