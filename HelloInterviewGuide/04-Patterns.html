@@ -1,0 +1,1327 @@
+<!DOCTYPE html><html><head>
+      <title>04-Patterns</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="color-scheme" content="light dark">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}@media (prefers-color-scheme: dark) {
+code[class*=language-],pre[class*=language-]{color:#c9d1d9;text-shadow:none;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::mozselection,code[class*=language-]::selection,pre[class*=language-]::mozselection,pre[class*=language-]::selection{text-shadow:none;background:#234879}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;background:#161b22}:not(pre)>code[class*=language-]{padding:.1em .3em;border-radius:.3em;color:#c9d1d9;background:#343942}pre[data-line]{position:relative}pre[class*=language-]>code[class*=language-]{position:relative;z-index:1}.line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:#2f2a1e;box-shadow:inset 5px 0 0 #674c16;z-index:0;pointer-events:none;line-height:inherit;white-space:pre}.namespace{opacity:.7}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8b949e}.token.punctuation{color:#c9d1d9}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#79c0ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a5d6ff}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#a5d6ff}.token.atrule,.token.attr-value,.token.keyword{color:#f97583}.token.function{color:#d2a8ff}.token.important,.token.regex,.token.variable{color:#79b8ff}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+}
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}@media (prefers-color-scheme: dark) {
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#ccc;background-color:#24292e;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#fff}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#a3a3a3}html body strong{color:#fff}html body del{color:#a3a3a3}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#a3a3a3;background-color:#363d45;border-left:4px solid #48525c}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#48525c;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#fff}html body table td,html body table th{border:1px solid #48525c;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#fff;background-color:#363d45;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#48525c;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#fff;border:1px solid #48525c;border-bottom:2px solid #3a424b;padding:2px 4px;background-color:#363d45;border-radius:3px}@media print{html body{background-color:#24292e}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#fff;page-break-after:avoid}html body blockquote{color:#a3a3a3}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}
+}
+.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="patterns">Patterns </h1>
+<blockquote>
+<p>Requirement phrasing → known solution shape. Deep versions: see <code>../3-Patterns/</code> in the source library.</p>
+</blockquote>
+<h2 id="pattern-lookup">Pattern lookup </h2>
+<table>
+<thead>
+<tr>
+<th>The prompt says…</th>
+<th>Pattern</th>
+<th>The one decision that matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Push updates/live state to users"</td>
+<td><a href="#1-realtime-updates">Realtime Updates</a></td>
+<td>Pick the client transport, then the event-source → connection-owner trigger path.</td>
+</tr>
+<tr>
+<td>"Two actors may claim/change the same thing"</td>
+<td><a href="#2-dealing-with-contention">Dealing with Contention</a></td>
+<td>Make the invariant visible to one authoritative row/key/transaction.</td>
+</tr>
+<tr>
+<td>"One operation spans services and may need rollback"</td>
+<td><a href="#3-multi-step-processes">Multi-Step Processes</a></td>
+<td>Decide whether choreography or an explicit workflow owner tracks durable progress.</td>
+</tr>
+<tr>
+<td>"Reads are crushing the database"</td>
+<td><a href="#4-scaling-reads">Scaling Reads</a></td>
+<td>Reduce work per read before adding replicas/caches/CDNs.</td>
+</tr>
+<tr>
+<td>"Writes, bursts, hot keys, or fanout overwhelm one store"</td>
+<td><a href="#5-scaling-writes">Scaling Writes</a></td>
+<td>Prove steady-state vs burst, then flatten writes across components.</td>
+</tr>
+<tr>
+<td>"Users upload/download photos, videos, or files"</td>
+<td><a href="#6-large-blobs">Large Blobs</a></td>
+<td>Keep bytes off app servers; store metadata separately from object bytes.</td>
+</tr>
+<tr>
+<td>"The task takes seconds/minutes/hours"</td>
+<td><a href="#7-long-running-tasks">Long-Running Tasks</a></td>
+<td>Return a job id and process asynchronously unless HTTP completion is safely fast.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="1-realtime-updates">1. Realtime Updates </h2>
+<p><strong>Trigger:</strong> users need updates within seconds/instantly; servers push live changes. <strong>Appears in:</strong> Ticketmaster, Uber, WhatsApp, Robinhood, Google Docs, Strava, Online Auction, FB Live Comments, Online Chess, ChatGPT, Flash Sale</p>
+<p><em>HTTP request/response is not enough; solve both hops: update source → connection owner → client.</em></p>
+<p><img src="images/1-RealtimeUpdatesPattern-fig-02.png" alt="Two Hops for Real-time Updates"><br>
+<img src="images/1-RealtimeUpdatesPattern-fig-17.png" alt="Pub/Sub Fanout"></p>
+<p><strong>Ladder (simplest → heaviest)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Cost / what breaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Polling</td>
+<td>Seconds-stale UX is fine; realtime is not the crux</td>
+<td>Huge client count or sub-second latency</td>
+<td>Idle reads; latency ≤ poll interval</td>
+</tr>
+<tr>
+<td>Long polling</td>
+<td>Rare events should appear quickly</td>
+<td>Frequent updates; proxy timeouts are messy</td>
+<td>Hanging requests; reconnect churn; 15-30s timeout tuning</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td>One-way server push: dashboards, AI tokens, progress</td>
+<td>Client sends frequent messages on same channel</td>
+<td>Reconnect gaps; buffering proxies; one-way only</td>
+</tr>
+<tr>
+<td>WebSockets</td>
+<td>Frequent bidirectional chat, games, collaboration, bidding</td>
+<td>Occasional writes or one-way updates suffice</td>
+<td>Stateful endpoints; heartbeats; deploy/reconnect handling</td>
+</tr>
+<tr>
+<td>WebRTC</td>
+<td>Audio/video/screen share/P2P is core</td>
+<td>Ordinary server-to-client updates</td>
+<td>Signaling, STUN/TURN, NAT failures, setup complexity</td>
+</tr>
+<tr>
+<td>Pull from storage/log</td>
+<td>Loose latency and durable cursor replay matter</td>
+<td>True fanout latency or DB polling load is too high</td>
+<td>Wasted reads; cursor/order design required</td>
+</tr>
+<tr>
+<td>Consistent-hash owners</td>
+<td>Connections hold expensive user/doc state</td>
+<td>Endpoints only forward tiny messages</td>
+<td>Ring changes, redirects, state loss, dual-route migration</td>
+</tr>
+<tr>
+<td>Pub/sub fanout</td>
+<td>Many lightweight endpoint servers forward messages</td>
+<td>Pub/sub SPOF/bottleneck or heavy connection state</td>
+<td>Extra hop; topic/subscription scaling</td>
+</tr>
+</tbody>
+</table>
+<div class="mermaid">flowchart TD
+  A[Need live updates] --&gt; B{Seconds stale OK?}
+  B --&gt;|Yes| P[Polling]
+  B --&gt;|No| C{Bidirectional?}
+  C --&gt;|No| S[SSE]
+  C --&gt;|Yes| W[WebSockets]
+  W --&gt; D{Heavy per-connection state?}
+  S --&gt; D
+  D --&gt;|Yes| H[Consistent hash owners]
+  D --&gt;|No| U[Pub/sub fanout]
+</div><p><strong>Then the interviewer asks:</strong></p>
+<ul>
+<li><strong>Missed updates:</strong> reconnect with last event id/sequence and replay from per-user queue/log.</li>
+<li><strong>Ordering:</strong> route related messages through one host/partition and stamp order there.</li>
+<li><strong>Backpressure:</strong> bound client buffers; drop noncritical events or disconnect/replay slow clients.</li>
+<li><strong>Hot fanout:</strong> batch, cache once, shard topics, or add hierarchical fanout.</li>
+</ul>
+<blockquote>
+<p><strong>Trap:</strong> WebSockets solve only client transport; producers still need to find the socket holder.<br>
+<strong>Say:</strong> "Realtime is two decisions: client protocol and server-side trigger path."</p>
+</blockquote>
+<h2 id="2-dealing-with-contention">2. Dealing with Contention </h2>
+<p><strong>Trigger:</strong> multiple users/processes compete for limited resources; avoid double-booking, double-charging, stale overwrites. <strong>Appears in:</strong> Ticketmaster, Rate Limiter, Online Auction, Online Chess, Flash Sale</p>
+<p><em>Lost updates come from read-decide-write races; make the datastore reject losers atomically.</em></p>
+<p><img src="images/2-DealingWithContention-fig-02.png" alt="Race Condition Timeline"></p>
+<p><strong>Interview move:</strong></p>
+<ul>
+<li>Name the invariant and the exact row/key that enforces it.</li>
+<li>Define loser behavior before dependent writes.</li>
+<li>Keep external calls outside locks.</li>
+</ul>
+<p><strong>Ladder (simplest → heaviest)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Cost / what breaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conditional write</td>
+<td>Predicate fits same row/key: <code>WHERE seats &gt; 0</code>, <code>status='free'</code></td>
+<td>Choice spans rows or app logic</td>
+<td>Zero affected rows must abort dependent work</td>
+</tr>
+<tr>
+<td>Pessimistic lock</td>
+<td>Must read a set, decide, then write under high conflict</td>
+<td>One atomic update is enough; external calls needed</td>
+<td>Blocking, deadlocks, short transactions only</td>
+</tr>
+<tr>
+<td>OCC/version</td>
+<td>Conflicts are rare but read-decide-write exists</td>
+<td>Everyone fights for one item</td>
+<td>Retry storms; wasted work; ABA if version is bad</td>
+</tr>
+<tr>
+<td>Serializable/remodel</td>
+<td>Invariant spans rows that do not collide</td>
+<td>Same-row conflict is enough</td>
+<td>Abort/retry cost; often better to materialize invariant row</td>
+</tr>
+<tr>
+<td>Lease/reservation</td>
+<td>Hold must survive user wait or external call</td>
+<td>Work fits one DB transaction</td>
+<td>TTL double-grant; coordination ops; hot lease rows</td>
+</tr>
+<tr>
+<td>Queue per resource</td>
+<td>One hot resource needs strict serialization</td>
+<td>Per-resource throughput must exceed one worker</td>
+<td>Latency/backlog; active worker becomes critical</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Then the interviewer asks:</strong></p>
+<ul>
+<li><strong>Wrong guard:</strong> a counter says "some seat exists"; the seat row says "A15 is free".</li>
+<li><strong>Deadlocks:</strong> lock rows in global order and treat deadlock/serialization errors as retryable.</li>
+<li><strong>Payment inside lock:</strong> reserve first, commit, then call external systems outside the transaction.</li>
+<li><strong>Hot partition:</strong> sharding cannot split one authoritative row; queue it or change product semantics.</li>
+</ul>
+<blockquote>
+<p><strong>Trap:</strong> Distributed locks do not replace source-of-truth validation.<br>
+<strong>Say:</strong> "The database can only protect a conflict it can see."</p>
+</blockquote>
+<h2 id="3-multi-step-processes">3. Multi-Step Processes </h2>
+<p><strong>Trigger:</strong> one user operation spans services/steps and must survive failures, retries, waits, or compensations. <strong>Appears in:</strong> Payment System, Uber, Notification System</p>
+<p><em>This is a distributed state machine, not one transaction; persist progress and plan undo paths.</em></p>
+<p><img src="images/3-MultistepProcesses-fig-07.png" alt="Workflow in an Interview"></p>
+<p><strong>Interview move:</strong></p>
+<ul>
+<li>Draw the happy path, then mark every step that can timeout, retry, or callback later.</li>
+<li>Persist progress before each side effect.</li>
+<li>Pick one place to own retries and compensation.</li>
+</ul>
+<p><strong>Ladder (simplest → heaviest)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Cost / what breaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single-server flow</td>
+<td>Short, synchronous, low-risk, local steps</td>
+<td>External services, callbacks, waits, compensation</td>
+<td>Crash loses in-memory progress</td>
+</tr>
+<tr>
+<td>DB-backed orchestration</td>
+<td>Few steps; status rows and pollers are enough</td>
+<td>Many branches/retries/visibility needs</td>
+<td>You build locks, retries, recovery, dashboards</td>
+</tr>
+<tr>
+<td>Saga + compensation</td>
+<td>Local commits must be undone after later failure</td>
+<td>True atomicity is required or one DB tx works</td>
+<td>Temporary inconsistency; compensations can fail</td>
+</tr>
+<tr>
+<td>Event choreography</td>
+<td>Independent services react to durable events</td>
+<td>Need one place to understand/change/debug flow</td>
+<td>Implicit event maze; idempotent consumers required</td>
+</tr>
+<tr>
+<td>Workflow orchestration</td>
+<td>Branching, waits, retries, compensation, observability</td>
+<td>Single async job is enough</td>
+<td>New engine and activity/history overhead</td>
+</tr>
+<tr>
+<td>Durable execution</td>
+<td>Want code-native timers/signals/loops and replay</td>
+<td>Team cannot operate deterministic workflow engine</td>
+<td>Non-determinism and huge histories break replay</td>
+</tr>
+<tr>
+<td>Managed workflows</td>
+<td>Prefer cloud-managed state machine/integrations</td>
+<td>Need rich code logic or payload/duration exceeds limits</td>
+<td>Vendor limits; less expressive model</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Then the interviewer asks:</strong></p>
+<ul>
+<li><strong>Coordinator crash:</strong> recover from durable workflow history/status, not process memory.</li>
+<li><strong>Idempotency:</strong> activities run at least once; side effects use keys and recorded results.</li>
+<li><strong>Compensation failure:</strong> retry undo steps and provide human escalation.</li>
+<li><strong>Versioning/history:</strong> old executions need deterministic paths; pass IDs, not huge payloads.</li>
+</ul>
+<blockquote>
+<p><strong>Trap:</strong> A saga is not a distributed transaction; it accepts temporary inconsistency.<br>
+<strong>Say:</strong> "When I start hand-rolling checkpoints, pollers, retries, and compensation, I need workflow orchestration."</p>
+</blockquote>
+<h2 id="4-scaling-reads">4. Scaling Reads </h2>
+<p><strong>Trigger:</strong> read traffic dwarfs writes; the same data is requested by many users; primary DB is read-bound. <strong>Appears in:</strong> Ticketmaster, Bitly, FB News Feed, Instagram, YouTube Top K, Yelp, Distributed Cache, Rate Limiter, FB Post Search, YouTube, Local Delivery Service, News Aggregator, Metrics Monitoring</p>
+<p><em>One write can create millions of reads; make each read cheaper, closer, or avoid it entirely.</em></p>
+<p><strong>Interview move:</strong></p>
+<ul>
+<li>Quote read/write ratio and freshness budget.</li>
+<li>Index the primary query shape before adding infrastructure.</li>
+<li>Separate correctness reads from cacheable convenience reads.</li>
+<li>Put public/shared data at the edge only when auth permits it.</li>
+</ul>
+<p><strong>Ladder (simplest → heaviest)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Cost / what breaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Indexes</td>
+<td>Filters/joins/sorts scan too many rows</td>
+<td>Endpoint is cold or write cost dominates</td>
+<td>Storage/write overhead; wrong compound order fails</td>
+</tr>
+<tr>
+<td>Vertical scale</td>
+<td>Math fits bigger RAM/SSD/CPU</td>
+<td>Requirement clearly exceeds one node</td>
+<td>Finite ceiling; can dodge horizontal design</td>
+</tr>
+<tr>
+<td>Denormalized/materialized reads</td>
+<td>Expensive joins/aggregates; writes are rarer</td>
+<td>Immediate consistency across copies is mandatory</td>
+<td>Duplicate/stale data; write fanout</td>
+</tr>
+<tr>
+<td>Read replicas</td>
+<td>Read QPS exceeds leader; dataset fits each node</td>
+<td>Stale reads break correctness</td>
+<td>Replica lag; read-your-writes routing</td>
+</tr>
+<tr>
+<td>Shard/regionalize</td>
+<td>Dataset/geography makes each node too big/far</td>
+<td>Requests scatter to every shard</td>
+<td>Routing, rebalancing, cross-shard reads</td>
+</tr>
+<tr>
+<td>App cache</td>
+<td>Hot shared objects tolerate bounded staleness</td>
+<td>Per-user/private data has no hit rate</td>
+<td>Stampede, hot keys, invalidation races</td>
+</tr>
+<tr>
+<td>CDN/edge</td>
+<td>Public/global content dominates</td>
+<td>Private or instantly fresh data</td>
+<td>Edge invalidation delay; signed URL/header mistakes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Then the interviewer asks:</strong></p>
+<ul>
+<li><strong>Replica lag:</strong> route read-your-writes to primary or use bounded/synchronous freshness selectively.</li>
+<li><strong>Cache stampede:</strong> coalesce rebuilds, early-refresh, background warm, or use short rebuild locks.</li>
+<li><strong>Invalidation race:</strong> prefer versioned keys over in-place delete/update races.</li>
+<li><strong>Deleted/hidden content:</strong> filter with small tombstone cache while feed/cache invalidations catch up.</li>
+</ul>
+<blockquote>
+<p><strong>Trap:</strong> Redis before indexes is usually premature.<br>
+<strong>Say:</strong> "Indexes first, then replicas/materialized views, then caches/CDN based on freshness."</p>
+</blockquote>
+<h2 id="5-scaling-writes">5. Scaling Writes </h2>
+<p><strong>Trigger:</strong> write throughput, bursts, hot keys, fan-in, or fan-out exceed one database/server. <strong>Appears in:</strong> YouTube Top K, Strava, Rate Limiter, Job Scheduler, Ad Click Aggregator, FB Post Search, Metrics Monitoring, Notification System, Flash Sale</p>
+<p><em>Writes need one authoritative commit path; reduce writes per component or relax what must be committed now.</em></p>
+<p><img src="images/5-ScalingWrites-fig-03.png" alt="Redis Cluster Sharding"></p>
+<p><strong>Interview move:</strong></p>
+<ul>
+<li>Do quick math to separate burst smoothing from steady-state capacity.</li>
+<li>Choose the partition key by load variance, then discuss read locality.</li>
+</ul>
+<p><strong>Ladder (simplest → heaviest)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Cost / what breaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vertical/tune writes</td>
+<td>Back-of-envelope fits bigger/tuned store</td>
+<td>Math demands horizontal scale</td>
+<td>Finite; fewer indexes can hurt reads/correctness</td>
+</tr>
+<tr>
+<td>Write-optimized store</td>
+<td>Pattern is append-heavy/time-series/analytics</td>
+<td>Need rich relational queries/transactions</td>
+<td>Query/consistency/ops tradeoffs</td>
+</tr>
+<tr>
+<td>Horizontal sharding</td>
+<td>Steady-state writes exceed one node; flat key exists</td>
+<td>Reads scatter or one key is still hot</td>
+<td>Routing, resharding, hot shards, cross-shard reads</td>
+</tr>
+<tr>
+<td>Vertical partitioning</td>
+<td>Entity mixes hot metrics and read-mostly content</td>
+<td>Common ops now span many stores</td>
+<td>Modeling/coordination complexity</td>
+</tr>
+<tr>
+<td>Queue bursts</td>
+<td>Spike is temporary and delay is acceptable</td>
+<td>Steady-state sink cannot catch up</td>
+<td>Backlog, status semantics, eventual commit</td>
+</tr>
+<tr>
+<td>Load shedding</td>
+<td>Writes are superseded or lower value</td>
+<td>Payments/purchases/user-visible facts</td>
+<td>Deliberate data loss/accuracy loss</td>
+</tr>
+<tr>
+<td>Batching</td>
+<td>Per-write overhead dominates and delay is safe</td>
+<td>Sparse keys or immediate durability needed</td>
+<td>Latency; crash recovery for acknowledged batches</td>
+</tr>
+<tr>
+<td>Hierarchical aggregation</td>
+<td>Massive fan-in/fan-out wants aggregate view</td>
+<td>Every event must be immediately ordered/stored</td>
+<td>Layer latency and merge complexity</td>
+</tr>
+<tr>
+<td>Split hot keys</td>
+<td>One aggregatable counter/key melts a shard</td>
+<td>Atomic record/profile cannot be summed</td>
+<td>Read amplification; subkey coordination</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Then the interviewer asks:</strong></p>
+<ul>
+<li><strong>Partition key:</strong> use stable high-cardinality IDs; avoid country/state/celebrity hot shards.</li>
+<li><strong>Resharding:</strong> migrate gradually with dual writes and prefer reads from new placement.</li>
+<li><strong>Queue masking:</strong> queues smooth bursts but expose steady overload as growing age/depth.</li>
+<li><strong>Dropped/batched writes:</strong> make durability and product semantics explicit before shedding or acking.</li>
+</ul>
+<blockquote>
+<p><strong>Trap:</strong> Read replicas do not remove primary write load.<br>
+<strong>Say:</strong> "Flat partition load is the goal; bad keys just move the bottleneck."</p>
+</blockquote>
+<h2 id="6-large-blobs">6. Large Blobs </h2>
+<p><strong>Trigger:</strong> users upload/download large photos, videos, documents, or media over roughly 10MB. <strong>Appears in:</strong> Instagram, Dropbox, YouTube</p>
+<p><em>Object storage handles bytes; your database handles metadata, authorization, and workflow state.</em></p>
+<p><img src="images/6-HandlingLargeBlobs-fig-04.png" alt="Simple Direct Upload"></p>
+<p><strong>Interview move:</strong></p>
+<ul>
+<li>Authorize metadata first, issue a scoped URL, then let storage move bytes.</li>
+<li>Treat object-created events as truth.</li>
+<li>Decide when a blob is safe to serve.</li>
+</ul>
+<p><strong>Ladder (simplest → heaviest)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Cost / what breaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API proxy</td>
+<td>Small files or synchronous byte inspection/compliance</td>
+<td>Large files, global users, long transfers</td>
+<td>Double bandwidth; API saturation; timeouts</td>
+</tr>
+<tr>
+<td>Presigned direct upload</td>
+<td>One-shot upload fits URL expiry</td>
+<td>Flaky/mobile/huge files or pre-storage scan needed</td>
+<td>URL leakage until expiry; orphan pending rows</td>
+</tr>
+<tr>
+<td>Signed direct download</td>
+<td>Authorized user needs private object access</td>
+<td>Tiny/private content with no offload value</td>
+<td>Link leakage; auth/header mistakes</td>
+</tr>
+<tr>
+<td>CDN delivery</td>
+<td>Popular/global downloads need low latency</td>
+<td>Rare downloads or must-never-cache data</td>
+<td>Invalidation delay; preserve auth/range requests</td>
+</tr>
+<tr>
+<td>Multipart/resumable</td>
+<td>Large/flaky uploads need progress and retry</td>
+<td>Small files where setup overhead dominates</td>
+<td>Abandoned parts cost money; completion failure</td>
+</tr>
+<tr>
+<td>Storage events + reconciliation</td>
+<td>Direct uploads bypass app server truth</td>
+<td>App proxies every byte and can update state directly</td>
+<td>Delayed/lost events; periodic scans needed</td>
+</tr>
+<tr>
+<td>Quarantine pipeline</td>
+<td>Virus scan, moderation, transcoding, compliance</td>
+<td>Immediate low-risk availability is more important</td>
+<td>Delayed availability; worker/workflow complexity</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Then the interviewer asks:</strong></p>
+<ul>
+<li><strong>99% upload failure:</strong> list completed parts/ranges and retry only missing chunks.</li>
+<li><strong>Client lies:</strong> storage-created events, not browser callbacks, mark upload complete.</li>
+<li><strong>Metadata:</strong> create DB row/key before upload; query metadata in DB, not object tags.</li>
+<li><strong>Abuse:</strong> sign size/type/key/expiry, generate keys server-side, quarantine unsafe content.</li>
+</ul>
+<blockquote>
+<p><strong>Trap:</strong> App servers should be ticket booths, not gigabyte pipes.<br>
+<strong>Say:</strong> "Bytes go to object storage; metadata and authorization stay in my database."</p>
+</blockquote>
+<h2 id="7-long-running-tasks">7. Long-Running Tasks </h2>
+<p><strong>Trigger:</strong> operations take more than a few seconds, need special hardware, or should not hold an HTTP request open. <strong>Appears in:</strong> Instagram, LeetCode, Job Scheduler, ChatGPT</p>
+<p><em>Synchronous HTTP ties up web capacity and hides progress; accept fast, process elsewhere, expose status.</em></p>
+<p><img src="images/7-ManagingLongRunningTasks-fig-04.png" alt="Async Worker Pool Message Queue"></p>
+<p><strong>Ladder (simplest → heaviest)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Use when</th>
+<th>Avoid when</th>
+<th>Cost / what breaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Synchronous request</td>
+<td>Work reliably finishes within timeout</td>
+<td>Video/PDF/import/GPU/minute-scale work</td>
+<td>Timeouts, blocked web workers, duplicate retries</td>
+</tr>
+<tr>
+<td>Async worker pool</td>
+<td>One independent background task after validation</td>
+<td>User truly needs low-latency final result</td>
+<td>Queue/job table/status endpoint; eventual result</td>
+</tr>
+<tr>
+<td>Durable queue</td>
+<td>Jobs must survive crashes and coordinate workers</td>
+<td>In-memory loss is acceptable, rarely true</td>
+<td>Vendor semantics: visibility, size, cost, replay</td>
+</tr>
+<tr>
+<td>Worker runtime</td>
+<td>Need independent scaling/special hardware</td>
+<td>Serverless limits/cold starts/local storage conflict</td>
+<td>Idle servers vs orchestration/runtime complexity</td>
+</tr>
+<tr>
+<td>Reliable lifecycle</td>
+<td>Users need <code>pending→processing→done/failed</code> status</td>
+<td>Fire-and-forget is truly OK</td>
+<td>Heartbeat tuning; stuck job recovery</td>
+</tr>
+<tr>
+<td>Retry + DLQ</td>
+<td>Transient failures and poison messages exist</td>
+<td>Infinite retries are harmless, rare</td>
+<td>DLQ monitoring and replay workflow</td>
+</tr>
+<tr>
+<td>Idempotency/dedupe</td>
+<td>Users click twice or workers retry side effects</td>
+<td>Duplicate work has no external effect</td>
+<td>Idempotency table and in-progress semantics</td>
+</tr>
+<tr>
+<td>Backpressure/split queues</td>
+<td>Queue depth grows or jobs have mixed durations</td>
+<td>Homogeneous bounded workload</td>
+<td>Busy responses; routing/capacity planning</td>
+</tr>
+<tr>
+<td>Workflow dependencies</td>
+<td>Job becomes branching/multi-step with waits</td>
+<td>One independent job is enough</td>
+<td>Workflow-engine complexity; see Multi-Step Processes</td>
+</tr>
+</tbody>
+</table>
+<div class="mermaid">flowchart TD
+  A[Request arrives] --&gt; B{Finishes within timeout?}
+  B --&gt;|Yes| S[Run sync]
+  B --&gt;|No| Q[Create job + enqueue id]
+  Q --&gt; W[Workers process]
+  W --&gt; R{Crash/fail?}
+  R --&gt;|Retryable| H[Heartbeat/visibility retry]
+  R --&gt;|Poison| D[DLQ]
+  Q --&gt; P[Status + poll/push notify]
+</div><p><strong>Then the interviewer asks:</strong></p>
+<ul>
+<li><strong>Worker crash:</strong> visibility timeout/heartbeat lets another worker retry after lease expiry.</li>
+<li><strong>Duplicate side effects:</strong> idempotency keys return existing job ids and guard emails/charges/files.</li>
+<li><strong>Backpressure:</strong> cap queue depth, reject/defer, autoscale by depth and oldest age.</li>
+<li><strong>Mixed workloads/dependencies:</strong> split fast/slow queues; graduate flowcharts to workflow orchestration.</li>
+</ul>
+<blockquote>
+<p><strong>Trap:</strong> Queues should carry job IDs and durable metadata, not huge payloads.<br>
+<strong>Say:</strong> "I accept the job quickly, process at least once, and make effects idempotent."</p>
+</blockquote>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

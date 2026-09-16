@@ -1,0 +1,3609 @@
+<!DOCTYPE html><html><head>
+      <title>06-Problems</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="color-scheme" content="light dark">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}@media (prefers-color-scheme: dark) {
+code[class*=language-],pre[class*=language-]{color:#c9d1d9;text-shadow:none;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-]::mozselection,code[class*=language-]::selection,pre[class*=language-]::mozselection,pre[class*=language-]::selection{text-shadow:none;background:#234879}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;background:#161b22}:not(pre)>code[class*=language-]{padding:.1em .3em;border-radius:.3em;color:#c9d1d9;background:#343942}pre[data-line]{position:relative}pre[class*=language-]>code[class*=language-]{position:relative;z-index:1}.line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:#2f2a1e;box-shadow:inset 5px 0 0 #674c16;z-index:0;pointer-events:none;line-height:inherit;white-space:pre}.namespace{opacity:.7}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#8b949e}.token.punctuation{color:#c9d1d9}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#79c0ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a5d6ff}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#a5d6ff}.token.atrule,.token.attr-value,.token.keyword{color:#f97583}.token.function{color:#d2a8ff}.token.important,.token.regex,.token.variable{color:#79b8ff}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+}
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}@media (prefers-color-scheme: dark) {
+html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#ccc;background-color:#24292e;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#fff}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#a3a3a3}html body strong{color:#fff}html body del{color:#a3a3a3}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#a3a3a3;background-color:#363d45;border-left:4px solid #48525c}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#48525c;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#fff}html body table td,html body table th{border:1px solid #48525c;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#fff;background-color:#363d45;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#48525c;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#fff;border:1px solid #48525c;border-bottom:2px solid #3a424b;padding:2px 4px;background-color:#363d45;border-radius:3px}@media print{html body{background-color:#24292e}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#fff;page-break-after:avoid}html body blockquote{color:#a3a3a3}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}
+}
+.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc ol.md-toc-ol{margin:0;padding-left:1.6em}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjRV6SII.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuOKfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8L6tjPQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtD6GgLL.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHQLL.ttf) format('truetype');
+}
+html,
+body {
+  min-height: 100%;
+  background: #0f111a !important;
+}
+.markdown-preview.markdown-preview {
+  /*====================================================
+  Aurora Notes Theme
+  Markdown Preview Enhanced
+=====================================================*/
+  /*====================================================
+  Color Palette
+=====================================================*/
+  --bg: #0f111a;
+  --bg2: #1a1d2b;
+  --bg3: #24283b;
+  --text: #d7dae0;
+  --muted: #9ca3af;
+  --blue: #7aa2f7;
+  --cyan: #7dcfff;
+  --green: #9ece6a;
+  --yellow: #e0af68;
+  --orange: #ff9e64;
+  --red: #f7768e;
+  --purple: #bb9af7;
+  --pink: #ff79c6;
+  --border: #30364d;
+  /*====================================================
+  Main
+=====================================================*/
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Kalam", cursive;
+  line-height: 1.65;
+  font-size: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px clamp(24px, 5vw, 72px);
+  /*====================================================
+  Headings
+=====================================================*/
+  /*====================================================
+  Text
+=====================================================*/
+  /*====================================================
+  Links
+=====================================================*/
+  /*====================================================
+  Lists
+=====================================================*/
+  /*====================================================
+  Blockquotes
+=====================================================*/
+  /*====================================================
+  Inline Code
+=====================================================*/
+  /*====================================================
+  Code Blocks
+=====================================================*/
+  /*====================================================
+  Horizontal Rule
+=====================================================*/
+  /*====================================================
+  Tables
+=====================================================*/
+  /*====================================================
+  Images
+=====================================================*/
+  /*====================================================
+  Task Lists
+=====================================================*/
+  /*====================================================
+  Selection
+=====================================================*/
+  /*====================================================
+  Scrollbar
+=====================================================*/
+  /*====================================================
+  Mermaid
+=====================================================*/
+  /*====================================================
+  Math
+=====================================================*/
+  /*====================================================
+  Paragraph Spacing
+=====================================================*/
+}
+.markdown-preview.markdown-preview h1,
+.markdown-preview.markdown-preview h2,
+.markdown-preview.markdown-preview h3,
+.markdown-preview.markdown-preview h4,
+.markdown-preview.markdown-preview h5,
+.markdown-preview.markdown-preview h6 {
+  font-family: "Caveat", "Kalam", cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: 0.15em 0 0.05em;
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+.markdown-preview.markdown-preview h1 {
+  color: var(--blue);
+  font-size: 2.5em;
+}
+.markdown-preview.markdown-preview h2 {
+  color: var(--purple);
+  font-size: 2em;
+}
+.markdown-preview.markdown-preview h3 {
+  color: var(--green);
+  font-size: 1.65em;
+}
+.markdown-preview.markdown-preview h4 {
+  color: var(--yellow);
+  font-size: 1.35em;
+}
+.markdown-preview.markdown-preview h5 {
+  color: var(--orange);
+  font-size: 1.15em;
+}
+.markdown-preview.markdown-preview h6 {
+  color: var(--red);
+}
+.markdown-preview.markdown-preview strong {
+  color: var(--yellow);
+  font-weight: 700;
+}
+.markdown-preview.markdown-preview em {
+  color: var(--cyan);
+}
+.markdown-preview.markdown-preview del {
+  color: #777;
+}
+.markdown-preview.markdown-preview a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.markdown-preview.markdown-preview a:hover {
+  color: var(--pink);
+}
+.markdown-preview.markdown-preview li::marker {
+  color: var(--orange);
+}
+.markdown-preview.markdown-preview ul li {
+  margin: 4px 0;
+}
+.markdown-preview.markdown-preview blockquote {
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.15), rgba(187, 154, 247, 0.08));
+  border-left: 6px solid var(--blue);
+  padding: 3px 6px;
+  border-radius: 8px;
+  font-family: "Kalam", cursive;
+  font-size: 1.05em;
+  color: #dce6ff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+.markdown-preview.markdown-preview blockquote p {
+  margin: 2px 0;
+}
+.markdown-preview.markdown-preview code {
+  font-family: "JetBrains Mono", monospace;
+  background: #20242f;
+  color: #c3e88d;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid #3b4252;
+}
+.markdown-preview.markdown-preview pre {
+  background: #1b1f27 !important;
+  color: #ffffff !important;
+  border-radius: 16px;
+  border: 1px solid #607d8b;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview pre code {
+  display: block;
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  color: #ffffff !important;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.markdown-preview.markdown-preview pre code.hljs {
+  background: transparent !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-comment,
+.markdown-preview.markdown-preview pre code .hljs-quote,
+.markdown-preview.markdown-preview pre code .token.comment,
+.markdown-preview.markdown-preview pre code .token.prolog,
+.markdown-preview.markdown-preview pre code .token.doctype {
+  color: #b0bec5 !important;
+  font-style: italic;
+}
+.markdown-preview.markdown-preview pre code .hljs-keyword,
+.markdown-preview.markdown-preview pre code .hljs-selector-tag,
+.markdown-preview.markdown-preview pre code .hljs-literal,
+.markdown-preview.markdown-preview pre code .hljs-meta,
+.markdown-preview.markdown-preview pre code .token.keyword,
+.markdown-preview.markdown-preview pre code .token.boolean,
+.markdown-preview.markdown-preview pre code .token.constant {
+  color: #d9a7ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-string,
+.markdown-preview.markdown-preview pre code .hljs-doctag,
+.markdown-preview.markdown-preview pre code .hljs-regexp,
+.markdown-preview.markdown-preview pre code .token.string,
+.markdown-preview.markdown-preview pre code .token.char,
+.markdown-preview.markdown-preview pre code .token.regex {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-number,
+.markdown-preview.markdown-preview pre code .hljs-symbol,
+.markdown-preview.markdown-preview pre code .hljs-bullet,
+.markdown-preview.markdown-preview pre code .token.number,
+.markdown-preview.markdown-preview pre code .token.symbol {
+  color: #ffab91 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-section,
+.markdown-preview.markdown-preview pre code .hljs-function .hljs-title,
+.markdown-preview.markdown-preview pre code .token.function,
+.markdown-preview.markdown-preview pre code .token.method {
+  color: #82b1ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-variable,
+.markdown-preview.markdown-preview pre code .hljs-template-variable,
+.markdown-preview.markdown-preview pre code .hljs-attr,
+.markdown-preview.markdown-preview pre code .hljs-attribute,
+.markdown-preview.markdown-preview pre code .token.property,
+.markdown-preview.markdown-preview pre code .token.attr-name {
+  color: #ffe082 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-built_in,
+.markdown-preview.markdown-preview pre code .hljs-class .hljs-title,
+.markdown-preview.markdown-preview pre code .hljs-name,
+.markdown-preview.markdown-preview pre code .hljs-type,
+.markdown-preview.markdown-preview pre code .token.class-name,
+.markdown-preview.markdown-preview pre code .token.builtin,
+.markdown-preview.markdown-preview pre code .token.namespace {
+  color: #80d8ff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-params,
+.markdown-preview.markdown-preview pre code .hljs-subst,
+.markdown-preview.markdown-preview pre code .token.parameter {
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-addition,
+.markdown-preview.markdown-preview pre code .token.inserted {
+  color: #c3e88d !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-deletion,
+.markdown-preview.markdown-preview pre code .token.deleted {
+  color: #ff8a80 !important;
+}
+.markdown-preview.markdown-preview pre code .hljs-punctuation,
+.markdown-preview.markdown-preview pre code .hljs-operator,
+.markdown-preview.markdown-preview pre code .token.punctuation,
+.markdown-preview.markdown-preview pre code .token.operator {
+  color: #84ffff !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.markdown-preview.markdown-preview th {
+  background: linear-gradient(90deg, #3b4261, #2b3050);
+  color: var(--yellow);
+  padding: 9px 12px;
+}
+.markdown-preview.markdown-preview th + th {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td {
+  background: #171b28;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview td + td {
+  border-left: 1px solid var(--border);
+}
+.markdown-preview.markdown-preview tr:nth-child(even) td {
+  background: #1b2132;
+}
+.markdown-preview.markdown-preview img {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid var(--border);
+  margin: 14px auto 14px 0;
+  display: block;
+}
+.markdown-preview.markdown-preview input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: var(--green);
+  margin-right: 10px;
+}
+.markdown-preview.markdown-preview ::selection {
+  background: var(--purple);
+  color: white;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar {
+  width: 12px;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-track {
+  background: #12151f;
+}
+.markdown-preview.markdown-preview ::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--blue), var(--purple));
+  border-radius: 20px;
+}
+.markdown-preview.markdown-preview .mermaid {
+  background: #1b2030;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.markdown-preview.markdown-preview .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.markdown-preview.markdown-preview .mermaid .edgePath path,
+.markdown-preview.markdown-preview .mermaid .flowchart-link,
+.markdown-preview.markdown-preview .mermaid .messageLine0,
+.markdown-preview.markdown-preview .mermaid .messageLine1,
+.markdown-preview.markdown-preview .mermaid .relationshipLine {
+  stroke: var(--cyan) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid marker path,
+.markdown-preview.markdown-preview .mermaid .arrowheadPath {
+  fill: var(--cyan) !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .labelText,
+.markdown-preview.markdown-preview .mermaid .messageText,
+.markdown-preview.markdown-preview .mermaid .loopText,
+.markdown-preview.markdown-preview .mermaid .relationshipLabel {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel,
+.markdown-preview.markdown-preview .mermaid .labelBkg {
+  background-color: #111827 !important;
+  fill: #111827 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel rect,
+.markdown-preview.markdown-preview .mermaid .label-container {
+  background: #111827 !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel p,
+.markdown-preview.markdown-preview .mermaid .edgeLabel span,
+.markdown-preview.markdown-preview .mermaid .edgeLabel div {
+  margin: 0 !important;
+  padding: 0 4px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid foreignObject,
+.markdown-preview.markdown-preview .mermaid .edgeLabel {
+  overflow: visible !important;
+}
+.markdown-preview.markdown-preview .mermaid .nodeLabel,
+.markdown-preview.markdown-preview .mermaid .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid .label text,
+.markdown-preview.markdown-preview .mermaid .label tspan,
+.markdown-preview.markdown-preview .mermaid text,
+.markdown-preview.markdown-preview .mermaid tspan {
+  color: #f8fafc !important;
+  fill: #f8fafc !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .edgeLabel text,
+.markdown-preview.markdown-preview .mermaid .edgeLabel tspan,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label,
+.markdown-preview.markdown-preview .mermaid .edgeLabel .label * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid rect.actor,
+.markdown-preview.markdown-preview .mermaid .actor-box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid text.actor,
+.markdown-preview.markdown-preview .mermaid text.actor tspan,
+.markdown-preview.markdown-preview .mermaid .actor text,
+.markdown-preview.markdown-preview .mermaid .actor text tspan {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.markdown-preview.markdown-preview .mermaid .actor-line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node rect,
+.markdown-preview.markdown-preview .mermaid .node polygon,
+.markdown-preview.markdown-preview .mermaid .node .label-container {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .node text,
+.markdown-preview.markdown-preview .mermaid .node tspan,
+.markdown-preview.markdown-preview .mermaid .node .label,
+.markdown-preview.markdown-preview .mermaid .node .label p,
+.markdown-preview.markdown-preview .mermaid .node .label span,
+.markdown-preview.markdown-preview .mermaid .node .label div {
+  fill: #f8fafc !important;
+  color: #f8fafc !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup rect,
+.markdown-preview.markdown-preview .mermaid .classLabel .box {
+  fill: #111827 !important;
+  stroke: var(--purple) !important;
+  stroke-width: 2px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup line {
+  stroke: var(--purple) !important;
+  stroke-width: 1.5px !important;
+}
+.markdown-preview.markdown-preview .mermaid .classGroup text,
+.markdown-preview.markdown-preview .mermaid .classGroup tspan,
+.markdown-preview.markdown-preview .mermaid .classLabel text,
+.markdown-preview.markdown-preview .mermaid .classLabel tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel p,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel span,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] .nodeLabel div,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] text,
+.markdown-preview.markdown-preview .mermaid svg[aria-roledescription*="class" i] tspan {
+  fill: #111827 !important;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+.markdown-preview.markdown-preview .mermaid .activation0,
+.markdown-preview.markdown-preview .mermaid .activation1,
+.markdown-preview.markdown-preview .mermaid .activation2 {
+  fill: #263238 !important;
+  stroke: var(--cyan) !important;
+}
+.markdown-preview.markdown-preview .mermaid .note {
+  fill: #263238 !important;
+  stroke: var(--yellow) !important;
+}
+.markdown-preview.markdown-preview .mermaid .noteText,
+.markdown-preview.markdown-preview .mermaid .noteText tspan,
+.markdown-preview.markdown-preview .mermaid .sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+.markdown-preview.markdown-preview .mermaid .loopLine,
+.markdown-preview.markdown-preview .mermaid .labelBox {
+  fill: #1b2030 !important;
+  stroke: var(--purple) !important;
+}
+.markdown-preview.markdown-preview .katex-display {
+  background: #181c28;
+  border-radius: 8px;
+  padding: 14px;
+}
+.markdown-preview.markdown-preview p {
+  margin: 10px 0;
+}
+/*====================================================
+Markdown Preview Enhanced index / sidebar
+=====================================================*/
+.md-sidebar-toc,
+.md-sidebar-toc.md-sidebar-toc,
+.markdown-preview-enhanced-toc,
+.markdown-preview-enhanced-toc.md-preview-toc {
+  background: #171a26 !important;
+  color: #d7dae0 !important;
+  border-color: #30364d !important;
+  font-family: "Kalam", cursive;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.md-sidebar-toc a,
+.markdown-preview-enhanced-toc a {
+  color: #b9c7e8 !important;
+}
+.md-sidebar-toc a:hover,
+.md-sidebar-toc a.active,
+.markdown-preview-enhanced-toc a:hover,
+.markdown-preview-enhanced-toc a.active {
+  color: #7dcfff !important;
+  background: #24283b !important;
+}
+.md-sidebar-toc ul,
+.markdown-preview-enhanced-toc ul {
+  padding-left: 16px;
+}
+@media (max-width: 700px) {
+  .markdown-preview.markdown-preview {
+    font-size: 15px;
+    padding: 20px 16px;
+  }
+}
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="problems">Problems </h1>
+<blockquote>
+<p>32 designs, compressed to the decisions that matter. Full worked breakdowns (requirements, APIs, full deep dives, all diagrams) are in <code>../7-Problems/&lt;Name&gt;.md</code>.</p>
+</blockquote>
+<h2 id="how-to-use">How to use </h2>
+<p>Attempt one prompt on a whiteboard for 35-45 minutes before reading.<br>
+Diff your choices against these: datastore, consistency boundary, queue, cache, and failure mode.<br>
+Use the <strong>Say</strong> line as the interview soundbite, not as a memorized answer.</p>
+<h2 id="archetype-index">Archetype index </h2>
+<table>
+<thead>
+<tr>
+<th>Archetype</th>
+<th>Problems</th>
+<th>The shared lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contention &amp; correctness</td>
+<td>Ticketmaster, Flash Sale, Online Auction, Payment System, Robinhood</td>
+<td>Put the invariant in one durable boundary; use TTL holds, queues, and idempotency around it.</td>
+</tr>
+<tr>
+<td>Realtime/stateful connections</td>
+<td>WhatsApp, FB Live Comments, Google Docs, Online Chess, ChatGPT</td>
+<td>Own connection placement, replay/reconnect, and durable-vs-ephemeral state explicitly.</td>
+</tr>
+<tr>
+<td>Feeds &amp; social graphs</td>
+<td>Facebook News Feed, Instagram, Tinder, Strava, News Aggregator</td>
+<td>Choose fanout timing by skew; precompute the common path and special-case celebrities/hot users.</td>
+</tr>
+<tr>
+<td>Blobs &amp; media</td>
+<td>Dropbox, YouTube</td>
+<td>Keep bytes out of app servers; use presigned multipart upload, processing DAGs, and CDN delivery.</td>
+</tr>
+<tr>
+<td>Search &amp; geo</td>
+<td>Yelp, Uber, Local Delivery, Facebook Post Search</td>
+<td>Build the index that matches the query: spatial, inverted, live geo, or denormalized read model.</td>
+</tr>
+<tr>
+<td>Streams &amp; counting</td>
+<td>Ad Click Aggregator, YouTube Top K, Metrics Monitoring</td>
+<td>Aggregate before reads, partition by the natural key, and preserve raw input for replay/reconciliation.</td>
+</tr>
+<tr>
+<td>Infrastructure primitives</td>
+<td>Rate Limiter, Distributed Cache, Job Scheduler, Notification System, Web Crawler, Bitly, Price Tracker, LeetCode</td>
+<td>Design the reusable primitive: sharding, leases, retries, eviction, isolation, and operational backpressure.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="technique---where-to-see-it-done">Technique -&gt; where to see it done </h2>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Best examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hybrid fan-out</td>
+<td>Facebook News Feed, Instagram</td>
+</tr>
+<tr>
+<td>Reservation TTL</td>
+<td>Ticketmaster, Flash Sale, Local Delivery</td>
+</tr>
+<tr>
+<td>Idempotency keys</td>
+<td>Payment System, Notification System, Job Scheduler</td>
+</tr>
+<tr>
+<td>Consistent hashing</td>
+<td>Distributed Cache, Google Docs, Online Chess</td>
+</tr>
+<tr>
+<td>Presigned URL + CDN</td>
+<td>Dropbox, YouTube, Instagram, WhatsApp</td>
+</tr>
+<tr>
+<td>Geo indexing</td>
+<td>Uber, Yelp, Tinder, Local Delivery</td>
+</tr>
+<tr>
+<td>Stream aggregation</td>
+<td>Ad Click Aggregator, YouTube Top K, Metrics Monitoring</td>
+</tr>
+<tr>
+<td>OT vs CRDT</td>
+<td>Google Docs, Figma case study</td>
+</tr>
+<tr>
+<td>Sandboxing</td>
+<td>LeetCode</td>
+</tr>
+<tr>
+<td>CDC read models</td>
+<td>News Aggregator, Payment System, Facebook Post Search</td>
+</tr>
+<tr>
+<td>Durable workflow</td>
+<td>Payment System, YouTube, Job Scheduler, Uber</td>
+</tr>
+<tr>
+<td>SSE streaming</td>
+<td>ChatGPT, Live Comments, Robinhood</td>
+</tr>
+<tr>
+<td>Hot-key mitigation</td>
+<td>Distributed Cache, Facebook News Feed, Ad Click Aggregator</td>
+</tr>
+<tr>
+<td>Approximate retrieval/counting</td>
+<td>Facebook Post Search, Tinder, YouTube Top K</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="ticketmaster">Ticketmaster </h2>
+<p><strong>Signal:</strong> Keep seat purchase correct while event search and hot-sale viewing remain fast.<br>
+<strong>Design:</strong> Cached Event/Search services read PostgreSQL metadata and Elasticsearch via CDC.<br>
+Booking uses Redis TTL holds, PostgreSQL finalization, Stripe webhooks, and a waiting room for extreme events.<br>
+<img src="images/Ticketmaster-fig-10.png" alt="Ticketmaster — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service split</td>
+<td>Event/Search/Booking services sharing PostgreSQL</td>
+<td>Strict database-per-service split</td>
+<td>Tightly coupled ticket data needs one ACID boundary.</td>
+</tr>
+<tr>
+<td>Booking store</td>
+<td>PostgreSQL transactions with row locks/OCC</td>
+<td>Non-transactional booking store</td>
+<td>Prevents two users buying the same ticket.</td>
+</tr>
+<tr>
+<td>Seat holds</td>
+<td>Redis <code>SET NX EX</code> TTL locks + Booking row</td>
+<td>Long DB transaction during payment</td>
+<td>Checkout time without holding row locks.</td>
+</tr>
+<tr>
+<td>Hold visibility</td>
+<td>Redis ZSET <code>event:{eventId}:reserved</code> scored by expiry</td>
+<td>Plain Redis Set of locked seats</td>
+<td>Expired holds disappear; no ghost reservations.</td>
+</tr>
+<tr>
+<td>Payment finalization</td>
+<td>Stripe.js token + idempotent webhook by <code>bookingId</code></td>
+<td>Server-handled raw cards; non-idempotent webhooks</td>
+<td>PCI safer; Stripe retries cannot duplicate state.</td>
+</tr>
+<tr>
+<td>Event reads</td>
+<td>Read-through Redis/Memcached + TTL/invalidation</td>
+<td>Every view hits PostgreSQL</td>
+<td>Static event data handles huge read bursts.</td>
+</tr>
+<tr>
+<td>Hot events</td>
+<td>Admin-enabled virtual waiting queue + admitted TTL set</td>
+<td>SSE seat-map updates for everyone</td>
+<td>Controls access before overwhelming booking.</td>
+</tr>
+<tr>
+<td>Search index</td>
+<td>Elasticsearch fed from PostgreSQL by CDC</td>
+<td>SQL <code>LIKE</code>/standard indexes</td>
+<td>Fuzzy search needs inverted indexes and ranking.</td>
+</tr>
+<tr>
+<td>Search caching</td>
+<td>Elasticsearch query/request cache + CDN edge</td>
+<td>App-only Redis result cache</td>
+<td>Repeated, non-personalized queries avoid search load.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> Redis multi-seat locking is partial, tokens bypass Booking Service, or CDC/search freshness is trusted for final availability.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Search and viewing can be eventually consistent, but the final ticket sale cannot."</p>
+</blockquote>
+<h2 id="flash-sale">Flash Sale </h2>
+<p><strong>Signal:</strong> Preserve a scarce-inventory invariant while millions of users arrive at once.<br>
+<strong>Design:</strong> Product launches pass through a waiting room, then Reservation Service claims units in PostgreSQL.<br>
+Reservation-unit rows, <code>FOR UPDATE SKIP LOCKED</code>, expiry reclaim, and Stripe settlement keep checkout short.<br>
+<img src="images/FlashSale-fig-16.png" alt="Flash Sale — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reservation boundary</td>
+<td>Short Reservation before Stripe payment</td>
+<td>Holding inventory transaction through payment</td>
+<td>Payment takes seconds; inventory claim must be quick.</td>
+</tr>
+<tr>
+<td>Inventory model</td>
+<td><code>ReservationUnit</code> rows + <code>FOR UPDATE SKIP LOCKED</code></td>
+<td>Single <code>inventoryCount</code> row; Redis counter</td>
+<td>Parallel claims stay in one database truth.</td>
+</tr>
+<tr>
+<td>Claim transaction</td>
+<td>Delete unit + insert Reservation atomically</td>
+<td>Separate decrement then reservation write</td>
+<td>Cannot lose inventory or create phantom reservations.</td>
+</tr>
+<tr>
+<td>Expiry reclaim</td>
+<td>On-demand batch reclaim of expired reservations</td>
+<td>Cron cleanup or delayed SQS jobs</td>
+<td>Avoids millions jobs; stock returns when needed.</td>
+</tr>
+<tr>
+<td>Reclaim lock</td>
+<td>Per-product advisory lock around reclamation</td>
+<td>Many requests reclaiming simultaneously</td>
+<td>One request refills pool; others retry fast.</td>
+</tr>
+<tr>
+<td>Purchase status</td>
+<td>Client polls <code>GET /purchases/:purchaseId</code> every second</td>
+<td>SSE for few-second waits</td>
+<td>Few reservation holders; polling is cheap.</td>
+</tr>
+<tr>
+<td>Admission</td>
+<td>Virtual Waiting Room Service + signed tokens</td>
+<td>Gateway <code>429</code> rate limiting</td>
+<td>Protects DB without retry thundering herd.</td>
+</tr>
+<tr>
+<td>Admission rate</td>
+<td>Controller admits ~8k/s for 10k TPS capacity</td>
+<td>Let all waiting users reserve</td>
+<td>Leaves headroom while using backend capacity.</td>
+</tr>
+<tr>
+<td>Fairness</td>
+<td>Pre-sale randomization, then FIFO after start</td>
+<td>Pure FIFO by arrival time</td>
+<td>Network latency and bots should not decide.</td>
+</tr>
+<tr>
+<td>Queue integrity</td>
+<td>Authenticated one active entry + CAPTCHA</td>
+<td>Anonymous duplicate entries</td>
+<td>Stops users and bots taking extra places.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> too many users open transactions, scans lack indexes, or admitted tokens are forgeable/reusable.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The reservation is the product: payment can take seconds, so I take inventory off the table before Stripe."</p>
+</blockquote>
+<h2 id="online-auction">Online Auction </h2>
+<p><strong>Signal:</strong> Serialize bids for one auction, retain audit history, and push current price updates.<br>
+<strong>Design:</strong> Bid Service appends to Kafka partitioned by <code>auctionId</code>, then updates SQL bid history and auction max price.<br>
+SSE servers subscribe through Pub/Sub so any connected watcher sees accepted high bids.<br>
+<img src="images/Auction-fig-11.png" alt="Online Auction — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service split</td>
+<td>Dedicated Bidding Service</td>
+<td>Auction Service handles bids too</td>
+<td>Bid traffic is ~100x creation traffic.</td>
+</tr>
+<tr>
+<td>Bid history</td>
+<td>Append Bid rows with accepted/rejected status</td>
+<td>Only overwriting <code>maxBidPrice</code></td>
+<td>Audit disputes; historical data is preserved.</td>
+</tr>
+<tr>
+<td>Current price</td>
+<td>Auction row stores max bid, updated transactionally</td>
+<td>Locking all Bid rows; Redis max cache</td>
+<td>One DB boundary without large locks.</td>
+</tr>
+<tr>
+<td>Concurrency</td>
+<td>OCC conditional update on <code>max_bid</code></td>
+<td>Pessimistic row locks everywhere</td>
+<td>Avoids locks; retries only on conflicts.</td>
+</tr>
+<tr>
+<td>Bid intake</td>
+<td>Kafka durably persists submitted bids</td>
+<td>Direct processing/drop/crash/over-provision</td>
+<td>Crashes and surge periods do not lose bids.</td>
+</tr>
+<tr>
+<td>Ordering</td>
+<td>Kafka partitioned by <code>auctionId</code></td>
+<td>Unpartitioned async workers</td>
+<td>Same-auction bids process in arrival order.</td>
+</tr>
+<tr>
+<td>Realtime</td>
+<td>SSE bid stream</td>
+<td>Regular/long polling or WebSockets</td>
+<td>One-way max-bid pushes are lighter.</td>
+</tr>
+<tr>
+<td>Fanout</td>
+<td>Pub/Sub to interested SSE servers</td>
+<td>Server-local connections only</td>
+<td>Updates reach watchers on other servers.</td>
+</tr>
+<tr>
+<td>Shard key</td>
+<td>Database sharded by <code>auctionId</code></td>
+<td>Single PostgreSQL instance</td>
+<td>~15K writes/s exceed one instance; no scatter-gather.</td>
+</tr>
+<tr>
+<td>Dynamic ending</td>
+<td>End-time update + cron; delayed scheduler when precise</td>
+<td>—</td>
+<td>Simple path is enough unless precision matters.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> a celebrity auction exceeds one row/partition, or backlog makes "bid received" misleading.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The Auction row is the consistency boundary; bid history is the audit trail."</p>
+</blockquote>
+<h2 id="payment-system">Payment System </h2>
+<p><strong>Signal:</strong> Preserve financial integrity when external payment networks are asynchronous and uncertain.<br>
+<strong>Design:</strong> Merchant PaymentIntents create internal Attempts/Charges before external calls.<br>
+Operational SQL state emits CDC to Kafka/object storage for audit, reconciliation, webhooks, and ledgers.<br>
+<img src="images/PaymentSystem-fig-13.png" alt="Payment System — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Payment model</td>
+<td>PaymentIntent + polymorphic Transaction/Charge records</td>
+<td>—</td>
+<td>Multiple attempts stay linked to one merchant-facing lifecycle.</td>
+</tr>
+<tr>
+<td>Merchant auth</td>
+<td>Public API key + HMAC request signing, timestamp, nonce</td>
+<td>Static API key alone</td>
+<td>Rejects tampering and replayed requests.</td>
+</tr>
+<tr>
+<td>Card collection</td>
+<td>Hosted iframe + client-side public-key encryption</td>
+<td>Merchant server collects cards; iframe-only</td>
+<td>Card data bypasses merchants and leaves browser encrypted.</td>
+</tr>
+<tr>
+<td>Network owner</td>
+<td>Transaction Service owns records and payment-network calls</td>
+<td>Extra service hops</td>
+<td>Reduces complexity and unnecessary network hops.</td>
+</tr>
+<tr>
+<td>Audit log</td>
+<td>PostgreSQL commit -&gt; CDC -&gt; Kafka -&gt; S3 archive</td>
+<td>Current-state DB or app-written audit tables</td>
+<td>No history loss; no application double-write.</td>
+</tr>
+<tr>
+<td>Unknown outcomes</td>
+<td>Attempt record before network call + automated reconciliation</td>
+<td>Treat timeout as failure</td>
+<td>Timeout is uncertainty, not denial.</td>
+</tr>
+<tr>
+<td>Idempotency</td>
+<td>Unique merchant idempotency key constraint</td>
+<td>New charge on each retry</td>
+<td>Prevents duplicate charges during retries.</td>
+</tr>
+<tr>
+<td>Event partition</td>
+<td>Kafka by <code>payment_intent_id</code>, 3-5 partitions, RF=3</td>
+<td>Single partition/unordered events</td>
+<td>10k TPS with per-intent ordering.</td>
+</tr>
+<tr>
+<td>Data scale</td>
+<td>Shard PostgreSQL by <code>merchant_id</code>; archive 3-6 months to S3/GCS</td>
+<td>One operational database for ~180TB/year</td>
+<td>Spreads writes and keeps hot DB small.</td>
+</tr>
+<tr>
+<td>Merchant updates</td>
+<td>CDC Webhook Service signs callbacks with exponential backoff</td>
+<td>Merchant polling or client SSE/WebSockets</td>
+<td>Server-to-server updates avoid high-frequency status checks.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> reference IDs are missing, CDC fails silently, webhooks are not idempotent, or secrets reach browsers.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "A timeout is an unknown financial state, not a failed payment."</p>
+</blockquote>
+<h2 id="robinhood">Robinhood </h2>
+<p><strong>Signal:</strong> Minimize exchange connections while keeping live prices and order state consistent.<br>
+<strong>Design:</strong> Symbol Service proxies exchange market data once, caches it, and streams prices over SSE.<br>
+Order Service writes pending state, sends through a broker gateway/NAT, then reconciles trade-feed updates by external ID.<br>
+<img src="images/Robinhood-fig-13.png" alt="Robinhood — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Price precision</td>
+<td>Integer <code>priceInCents</code></td>
+<td>Floating-point <code>price</code></td>
+<td>Avoids financial precision errors.</td>
+</tr>
+<tr>
+<td>Price feed</td>
+<td>Symbol Service streams SSE from internal cache</td>
+<td>Clients polling exchange directly</td>
+<td>Under 200ms without duplicate exchange calls.</td>
+</tr>
+<tr>
+<td>Price fanout</td>
+<td>Redis Pub/Sub channels per symbol</td>
+<td>Every Symbol Service receives every price</td>
+<td>Servers get only subscribed-symbol updates.</td>
+</tr>
+<tr>
+<td>Order path</td>
+<td>Synchronous Order Gateway via AWS NAT/elastic IPs</td>
+<td>Client direct exchange calls; queued dispatcher</td>
+<td>Low latency and few exchange-facing IPs.</td>
+</tr>
+<tr>
+<td>Order store</td>
+<td>ACID relational Order DB partitioned by <code>userId</code></td>
+<td>Client-only order tracking</td>
+<td>Reliable user reads hit one shard.</td>
+</tr>
+<tr>
+<td>Trade lookup</td>
+<td>RocksDB <code>externalOrderId</code> -&gt; <code>(orderId,userId)</code></td>
+<td>Query user-sharded DB by external ID</td>
+<td>Trade feed updates find the right shard.</td>
+</tr>
+<tr>
+<td>Create workflow</td>
+<td>Store <code>pending</code> order before exchange submission</td>
+<td>Submit to exchange first</td>
+<td>Client intent survives failures after exchange call.</td>
+</tr>
+<tr>
+<td>Create recovery</td>
+<td>Cleanup queries exchange by <code>clientOrderId</code></td>
+<td>Leave <code>pending</code> orders unresolved</td>
+<td>Distinguishes submitted orders from failed submissions.</td>
+</tr>
+<tr>
+<td>Cancel workflow</td>
+<td>Mark <code>pending_cancel</code> before exchange cancel, then cleanup</td>
+<td>Cancel first then update DB</td>
+<td>Failed cancels can be resolved later.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> mapping writes fail, exchange references are unstable, or cleanup cannot distinguish lost response from not submitted.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "We are a broker proxying an exchange, not designing the exchange/order book."</p>
+</blockquote>
+<h2 id="whatsapp">WhatsApp </h2>
+<p><strong>Signal:</strong> Deliver messages quickly over sockets while guaranteeing eventual receipt across offline users and devices.<br>
+<strong>Design:</strong> WebSocket chat servers route live commands through Redis Pub/Sub, but every message writes durable Message and per-client Inbox rows first.<br>
+Media uses presigned blob references, and inbox entries clear only on client ACK.<br>
+<img src="images/Whatsapp-fig-15.png" alt="WhatsApp — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol</td>
+<td>WebSockets over TLS commands</td>
+<td>REST request/response APIs</td>
+<td>Bidirectional high-frequency messages need persistent sockets.</td>
+</tr>
+<tr>
+<td>Chat metadata</td>
+<td>DynamoDB ChatParticipant PK <code>chatId,participantId</code> + GSI by <code>participantId</code></td>
+<td>—</td>
+<td>Efficient chat and user membership lookups.</td>
+</tr>
+<tr>
+<td>Delivery state</td>
+<td>Message row + Inbox TTL before Pub/Sub; ACK deletes</td>
+<td>Socket send as success</td>
+<td>Offline delivery works; server copies expire.</td>
+</tr>
+<tr>
+<td>Media</td>
+<td>Presigned blob upload/download URLs</td>
+<td>Attachments in DB or proxied by Chat Server</td>
+<td>Bytes bypass chat servers and databases.</td>
+</tr>
+<tr>
+<td>Server routing</td>
+<td>Sharded Redis Pub/Sub user channels; adaptive chat channels above 25</td>
+<td>Naive scale, Kafka per user, consistent hashing</td>
+<td>Lightweight routing; durable Inbox handles Pub/Sub loss.</td>
+</tr>
+<tr>
+<td>Multi-device</td>
+<td>Clients table + per-client Inbox, 3-client limit</td>
+<td>Per-user Inbox</td>
+<td>Each device syncs independently without unbounded storage.</td>
+</tr>
+<tr>
+<td>Connection health</td>
+<td>Application heartbeats every 10-30s, 5s timeout</td>
+<td>TCP timeouts or ACK-only detection</td>
+<td>Dead sockets close within seconds, not minutes.</td>
+</tr>
+<tr>
+<td>Missed messages</td>
+<td>User sequence piggybacked on heartbeats + sync</td>
+<td>Polling only or per-chat gap detection</td>
+<td>Detects Pub/Sub drops within one heartbeat.</td>
+</tr>
+<tr>
+<td>Ordering</td>
+<td>Server receive timestamps with NTP</td>
+<td>Delayed exact reordering</td>
+<td>Immediate delivery beats perfect send order.</td>
+</tr>
+<tr>
+<td>Last seen</td>
+<td>Last disconnect table + active-connection query</td>
+<td>DB writes on every heartbeat</td>
+<td>Avoids millions of low-value writes per second.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> ACKs are not idempotent, TTL deletes early, Pub/Sub is treated as durable, or sequence gaps cannot sync.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Redis Pub/Sub can be at-most-once because the delivery guarantee lives in the Inbox table."</p>
+</blockquote>
+<h2 id="fb-live-comments">FB Live Comments </h2>
+<p><strong>Signal:</strong> Pick the simplest push model for read-heavy comments, then scale one-stream fanout.<br>
+<strong>Design:</strong> Comment writes persist first, publish to partitioned Pub/Sub, then Realtime Messaging Servers fan out over SSE.<br>
+Viral streams switch to CDN snapshots/representative views plus reconnect catch-up by event ID.<br>
+<img src="images/LiveComments-fig-12.png" alt="FB Live Comments — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comment store</td>
+<td>DynamoDB comments keyed by <code>liveVideoId,commentId</code></td>
+<td>—</td>
+<td>Simple comments need scale, not transactions.</td>
+</tr>
+<tr>
+<td>User identity</td>
+<td>JWT/session token in header</td>
+<td><code>userId</code> in request body</td>
+<td>Prevents tampering and impersonation.</td>
+</tr>
+<tr>
+<td>History paging</td>
+<td>Cursor pagination by <code>last_comment_id</code></td>
+<td>Offset pagination</td>
+<td>Stable and avoids scanning preceding rows.</td>
+</tr>
+<tr>
+<td>Push channel</td>
+<td>SSE for viewers, HTTP POST for comments</td>
+<td>Polling or WebSockets</td>
+<td>Read-heavy one-way stream fits SSE.</td>
+</tr>
+<tr>
+<td>Service split</td>
+<td>Comment Management + Realtime Messaging Servers</td>
+<td>One service for writes and fanout</td>
+<td>Read traffic scales independently from writes.</td>
+</tr>
+<tr>
+<td>Fanout routing</td>
+<td>Partitioned Pub/Sub + viewer co-location by <code>liveVideoId</code></td>
+<td>Every server processes every comment</td>
+<td>Servers subscribe only to needed channels.</td>
+</tr>
+<tr>
+<td>Pub/Sub tech</td>
+<td>Redis Pub/Sub</td>
+<td>Kafka dynamic subscriptions</td>
+<td>Low-latency dynamic channels; DB persists comments.</td>
+</tr>
+<tr>
+<td>Mega streams</td>
+<td>CDN snapshots from 100-200 comment ring buffer</td>
+<td>Perfect SSE delivery or sampling only</td>
+<td>CDN serves millions; every comment is unreadable.</td>
+</tr>
+<tr>
+<td>Mode switching</td>
+<td>Flip to CDN above 100k viewers or 500 comments/s, with hysteresis</td>
+<td>Static SSE-only mode</td>
+<td>Avoids mega-stream overload and mode flapping.</td>
+</tr>
+<tr>
+<td>Reconnect</td>
+<td>SSE <code>Last-Event-ID</code> + client tracking + bounded Redis replay</td>
+<td>Ignore disconnections</td>
+<td>Catch-up without unbounded stale comment floods.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> viral streams overload assigned servers, replay cache is not shared, or <code>Last-Event-ID</code> catch-up is unbounded.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "At mega-stream scale, perfect delivery is less valuable than a readable representative experience."</p>
+</blockquote>
+<h2 id="google-docs">Google Docs </h2>
+<p><strong>Signal:</strong> Make concurrent text edits converge while scaling stateful WebSocket ownership.<br>
+<strong>Design:</strong> REST handles metadata; WebSocket Document Service owns active <code>docId</code>s by consistent hash.<br>
+It applies OT, persists operations before ACK, broadcasts transformed edits, and compacts logs when idle.<br>
+<img src="images/GoogleDocs-fig-15.png" alt="Google Docs — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API split</td>
+<td>REST for metadata, WebSocket messages for editing</td>
+<td>REST for all editor traffic</td>
+<td>Edits and cursor updates are bidirectional.</td>
+</tr>
+<tr>
+<td>Metadata store</td>
+<td>PostgreSQL metadata DB</td>
+<td>—</td>
+<td>Flexible queries; can partition and replicate later.</td>
+</tr>
+<tr>
+<td>Edit payload</td>
+<td>Send operations like insert/delete</td>
+<td>Full document snapshots to blob storage</td>
+<td>Avoids huge transfers and lost concurrent edits.</td>
+</tr>
+<tr>
+<td>Convergence</td>
+<td>Operational Transformation on central owner</td>
+<td>CRDTs or last-write snapshots</td>
+<td>Low memory; fits text and ≤100 editors.</td>
+</tr>
+<tr>
+<td>Operation log</td>
+<td>Cassandra append-only ops by <code>documentId</code>, server timestamp order</td>
+<td>Mutable document-only storage</td>
+<td>Fast writes and durable replay after restarts.</td>
+</tr>
+<tr>
+<td>ACK boundary</td>
+<td>Persist operation before acknowledging</td>
+<td>—</td>
+<td>Durable edits survive server restart.</td>
+</tr>
+<tr>
+<td>Client updates</td>
+<td>Server broadcasts transformed ops; clients also run OT</td>
+<td>Server-only transform</td>
+<td>Local optimistic edits still converge.</td>
+</tr>
+<tr>
+<td>Presence</td>
+<td>In-memory cursor/presence on Document Service</td>
+<td>Store awareness in document data</td>
+<td>Awareness is ephemeral with the connection.</td>
+</tr>
+<tr>
+<td>Ownership</td>
+<td>Consistent hash ring by <code>docId</code> via ZooKeeper redirects</td>
+<td>Any-server document connections</td>
+<td>One owner orders edits and broadcasts locally.</td>
+</tr>
+<tr>
+<td>Compaction</td>
+<td>Document Service compacts online when idle using new <code>documentVersionId</code></td>
+<td>Offline Compaction Service</td>
+<td>Owner knows no clients; avoids coordination races.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> docs need heavy offline/P2P editing, one doc becomes hot, compaction races, or OT edge cases are wrong.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Each edit is contextual, so the server must either transform it or make operations commutative."</p>
+</blockquote>
+<h2 id="online-chess">Online Chess </h2>
+<p><strong>Signal:</strong> Keep two players on one authoritative game while scaling matchmaking, clocks, and ranks.<br>
+<strong>Design:</strong> A Redis sorted set per time control atomically matches players; Game Servers own board state in memory.<br>
+Moves append to a log before broadcast; routing uses consistent hashing, fencing, and reconnect replay.<br>
+<img src="images/OnlineChess-fig-09.png" alt="Online Chess — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gameplay transport</td>
+<td>WebSocket scoped to game</td>
+<td>REST polling or SSE</td>
+<td>Both players send and receive continuously.</td>
+</tr>
+<tr>
+<td>Matchmaking</td>
+<td>Redis ZSET per time control + Lua</td>
+<td>In-process pool or Postgres SKIP LOCKED</td>
+<td>Atomic range claim avoids bloat and double-booking.</td>
+</tr>
+<tr>
+<td>Pool scale/failover</td>
+<td>Single Redis key with replicas/failover</td>
+<td>Rating-band sharding</td>
+<td>50k ops/s fits; lost pending requests can resubmit.</td>
+</tr>
+<tr>
+<td>Game state</td>
+<td>Stateful in-memory owner + move-log replay</td>
+<td>Shared Redis game state</td>
+<td>Local validation; tiny move logs recover crashes.</td>
+</tr>
+<tr>
+<td>Move ordering</td>
+<td>Persist before broadcast</td>
+<td>Broadcast then persist</td>
+<td>Recovery cannot miss moves players already saw.</td>
+</tr>
+<tr>
+<td>Server placement</td>
+<td>Consistent hashing + ephemeral registry</td>
+<td>Plain sticky hash by gameId</td>
+<td>Membership changes remap small slices and detect dead nodes.</td>
+</tr>
+<tr>
+<td>Fencing</td>
+<td>Game generation guard on writes</td>
+<td>Unfenced recovered owners</td>
+<td>Zombie servers cannot mutate games after reassignment.</td>
+</tr>
+<tr>
+<td>Clock fairness</td>
+<td>Server clock + median RTT compensation cap</td>
+<td>Client clock or no compensation</td>
+<td>Prevents cheating while reducing high-latency clock tax.</td>
+</tr>
+<tr>
+<td>Leaderboard rank</td>
+<td>Redis sorted set with ZREVRANK</td>
+<td>Postgres COUNT or bucketed counts</td>
+<td>O(log n) exact ranks for 10M players.</td>
+</tr>
+<tr>
+<td>Rating apply</td>
+<td>Game-result source + idempotent gameId apply</td>
+<td>Non-idempotent player/Redis updates</td>
+<td>Retries correct drift without double-counting games.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> routing changes without fencing, RTT inflation is unchecked, or game-end ELO is not idempotent by <code>gameId</code>.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The server owns rules and clocks; the database is a recovery log, not the move hot path."</p>
+</blockquote>
+<h2 id="chatgpt">ChatGPT </h2>
+<p><strong>Signal:</strong> Stream tokens quickly while scheduling scarce GPUs fairly and controlling context cost.<br>
+<strong>Design:</strong> Chat Service creates a Run, queues GPU work, receives worker tokens over gRPC streaming, and emits SSE to clients.<br>
+Redis Streams buffer live deltas for reconnect; Postgres stores final messages.<br>
+<img src="images/ChatGPT-fig-23.png" alt="ChatGPT — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service split</td>
+<td>Stateless Chat Service + GPU Inference Service</td>
+<td>Coupled chat/GPU tier</td>
+<td>Cheap chat and expensive GPUs scale independently.</td>
+</tr>
+<tr>
+<td>Worker streaming</td>
+<td>Server-streaming gRPC</td>
+<td>Request/response completion</td>
+<td>Avoids buffering 30-second answers before first token.</td>
+</tr>
+<tr>
+<td>Browser streaming</td>
+<td>SSE EventSource GET</td>
+<td>Polling or WebSockets</td>
+<td>One-way token push without bidirectional overhead.</td>
+</tr>
+<tr>
+<td>Run lifecycle</td>
+<td>Run row returning runId</td>
+<td>Synchronous POST returning Message</td>
+<td>Queued, streaming, failed, cancelled attempts need lifecycle.</td>
+</tr>
+<tr>
+<td>Stream replay</td>
+<td>Redis Streams + final Postgres message</td>
+<td>Pub/Sub or durable token chunks</td>
+<td>Replays gaps without bloating history.</td>
+</tr>
+<tr>
+<td>Stream retention</td>
+<td>Delta tokens with MAXLEN + TTL</td>
+<td>Snapshots or permanent chunk storage</td>
+<td>Bounds memory and avoids quadratic bandwidth.</td>
+</tr>
+<tr>
+<td>GPU scheduling</td>
+<td>Bounded queue + continuous batching</td>
+<td>Direct workers or unbounded queue</td>
+<td>Keeps GPUs utilized and rejects honestly at capacity.</td>
+</tr>
+<tr>
+<td>Fairness</td>
+<td>Token quotas + tier-aware priority</td>
+<td>Global or per-user request caps</td>
+<td>Tokens reflect GPU cost; tiers get differentiated service.</td>
+</tr>
+<tr>
+<td>Context cost</td>
+<td>Prefix caching + rolling summary</td>
+<td>Full history or truncation</td>
+<td>Reuses stable prefixes while preserving long-chat memory.</td>
+</tr>
+<tr>
+<td>Cancellation</td>
+<td>Explicit cancel request + control channel</td>
+<td>Treating disconnect as cancellation</td>
+<td>Frees GPU without breaking reconnect semantics.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> Redis retention is too short, demand exceeds capacity for long periods, or quota ignores token/context cost.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The Run is the unit of work; Message is the durable outcome."</p>
+</blockquote>
+<h2 id="facebook-news-feed">Facebook News Feed </h2>
+<p><strong>Signal:</strong> Choose fanout-on-read, fanout-on-write, or hybrid under celebrity skew.<br>
+<strong>Design:</strong> Normal posts fan out asynchronously into bounded per-user Feed rows; celebrity posts are merged at read time.<br>
+Post metadata is cached redundantly for hot objects, and timestamp cursors page the materialized feed.<br>
+<img src="images/FBNewsFeed-fig-11.png" alt="Facebook News Feed — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Post storage</td>
+<td>DynamoDB Post table</td>
+<td>—</td>
+<td>Simple scalable key-value store for posts.</td>
+</tr>
+<tr>
+<td>Follow graph</td>
+<td>DynamoDB relation table + reverse GSI</td>
+<td>Neo4j/triple store</td>
+<td>No traversals; simple follow lookups suffice.</td>
+</tr>
+<tr>
+<td>Follow API</td>
+<td>Idempotent PUT follow</td>
+<td>Non-idempotent action</td>
+<td>Double-clicking follow should not fail.</td>
+</tr>
+<tr>
+<td>Feed read path</td>
+<td>PrecomputedFeed of ~200 postIds/user</td>
+<td>Fanout-on-read across follows/posts</td>
+<td>Avoids thousands of reads; 4TB is reasonable.</td>
+</tr>
+<tr>
+<td>Cursoring</td>
+<td>Oldest timestamp cursor</td>
+<td>—</td>
+<td>Reverse chronological scroll fetches older posts efficiently.</td>
+</tr>
+<tr>
+<td>Fanout work</td>
+<td>SQS async feed workers</td>
+<td>Post Service blasts writes</td>
+<td>1-minute staleness permits smoothing millions of writes.</td>
+</tr>
+<tr>
+<td>Celebrity skew</td>
+<td>Hybrid fanout with non-precomputed follows</td>
+<td>Fanout-on-write for every account</td>
+<td>Avoids 90M writes for celebrity posts.</td>
+</tr>
+<tr>
+<td>Hot posts</td>
+<td>Redundant Redis post cache + long TTL/LRU</td>
+<td>Sharded cache or direct DynamoDB</td>
+<td>Viral keys spread across all cache instances.</td>
+</tr>
+<tr>
+<td>Feed depth</td>
+<td>Bound feeds to first ~200 IDs</td>
+<td>Arbitrary deep feed history</td>
+<td>Real users rarely page hundreds deep.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> users need deep complete history fast, too many follows are non-precomputed, or ranking/privacy enters scope.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "News feed is about choosing fanout timing: read, write, or hybrid by account type."</p>
+</blockquote>
+<h2 id="instagram">Instagram </h2>
+<p><strong>Signal:</strong> Separate feed-read latency from write amplification while serving global media cheaply.<br>
+<strong>Design:</strong> Post metadata lives in DB/cache; media uploads directly to S3 and delivers through CDN variants.<br>
+Feeds use Redis ZSET IDs: normal authors fan out on write, celebrities merge on read.<br>
+<img src="images/Instagram-fig-13.png" alt="Instagram — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metadata DB</td>
+<td>DynamoDB posts/follows with indexes</td>
+<td>Full table scans</td>
+<td>Scale and eventual consistency fit simple relationships.</td>
+</tr>
+<tr>
+<td>Media storage</td>
+<td>S3 object store</td>
+<td>App-server or DB byte storage</td>
+<td>Blob store handles 200TB/day binary scale.</td>
+</tr>
+<tr>
+<td>Feed model</td>
+<td>Hybrid Redis precompute + celebrity merge</td>
+<td>Fanout-on-read or pure fanout-on-write</td>
+<td>Fast common reads without 100k+ follower write explosions.</td>
+</tr>
+<tr>
+<td>Feed hydration</td>
+<td>Redis ZSET IDs + HASH metadata cache</td>
+<td>Full posts in feeds or DB per request</td>
+<td>Balances memory, freshness, and BatchGet misses.</td>
+</tr>
+<tr>
+<td>Redis durability</td>
+<td>AOF + Sentinel/Cluster</td>
+<td>Volatile Redis-only feeds</td>
+<td>Failover recovers cache with minimal data loss.</td>
+</tr>
+<tr>
+<td>Upload path</td>
+<td>Presigned S3 multipart</td>
+<td>Single POST or app-server upload</td>
+<td>4GB videos need chunks and server bypass.</td>
+</tr>
+<tr>
+<td>Completion update</td>
+<td>S3 event/Lambda backend update</td>
+<td>Client-reported completion PATCH</td>
+<td>Backend consistency beats trusting clients.</td>
+</tr>
+<tr>
+<td>Media delivery</td>
+<td>CloudFront CDN in front of S3</td>
+<td>Direct S3 serving</td>
+<td>Edge caches cut global latency and S3 cost.</td>
+</tr>
+<tr>
+<td>Media variants</td>
+<td>Optimized image/video variants + adaptive streaming</td>
+<td>Same high-res file for everyone</td>
+<td>Device-specific bytes render faster.</td>
+</tr>
+<tr>
+<td>Cold storage</td>
+<td>Glacier/S3 tiering for old media/metadata</td>
+<td>Keep 750PB hot</td>
+<td>Infrequent access should move to cheaper storage.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> celebrity threshold is wrong, Redis durability is ignored, URL TTLs are long, or CDN variants lag viral demand.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Media bytes should not flow through my application servers; metadata and bytes have different paths."</p>
+</blockquote>
+<h2 id="tinder">Tinder </h2>
+<p><strong>Signal:</strong> Serve nearby recommendations fast while detecting mutual likes exactly once and immediately.<br>
+<strong>Design:</strong> Profile/search indexes generate cached swipe stacks; high-volume swipes persist to Cassandra.<br>
+Redis Lua checks sorted pair keys for reciprocal likes and emits match notifications.<br>
+<img src="images/Tinder-fig-13.png" alt="Tinder — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service split</td>
+<td>Dedicated Swipe Service + Cassandra DB</td>
+<td>Profile service/database only</td>
+<td>Swipe writes reach 200GB/day and scale differently.</td>
+</tr>
+<tr>
+<td>Swipe storage</td>
+<td>Cassandra partitioned swipe history</td>
+<td>Relational/profile DB</td>
+<td>Write-optimized storage absorbs massive swipe volume.</td>
+</tr>
+<tr>
+<td>Pair key</td>
+<td>Sorted user-pair key/shard</td>
+<td>Separate A→B and B→A partitions</td>
+<td>Reciprocal swipes must be checked atomically together.</td>
+</tr>
+<tr>
+<td>Match detection</td>
+<td>Redis Lua atomic hash + Cassandra history</td>
+<td>Cassandra LWT or database polling</td>
+<td>Immediate matches need low-latency atomicity.</td>
+</tr>
+<tr>
+<td>Redis retention</td>
+<td>Expire recent Redis swipes, flush to Cassandra</td>
+<td>Keep all swipe history in Redis</td>
+<td>Cassandra stores history; Redis memory stays bounded.</td>
+</tr>
+<tr>
+<td>Match notification</td>
+<td>In-app result + APNS/FCM push</td>
+<td>Waiting for first swiper to reopen</td>
+<td>First swiper may have liked weeks earlier.</td>
+</tr>
+<tr>
+<td>Feed index</td>
+<td>Elasticsearch/OpenSearch geospatial index</td>
+<td>SQL bounding-box scan</td>
+<td>Fast complex preference and location queries.</td>
+</tr>
+<tr>
+<td>Feed generation</td>
+<td>Precomputed cached stacks + indexed top-up</td>
+<td>Live query or precompute-only</td>
+<td>Instant app open; active users still get freshness.</td>
+</tr>
+<tr>
+<td>Stale stacks</td>
+<td>&lt;1h TTL + location/filter refresh</td>
+<td>Indefinite cached feeds</td>
+<td>Cached profiles can stop matching filters.</td>
+</tr>
+<tr>
+<td>Swipe dedupe</td>
+<td>Backend contains + client cache/Bloom filter</td>
+<td>DB contains check only</td>
+<td>Avoid repeats despite replica lag and huge histories.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> Redis loses recent swipes before reconciliation, pair keys are inconsistent, or multi-device caches diverge.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Cassandra is great for durable swipe volume, but Redis is the right place for the atomic real-time pair check."</p>
+</blockquote>
+<h2 id="strava">Strava </h2>
+<p><strong>Signal:</strong> Realize the phone owns live tracking; scale backend around completed activity uploads.<br>
+<strong>Design:</strong> Mobile records GPS, distance, route, and timer offline with periodic local persistence.<br>
+Completion uploads metadata and route blobs/time-series; feeds and leaderboards are derived read models.<br>
+<img src="images/Strava-fig-09.png" alt="Strava — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pause timing</td>
+<td>Status/timestamp event log</td>
+<td>Single start timestamp</td>
+<td>Excludes pauses and supports active versus total time.</td>
+</tr>
+<tr>
+<td>Live tracking</td>
+<td>Client GPS + Haversine local stats</td>
+<td>Server-side per-point state</td>
+<td>Works offline and stays accurate without network.</td>
+</tr>
+<tr>
+<td>Local durability</td>
+<td>Buffer + local storage every ~10s</td>
+<td>Memory-only tracking</td>
+<td>Unexpected shutdown loses at most about 10 seconds.</td>
+</tr>
+<tr>
+<td>Sync boundary</td>
+<td>Completed/chunked activity upload</td>
+<td>Per-coordinate server writes</td>
+<td>Cuts backend requests roughly 100x.</td>
+</tr>
+<tr>
+<td>Service shape</td>
+<td>Single horizontally scaled Activity Service</td>
+<td>Many microservices</td>
+<td>Client offload leaves no major path skew.</td>
+</tr>
+<tr>
+<td>Activity storage</td>
+<td>Shard by completion time</td>
+<td>One huge activity database</td>
+<td>Recent activities dominate queries.</td>
+</tr>
+<tr>
+<td>Storage tiers</td>
+<td>Hot/warm/cold route storage</td>
+<td>Keep old routes hot</td>
+<td>Older activities are rare; 547.5TB/year accumulates.</td>
+</tr>
+<tr>
+<td>Realtime friends</td>
+<td>2–5s polling + 5–10s buffering</td>
+<td>WebSockets/SSE live pub-sub</td>
+<td>Predictable updates; friends do not need chat precision.</td>
+</tr>
+<tr>
+<td>Leaderboards</td>
+<td>Redis sorted sets incremented on completion</td>
+<td>Naive DB aggregation or daily table</td>
+<td>Efficient real-time top-N by activity totals.</td>
+</tr>
+<tr>
+<td>Filtered ranks</td>
+<td>Country sets + time zset/hash TTL cache</td>
+<td>One global leaderboard only</td>
+<td>Supports filters without scanning all activities.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> every activity requires live broadcast, route analytics become OLTP-wide scans, or feeds render full routes inline.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The client is an active system component, not just a dumb terminal."</p>
+</blockquote>
+<h2 id="news-aggregator">News Aggregator </h2>
+<p><strong>Signal:</strong> Separate publisher ingestion from feed delivery, then defend freshness and cursoring at 100M+ DAU.<br>
+<strong>Design:</strong> Webhooks/RSS/scrapers ingest articles and thumbnails; CDC updates regional Redis sorted-set feeds.<br>
+Clients page by monotonic article IDs; thumbnails live in S3/CloudFront with generated sizes.<br>
+<img src="images/NewsAggregator-fig-12.png" alt="News Aggregator — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service split</td>
+<td>Data Collection + Feed Service</td>
+<td>Single combined service</td>
+<td>User reads and batch ingestion scale differently.</td>
+</tr>
+<tr>
+<td>Thumbnail ownership</td>
+<td>S3-generated thumbnails</td>
+<td>Publisher image URLs or DB blobs</td>
+<td>Publishers can be slow; databases hate blobs.</td>
+</tr>
+<tr>
+<td>Cursoring</td>
+<td>Monotonic article IDs</td>
+<td>Offset, timestamp-only, composite cursors</td>
+<td>Stable simple pagination avoids shifts and collisions.</td>
+</tr>
+<tr>
+<td>Feed cache</td>
+<td>Regional Redis ZSET feeds via CDC</td>
+<td>DB query per page or TTL cache</td>
+<td>Sub-200ms reads with immediate freshness.</td>
+</tr>
+<tr>
+<td>Cache bounds</td>
+<td>Latest 1k–2k articles via ZREMRANGEBYRANK</td>
+<td>Unbounded Redis feeds</td>
+<td>Enough scrolling while memory stays bounded.</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>Publisher webhooks + RSS/scrape fallback</td>
+<td>Polling or scraping only</td>
+<td>Push gives seconds; fallback covers non-partners.</td>
+</tr>
+<tr>
+<td>Webhook auth</td>
+<td>Shared secrets/API keys</td>
+<td>Unauthenticated publisher posts</td>
+<td>Prevents spam and verifies content source.</td>
+</tr>
+<tr>
+<td>Traffic spikes</td>
+<td>Regional deployments + Redis read replicas</td>
+<td>One global cache/database</td>
+<td>Regional news lets hot regions scale independently.</td>
+</tr>
+<tr>
+<td>Categories</td>
+<td>In-memory filtering of cached regional JSON</td>
+<td>DB filtering or 250 category caches</td>
+<td>1k cached articles filter fast without duplication.</td>
+</tr>
+<tr>
+<td>Personalization</td>
+<td>Preference-vector assembly from category feeds</td>
+<td>Real-time scoring or per-user caches</td>
+<td>100x less memory while preserving sub-200ms responses.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> CDC lag is unmonitored, IDs are not time-ordered, publishers refuse integration, or personalization becomes deep per-user ranking.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "This is a read-scaling problem with a separate freshness pipeline."</p>
+</blockquote>
+<h2 id="dropbox">Dropbox </h2>
+<p><strong>Signal:</strong> Keep application servers out of the 50GB file-data path while supporting sync and sharing.<br>
+<strong>Design:</strong> File Service authorizes metadata and presigned multipart URLs; clients send bytes directly to blob storage.<br>
+CDN signed URLs serve downloads, <code>SharedFiles</code> indexes sharing, and sync uses push plus polling and content-defined chunks.<br>
+<img src="images/Dropbox-fig-13.png" alt="Dropbox — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metadata store</td>
+<td>DynamoDB FileMetadata + SharedFiles</td>
+<td>—</td>
+<td>Loose schema and user-keyed file lookups fit NoSQL.</td>
+</tr>
+<tr>
+<td>Upload path</td>
+<td>Presigned direct S3 upload</td>
+<td>File Service stores/relays bytes</td>
+<td>Bypasses app bandwidth and server-loss risk.</td>
+</tr>
+<tr>
+<td>Large uploads</td>
+<td>5–10MB S3 multipart chunks</td>
+<td>Single 50GB POST</td>
+<td>Enables progress, parallelism, and resume.</td>
+</tr>
+<tr>
+<td>Chunk integrity</td>
+<td>Server ETag ListParts verification</td>
+<td>Trust client PATCH statuses</td>
+<td>Trust but verify before marking uploaded.</td>
+</tr>
+<tr>
+<td>File identity</td>
+<td>Content and chunk fingerprints</td>
+<td>Filename-based identity</td>
+<td>Supports deduplication and resumable upload lookup.</td>
+</tr>
+<tr>
+<td>Download security</td>
+<td>CDN signed URLs + HTTPS/S3 encryption</td>
+<td>File relay, direct S3, or long-lived URLs</td>
+<td>Edges are fast; TTL limits bearer-link leaks.</td>
+</tr>
+<tr>
+<td>Sharing index</td>
+<td>SharedFiles table by userId,fileId</td>
+<td>Metadata sharelist or cache mirror</td>
+<td>Fast shared-with-me queries without sync drift.</td>
+</tr>
+<tr>
+<td>Sync signals</td>
+<td>WebSocket/SSE push + periodic polling</td>
+<td>Polling-only or push-only</td>
+<td>Near-instant changes; polling catches missed events.</td>
+</tr>
+<tr>
+<td>Conflict policy</td>
+<td>Remote truth + last-write-wins</td>
+<td>Client truth or distributed merge</td>
+<td>Keeps devices convergent without versioning scope.</td>
+</tr>
+<tr>
+<td>Delta transfer</td>
+<td>Content-defined chunks + selective compression</td>
+<td>Fixed chunks, full reupload, compress-all</td>
+<td>Inserts preserve fingerprints; only compressible bytes shrink.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> URLs live too long, multipart state is not reconciled, ACLs outgrow the model, or conflict history becomes required.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The File Service is the control plane; blob storage/CDN are the data plane."</p>
+</blockquote>
+<h2 id="youtube">YouTube </h2>
+<p><strong>Signal:</strong> Move multi-GB video bytes without app-server bottlenecks, then transform them for playback.<br>
+<strong>Design:</strong> Clients upload multipart to blob storage; metadata stores <code>videoId</code> state separately.<br>
+A workflow DAG transcodes originals into codec/bitrate segments and manifests, then CDN serves adaptive playback.<br>
+<img src="images/Youtube-fig-10.png" alt="YouTube — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metadata store</td>
+<td>Cassandra partitioned by videoId</td>
+<td>Relational single-node DB</td>
+<td>365M yearly records need highly available point lookups.</td>
+</tr>
+<tr>
+<td>Upload path</td>
+<td>S3 presigned multipart upload</td>
+<td>App-server video upload</td>
+<td>Multi-GB files bypass app servers and resume by chunks.</td>
+</tr>
+<tr>
+<td>Completion</td>
+<td>S3 CompleteMultipartUpload event</td>
+<td>Client-triggered processing</td>
+<td>Backend starts processing only after verified object completion.</td>
+</tr>
+<tr>
+<td>Video storage</td>
+<td>Segmented multi-format assets plus manifests</td>
+<td>Raw upload or full-format files</td>
+<td>Segments enable partial adaptive playback across devices.</td>
+</tr>
+<tr>
+<td>Streaming</td>
+<td>Adaptive bitrate via manifest</td>
+<td>Full download or fixed segments</td>
+<td>Client adapts quality to bandwidth without buffering.</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td>Temporal DAG with ffmpeg workers</td>
+<td>Monolithic processor</td>
+<td>Dependencies, fan-out, and CPU-heavy transcodes need orchestration.</td>
+</tr>
+<tr>
+<td>Worker handoff</td>
+<td>S3 URLs for intermediate files</td>
+<td>Passing blobs between workers</td>
+<td>Avoids moving large files through worker queues.</td>
+</tr>
+<tr>
+<td>Resumability</td>
+<td>Chunk fingerprints plus ETag verification</td>
+<td>Trust client progress</td>
+<td>Server verifies S3 part state before marking uploaded.</td>
+</tr>
+<tr>
+<td>Read scaling</td>
+<td>LRU cache partitioned by videoId</td>
+<td>Cassandra reads for every view</td>
+<td>Popular metadata hotspots are absorbed before the DB.</td>
+</tr>
+<tr>
+<td>Delivery</td>
+<td>CDN-cached segments and manifests</td>
+<td>Direct S3 streaming</td>
+<td>Edge proximity reduces startup latency and buffering.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> processing is not idempotent, manifests/CDN are stale, viral metadata hotspots form, or backlog delays availability.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The video service should move metadata, not video bytes."</p>
+</blockquote>
+<h2 id="yelp">Yelp </h2>
+<p><strong>Signal:</strong> Use the right indexes for local search/reviews without over-engineering a low-write system.<br>
+<strong>Design:</strong> Businesses and reviews start in PostgreSQL with PostGIS, trigram/full-text, B-tree category indexes, and denormalized rating counters.<br>
+Review writes synchronously update aggregates with optimistic locking and a unique user-business constraint.<br>
+<img src="images/Yelp-fig-13.png" alt="Yelp — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service split</td>
+<td>Business Service plus Review Service</td>
+<td>One mixed service</td>
+<td>Review writes and search reads scale differently.</td>
+</tr>
+<tr>
+<td>Data coupling</td>
+<td>Businesses and reviews in one Postgres DB</td>
+<td>Separate service-owned databases</td>
+<td>1TB reviews are manageable and tightly coupled.</td>
+</tr>
+<tr>
+<td>Search store</td>
+<td>Postgres + PostGIS + pg_trgm</td>
+<td>Elasticsearch secondary index</td>
+<td>Small data avoids another service and sync complexity.</td>
+</tr>
+<tr>
+<td>Search indexes</td>
+<td>PostGIS, pg_trgm, and category B-tree</td>
+<td>Lat/long B-tree plus LIKE scans</td>
+<td>Each filter needs an index matching access pattern.</td>
+</tr>
+<tr>
+<td>Rating update</td>
+<td>Synchronous denormalized average with optimistic locking</td>
+<td>On-demand AVG, cron, or queue</td>
+<td>One write/s does not justify asynchronous complexity.</td>
+</tr>
+<tr>
+<td>Review uniqueness</td>
+<td>Unique constraint on user_id,business_id</td>
+<td>Application-level check</td>
+<td>Persistence-layer invariant survives races and new writers.</td>
+</tr>
+<tr>
+<td>Read scaling</td>
+<td>Read replicas and/or cache</td>
+<td>Sharding</td>
+<td>Small data and read-heavy traffic need simpler scaling.</td>
+</tr>
+<tr>
+<td>Location names</td>
+<td>Location table mapping names to polygons</td>
+<td>Center-point radius</td>
+<td>Cities and neighborhoods are not circular.</td>
+</tr>
+<tr>
+<td>Location filtering</td>
+<td>Precomputed location_names keyword field</td>
+<td>Per-request geoshape filtering</td>
+<td>Polygon membership is paid once at business creation.</td>
+</tr>
+<tr>
+<td>Search order</td>
+<td>Distance first, then name/category</td>
+<td>Filtering full dataset</td>
+<td>Distance usually shrinks the search space fastest.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> fuzzy relevance exceeds Postgres, review writes jump orders of magnitude, or sharding loses global uniqueness.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "At 10M businesses and about 1TB reviews, the hard part is indexing reads, not sharding writes."</p>
+</blockquote>
+<h2 id="uber">Uber </h2>
+<p><strong>Signal:</strong> Match riders to nearby drivers quickly without double-assigning drivers or losing ride requests.<br>
+<strong>Design:</strong> Live driver location is ephemeral in Redis GEO/cells; ride state is durable in SQL/workflow queues.<br>
+Matching workers lock <code>driverId</code> with TTL, notify drivers, and commit assignment idempotently by region.<br>
+<img src="images/Uber-fig-10.png" alt="Uber — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fare estimate</td>
+<td>Ride Service calls third-party Mapping API</td>
+<td>Building routing in scope</td>
+<td>Mapping complexity is abstracted outside the interview scope.</td>
+</tr>
+<tr>
+<td>Location store</td>
+<td>Redis GEO geohash sorted set</td>
+<td>Direct DB writes or batched geospatial DB</td>
+<td>2M updates/s need real-time, disposable state.</td>
+</tr>
+<tr>
+<td>Stale drivers</td>
+<td>Timestamp sorted set cleanup after 30s</td>
+<td>Durable every GPS point</td>
+<td>Offline drivers disappear without costly permanent writes.</td>
+</tr>
+<tr>
+<td>Update rate</td>
+<td>Adaptive client location intervals</td>
+<td>Fixed 5-second pings</td>
+<td>Sensors reduce pings while preserving accuracy.</td>
+</tr>
+<tr>
+<td>Driver lock</td>
+<td>Redis distributed lock with 10s TTL</td>
+<td>App locks or DB status timeout</td>
+<td>TTL releases crashed or silent offers automatically.</td>
+</tr>
+<tr>
+<td>Ride queue</td>
+<td>Kafka/SQS queue with post-match offset commit</td>
+<td>First-come handler without queue</td>
+<td>Requests survive crashes and peak demand.</td>
+</tr>
+<tr>
+<td>Queue partition</td>
+<td>Geographic queue partitions</td>
+<td>Global FIFO queue</td>
+<td>Regional workers avoid boundary scatter and head-of-line blocking.</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Temporal or AWS Step Functions</td>
+<td>Delay queue</td>
+<td>Built-in timeouts and retries survive service restarts.</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>APNs/FCM push Notification Service</td>
+<td>—</td>
+<td>Drivers need timely accept or decline prompts.</td>
+</tr>
+<tr>
+<td>Scaling</td>
+<td>Geo-sharding with read replicas</td>
+<td>Vertical scaling</td>
+<td>Reduces latency and scales services, queues, databases.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> offline drivers remain indexed, lock TTL differs from visible timeout, region boundaries cause scatter, or offsets commit early.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Driver location is ephemeral; ride assignment is durable and must be exact."</p>
+</blockquote>
+<h2 id="local-delivery-service">Local Delivery Service </h2>
+<p><strong>Signal:</strong> Make browsing availability fast and approximate while order placement stays strictly consistent.<br>
+<strong>Design:</strong> Nearby Service prunes distribution centers, then availability aggregates cached/replica inventory for those candidates.<br>
+Order Service uses the leader PostgreSQL transaction to create order and reserve physical units at DCs.<br>
+<img src="images/LocalDelivery-fig-14.png" alt="Local Delivery Service — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inventory model</td>
+<td>Physical Inventory per DC</td>
+<td>Item-only catalog counts</td>
+<td>Ordering must reserve actual physical products.</td>
+</tr>
+<tr>
+<td>Availability path</td>
+<td>Nearby Service then inventory union</td>
+<td>Check all inventory</td>
+<td>Only serviceable DCs matter for availability.</td>
+</tr>
+<tr>
+<td>Catalog storage</td>
+<td>Item and inventory in Postgres</td>
+<td>Separate catalog search system</td>
+<td>Search/catalog are out of scope; simplicity wins.</td>
+</tr>
+<tr>
+<td>Order store</td>
+<td>Single Postgres for orders and inventory</td>
+<td>Two stores with distributed lock</td>
+<td>ACID transaction avoids crash gaps and deadlocks.</td>
+</tr>
+<tr>
+<td>Isolation</td>
+<td>SERIALIZABLE leader transaction</td>
+<td>Best-effort reservation</td>
+<td>Competing orders make one commit fail.</td>
+</tr>
+<tr>
+<td>Drive time</td>
+<td>Radius prune then Travel Time Service</td>
+<td>Simple SQL distance or all-DC travel calls</td>
+<td>Road-time is accurate; pruning avoids excessive API calls.</td>
+</tr>
+<tr>
+<td>Availability cache</td>
+<td>Redis cache with 1-minute TTL</td>
+<td>Direct DB lookup</td>
+<td>20k QPS availability reads need short-lived cached results.</td>
+</tr>
+<tr>
+<td>Cache invalidation</td>
+<td>Expire affected entries on order writes</td>
+<td>TTL-only freshness</td>
+<td>Checkout changes must not leave stale cached inventory.</td>
+</tr>
+<tr>
+<td>Partitioning</td>
+<td>Region ID from first 3 ZIP digits</td>
+<td>Full inventory partitions</td>
+<td>Nearby queries hit mostly one or two partitions.</td>
+</tr>
+<tr>
+<td>Read consistency</td>
+<td>Postgres read replicas for availability</td>
+<td>Leader-only reads</td>
+<td>Browsing tolerates staleness; checkout rechecks leader.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> leader write volume is exceeded, radius misses valid routes, stale reads cause unacceptable failures, or regions split service areas.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Availability is an approximate, fast read model; ordering is the strongly consistent write path."</p>
+</blockquote>
+<h2 id="facebook-post-search">Facebook Post Search </h2>
+<p><strong>Signal:</strong> Build a fast searchable index without Elasticsearch while handling huge post and like writes.<br>
+<strong>Design:</strong> Kafka ingestion builds custom inverted indexes: keyword to capped post lists sorted by recency or likes.<br>
+Hot indexes live in Redis; cold tiers live in blob-backed storage with candidate reranking.<br>
+<img src="images/FacebookPostSearch-fig-23.png" alt="Facebook Post Search — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scope</td>
+<td>Custom search index without Elasticsearch</td>
+<td>Search engine or pre-built full-text</td>
+<td>Interview tests indexing fundamentals, not product engines.</td>
+</tr>
+<tr>
+<td>Write intake</td>
+<td>Single Ingestion Service initially</td>
+<td>Split post and like ingestion</td>
+<td>Operation is simple; note future scaling concern.</td>
+</tr>
+<tr>
+<td>Inverted index</td>
+<td>Redis keyword to postId lists</td>
+<td>Sharded LIKE scans</td>
+<td>Sharding only parallelizes the wrong algorithm.</td>
+</tr>
+<tr>
+<td>Sort indexes</td>
+<td>Creation lists plus Redis likes sorted sets</td>
+<td>Request-time sorting</td>
+<td>Pre-sorted indexes avoid huge payloads and lookups.</td>
+</tr>
+<tr>
+<td>Search cache</td>
+<td>Redis query cache with under-1-minute TTL</td>
+<td>Recompute every duplicate query</td>
+<td>No personalization and 1-minute freshness allow caching.</td>
+</tr>
+<tr>
+<td>Edge cache</td>
+<td>CDN cache-control on search responses</td>
+<td>Only origin-side caching</td>
+<td>Geographic edge hits return in tens of milliseconds.</td>
+</tr>
+<tr>
+<td>Phrase queries</td>
+<td>Bigram or shingle indexes</td>
+<td>Intersection and filter only</td>
+<td>Direct phrase lookup avoids massive intersections.</td>
+</tr>
+<tr>
+<td>Post ingestion</td>
+<td>Kafka fanout and keyword-sharded Redis</td>
+<td>Single ingestion and index instance</td>
+<td>Buffers bursts and spreads 100+ writes per post.</td>
+</tr>
+<tr>
+<td>Like ranking</td>
+<td>Milestone like updates plus fresh rerank</td>
+<td>Per-like index writes or batching only</td>
+<td>Writes drop exponentially while final order stays precise.</td>
+</tr>
+<tr>
+<td>Cold storage</td>
+<td>Cap lists 1k-10k; move cold indexes to S3/R2</td>
+<td>Keep all postings hot</td>
+<td>Rare keywords get cheaper storage with small latency penalty.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> common keywords are uncapped, personalization/privacy enters scope, or candidate recall misses the true top N.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Sharding an unindexed <code>LIKE</code> scan only parallelizes the wrong algorithm."</p>
+</blockquote>
+<h2 id="ad-click-aggregator">Ad Click Aggregator </h2>
+<p><strong>Signal:</strong> Turn raw click firehose data into accurate near-realtime advertiser metrics.<br>
+<strong>Design:</strong> Server-side <code>/click</code> verifies signed impressions, writes accepted events to Kafka/Kinesis, then returns <code>302</code>.<br>
+Flink aggregates by event time into OLAP minute rows, while raw archives feed batch reconciliation.<br>
+<img src="images/AdClickAggregator-fig-09.png" alt="Ad Click Aggregator — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Redirect</td>
+<td>Server-side /click returns 302</td>
+<td>Client-side redirect plus POST</td>
+<td>Every redirect is tracked before leaving site.</td>
+</tr>
+<tr>
+<td>Analytics path</td>
+<td>Kafka/Kinesis plus Flink stream processing</td>
+<td>Same DB queries or Spark batches only</td>
+<td>Near-real-time metrics handle spikes better.</td>
+</tr>
+<tr>
+<td>Processor</td>
+<td>Flink event-time windows and watermarks</td>
+<td>Raw Kafka consumers</td>
+<td>Out-of-order events land in correct minute buckets.</td>
+</tr>
+<tr>
+<td>Analytics store</td>
+<td>OLAP warehouse or ClickHouse</td>
+<td>TSDB or row database</td>
+<td>High-cardinality multidimensional aggregations need columnar OLAP.</td>
+</tr>
+<tr>
+<td>Stream key</td>
+<td>Partition by adId</td>
+<td>Random partitioning</td>
+<td>Per-ad aggregation stays local and parallel.</td>
+</tr>
+<tr>
+<td>Hot shards</td>
+<td>adId:0-N suffix fanout</td>
+<td>Plain adId partitioning</td>
+<td>Viral ads need more than one shard.</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>Kafka/Kinesis 7-day retention plus replay</td>
+<td>Flink checkpointing as primary recovery</td>
+<td>Small windows replay from stream if processors fail.</td>
+</tr>
+<tr>
+<td>Reconciliation</td>
+<td>S3 data lake plus Spark batch repair</td>
+<td>Trust speed layer only</td>
+<td>Money metrics need slower source-of-truth correction.</td>
+</tr>
+<tr>
+<td>Dedupe</td>
+<td>HMAC-signed impression ID; stream then cache</td>
+<td>userId+adId or cache-first</td>
+<td>Per-impression counts; lost clicks cannot be recovered.</td>
+</tr>
+<tr>
+<td>Query rollups</td>
+<td>Daily or weekly OLAP pre-aggregates</td>
+<td>Large-window raw minute scans</td>
+<td>Common large windows trade storage for query speed.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> raw archive is incomplete, cache outage admits duplicates, hot suffixes cannot keep up, or aggregate schema lacks new dimensions.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "For money-moving metrics, I want fast delivery plus a slower reconciliation path that can correct the record."</p>
+</blockquote>
+<h2 id="youtube-top-k">YouTube Top K </h2>
+<p><strong>Signal:</strong> Turn a massive view-event firehose into precise top-K answers in milliseconds.<br>
+<strong>Design:</strong> View events arrive in Kafka by <code>videoId</code>; Flink aggregates by supported windows.<br>
+Sharded aggregate tables and cache hold precomputed top-K for hour/day/month/all-time.<br>
+<img src="images/YoutubeTopK-fig-20.png" alt="YouTube Top K — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td>Tumbling 1h/day/month/all-time</td>
+<td>Sliding or arbitrary ranges</td>
+<td>Easier to precompute within 1-minute delay.</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>Exact aggregates</td>
+<td>Count-Min Sketch approximation</td>
+<td>Requirements demand precise top-K results.</td>
+</tr>
+<tr>
+<td>Ingestion</td>
+<td>Kafka ViewEvent partitioned by videoId</td>
+<td>Dedicated view API</td>
+<td>Existing stream avoids boilerplate and enables partitioning.</td>
+</tr>
+<tr>
+<td>Read path</td>
+<td>Cron-precomputed Redis cache</td>
+<td>Database query per request or cache-on-miss</td>
+<td>Cache hits meet tens-of-milliseconds SLA.</td>
+</tr>
+<tr>
+<td>Stale fallback</td>
+<td>Retain cache entries for hours</td>
+<td>Empty result when cron is late</td>
+<td>Stale top-K beats serving nothing.</td>
+</tr>
+<tr>
+<td>Write scaling</td>
+<td>VideoId-sharded consumers and DB</td>
+<td>Single Postgres instance</td>
+<td>700k TPS requires spreading writes across shards.</td>
+</tr>
+<tr>
+<td>DB writes</td>
+<td>Flink batched tumbling aggregates</td>
+<td>Per-view counter updates</td>
+<td>Bulk per-video updates cut writes 2-100x.</td>
+</tr>
+<tr>
+<td>Top-K tables</td>
+<td>Per-window aggregate tables indexed by views</td>
+<td>Coarse-grain cron rollups</td>
+<td>Top-K reads directly from indexed current windows.</td>
+</tr>
+<tr>
+<td>Sliding support</td>
+<td>Increment newest minute, decrement expired minute</td>
+<td>Flink native sliding windows</td>
+<td>Native 1-minute slides multiply memory 43,200x.</td>
+</tr>
+<tr>
+<td>Specialized DB</td>
+<td>TimescaleDB continuous aggregates or OLAP rollups</td>
+<td>InfluxDB or Prometheus</td>
+<td>Billions of videoId series make top scans fail.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> precompute falls behind, hot videos skew partitions, sliding-window decrements are lost, or approximations replace required exactness.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Top-K reads must be precomputed; otherwise every request asks the database to rediscover the same sorted list."</p>
+</blockquote>
+<h2 id="metrics-monitoring">Metrics Monitoring </h2>
+<p><strong>Signal:</strong> Absorb massive metric writes while dashboards and alerts survive cardinality pressure.<br>
+<strong>Design:</strong> Agents batch metrics to collectors, Kafka buffers ingestion, and a TSDB stores time/series-hash partitions.<br>
+Rollups, query splitting, result cache, and alert evaluators share the pipeline with stricter paths for critical alerts.<br>
+<img src="images/MetricMonitoring-fig-16.png" alt="Metrics Monitoring — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ingest protocol</td>
+<td>Agent-batched protobuf metrics</td>
+<td>Servers direct JSON posts</td>
+<td>Reduces central requests and wire overhead.</td>
+</tr>
+<tr>
+<td>Buffer</td>
+<td>Kafka partitioned by metric/series hash</td>
+<td>Direct database writes</td>
+<td>Absorbs spikes, persists metrics, enables parallel consumers.</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Time-series DB partitioned by time and series hash</td>
+<td>Postgres relational table</td>
+<td>Append-only range queries need compression and rollups.</td>
+</tr>
+<tr>
+<td>Query path</td>
+<td>Separate PromQL-like query service</td>
+<td>Combine with ingestion path</td>
+<td>Expensive dashboard reads scale separately from writes.</td>
+</tr>
+<tr>
+<td>Alert baseline</td>
+<td>1-minute polling alert evaluator</td>
+<td>Flink/Spark for every rule</td>
+<td>Most alerts are scheduled queries within 1-minute SLA.</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>Alertmanager-style Notification Service</td>
+<td>Direct Slack/PagerDuty calls</td>
+<td>Prevents provider failures and alert storms.</td>
+</tr>
+<tr>
+<td>Dashboard reads</td>
+<td>Rollups plus Redis query splitting/cache</td>
+<td>Raw 10-second 30-day scans</td>
+<td>One 30-day panel otherwise reads about 25GB.</td>
+</tr>
+<tr>
+<td>Critical alerts</td>
+<td>Flink stream processing for critical alerts</td>
+<td>Faster polling for everything</td>
+<td>Seconds latency without querying storage for every rule.</td>
+</tr>
+<tr>
+<td>HA</td>
+<td>Local agent buffers, replicated Kafka, idempotent writes</td>
+<td>Single-instance pipeline</td>
+<td>Failures delay data instead of losing it.</td>
+</tr>
+<tr>
+<td>Cardinality</td>
+<td>Postgres policy store plus Redis series tracker</td>
+<td>Arbitrary labels accepted</td>
+<td>Caps prevent metric plus label-set series explosion.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> labels create unbounded series, Kafka retention expires before catch-up, rollups lose percentiles, or alerts overload storage.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The hidden scaling unit is not metric points, it's series: metric name plus label set."</p>
+</blockquote>
+<h2 id="rate-limiter">Rate Limiter </h2>
+<p><strong>Signal:</strong> Enforce useful limits at 1M req/s without adding more than about 10ms or creating an outage mode.<br>
+<strong>Design:</strong> API Gateway evaluates token buckets from user/IP/API-key context before app servers.<br>
+Redis Cluster shards by limit key, and Lua atomically refills/decrements with regional rule caches.<br>
+<img src="images/RateLimitter-fig-11.png" alt="Rate Limiter — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Placement</td>
+<td>API Gateway/load-balancer limiter</td>
+<td>In-process or dedicated service</td>
+<td>Blocks early without extra app-server network hop.</td>
+</tr>
+<tr>
+<td>Algorithm</td>
+<td>Token bucket</td>
+<td>Fixed window, sliding log, sliding counter</td>
+<td>Balances simplicity, memory efficiency, and bursty API traffic.</td>
+</tr>
+<tr>
+<td>State</td>
+<td>Redis token buckets</td>
+<td>Per-gateway memory buckets</td>
+<td>Gateways share one source of truth for clients.</td>
+</tr>
+<tr>
+<td>Atomicity</td>
+<td>Redis Lua read-calculate-update</td>
+<td><code>HMGET</code> plus <code>MULTI/EXEC</code> writes</td>
+<td>Atomic boundary includes entire bucket decision.</td>
+</tr>
+<tr>
+<td>Rejection</td>
+<td>HTTP 429 fail-fast headers</td>
+<td>Queue excess requests</td>
+<td>Avoids memory load, retries, and unpredictable response times.</td>
+</tr>
+<tr>
+<td>Sharding</td>
+<td>Redis Cluster hash slots</td>
+<td>Single Redis instance</td>
+<td>Ten shards at ~100k ops handle 1M req/s.</td>
+</tr>
+<tr>
+<td>Failure</td>
+<td>Fail-closed plus Redis replicas</td>
+<td>Fail-open</td>
+<td>Avoids cascade failures when spikes break Redis.</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>Connection pools and regional Redis</td>
+<td>Per-request TCP or distant Redis</td>
+<td>Avoids 20-50ms handshakes and cross-region latency.</td>
+</tr>
+<tr>
+<td>Hot keys</td>
+<td>Client-side limits, batching, blocklists, DDoS protection</td>
+<td>Server-side limiter alone</td>
+<td>Separates legitimate bursts from abuse before hot shards.</td>
+</tr>
+<tr>
+<td>Rule updates</td>
+<td>Push-based ZooKeeper config</td>
+<td>30-second polling</td>
+<td>Updates security-critical limits within seconds.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> limit keys need app-only state, one client overloads a shard, Lua is too slow, or product risk favors availability.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The atomic boundary is the entire token-bucket decision, not just the write."</p>
+</blockquote>
+<h2 id="distributed-cache">Distributed Cache </h2>
+<p><strong>Signal:</strong> Move from O(1) single-node cache to low-latency distributed cache with sane eviction and hot-key behavior.<br>
+<strong>Design:</strong> Each node uses hash map + TTL metadata + LRU list; the cluster uses consistent hashing with async replication.<br>
+Hot reads replicate selected keys; decomposable hot writes use suffix sharding and batching.<br>
+<img src="images/DistributedCache-fig-10.png" alt="Distributed Cache — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Storage</td>
+<td>In-memory hash table</td>
+<td>—</td>
+<td>Provides O(1) gets, sets, deletes.</td>
+</tr>
+<tr>
+<td>TTL</td>
+<td>Expiry timestamp plus janitor</td>
+<td>Lazy cleanup only</td>
+<td>Removes expired entries nobody reads again.</td>
+</tr>
+<tr>
+<td>Eviction</td>
+<td>Hash map plus doubly linked LRU list</td>
+<td>Hash table or list alone</td>
+<td>O(1) lookup, updates, and eviction.</td>
+</tr>
+<tr>
+<td>Replication</td>
+<td>Asynchronous primary-replica replication</td>
+<td>Synchronous replication</td>
+<td>Prioritizes availability and write latency over strong consistency.</td>
+</tr>
+<tr>
+<td>Cluster size</td>
+<td>~50 nodes by storage</td>
+<td>Throughput-only eight nodes</td>
+<td>1TB requires more nodes than 100k req/s.</td>
+</tr>
+<tr>
+<td>Sharding</td>
+<td>Consistent hashing with MurmurHash ring</td>
+<td><code>hash(key) % N</code> modulo</td>
+<td>Node changes remap only limited key ranges.</td>
+</tr>
+<tr>
+<td>Hot reads</td>
+<td>Copies of hot keys</td>
+<td>Vertical scaling all nodes</td>
+<td>Targets specific read hotspots without upgrading every node.</td>
+</tr>
+<tr>
+<td>Hot writes</td>
+<td>Suffix sharding</td>
+<td>Single hot counter key</td>
+<td>Decomposable writes spread across nodes.</td>
+</tr>
+<tr>
+<td>Write batching</td>
+<td>50-100ms write batching</td>
+<td>Per-write updates</td>
+<td>Reduces hot-write pressure by an order of magnitude.</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Client batching and connection pools</td>
+<td>Per-request connections</td>
+<td>Fewer round trips and lower p95/p99 latency.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> callers need strong reads from any replica, ring balance is poor, hot key is write-heavy and non-decomposable.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Hot reads and hot writes are different problems; copying helps reads, suffix sharding helps decomposable writes."</p>
+</blockquote>
+<h2 id="job-scheduler">Job Scheduler </h2>
+<p><strong>Signal:</strong> Combine durable scheduling with near-time execution precision and at-least-once retries.<br>
+<strong>Design:</strong> Job definitions create Execution rows by time bucket; schedulers move near-term work into SQS.<br>
+Container workers run idempotent tasks under visibility timeout, heartbeat, retry, and DLQ policies.<br>
+<img src="images/JobScheduler-fig-15.png" alt="Job Scheduler — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Storage</td>
+<td>DynamoDB/Cassandra for Jobs and Executions</td>
+<td>Postgres or MySQL</td>
+<td>Few relationships; NoSQL scales writes easier.</td>
+</tr>
+<tr>
+<td>Recurrence</td>
+<td>Job definitions plus time-bucketed Executions</td>
+<td>Single row with CRON</td>
+<td>Query due work without evaluating every schedule.</td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>user_id</code> GSI on Executions</td>
+<td>Jobs scan plus per-job lookups</td>
+<td>Supports user status queries and pagination.</td>
+</tr>
+<tr>
+<td>Timing</td>
+<td>5-minute DB scan plus direct near-term SQS</td>
+<td>2-second DB polling or Kafka append</td>
+<td>Reduces load while meeting 2s precision.</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>SQS delayed delivery</td>
+<td>Redis ZSET or RabbitMQ delay queues</td>
+<td>Native delay, visibility timeouts, DLQ, autoscaling.</td>
+</tr>
+<tr>
+<td>Sharding</td>
+<td>Random suffixes on time buckets</td>
+<td>Single hourly partition</td>
+<td>Avoids DynamoDB hot partition at 10k/sec.</td>
+</tr>
+<tr>
+<td>Workers</td>
+<td>ECS containers with auto-scaling</td>
+<td>Lambda functions</td>
+<td>Steady workload avoids cold starts and serverless cost.</td>
+</tr>
+<tr>
+<td>Retries</td>
+<td>SQS visibility timeout, heartbeat, DLQ</td>
+<td>Health checks or DB leases</td>
+<td>No extra monitor or 50k lease writes/sec.</td>
+</tr>
+<tr>
+<td>Backoff</td>
+<td>Exponential re-enqueue delays then DLQ</td>
+<td>Indefinite retries</td>
+<td>Stops poison jobs after three attempts.</td>
+</tr>
+<tr>
+<td>Idempotency</td>
+<td>Idempotent jobs with downstream keys</td>
+<td>No controls or dedupe table</td>
+<td>At-least-once duplicates become harmless.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> precision is treated as hard real-time, shard queries miss buckets, workers lack idempotency, or queue-depth scaling lags.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "A scheduler has two clocks: durable long-range state in the DB and precise near-term visibility in the queue."</p>
+</blockquote>
+<h2 id="notification-system">Notification System </h2>
+<p><strong>Signal:</strong> Protect high-priority messages from campaign blasts while never dropping accepted work.<br>
+<strong>Design:</strong> API accepts to durable queues and returns <code>202</code>; workers deliver by channel/provider with stored outcomes.<br>
+Priority has separate queues, worker pools, provider token buckets, dedupe IDs, and retry/suppression states.<br>
+<img src="images/NotificationSystem-fig-12.png" alt="Notification System — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API</td>
+<td>Separate <code>/notifications</code> and <code>/campaigns</code></td>
+<td>Overloaded notification endpoint</td>
+<td>Avoids one endpoint creating two resource types.</td>
+</tr>
+<tr>
+<td>Channel ownership</td>
+<td>Provider APIs plus stored device tokens</td>
+<td>Persistent phone sockets</td>
+<td>APNs, Twilio, email own last-mile delivery.</td>
+</tr>
+<tr>
+<td>Scheduling</td>
+<td>Minute cron for scheduled sends</td>
+<td>Seconds-precise cron for OTPs</td>
+<td>Delayed sends tolerate minutes; OTPs stay immediate.</td>
+</tr>
+<tr>
+<td>Campaign fan-out</td>
+<td>Segment snapshot at fan-out</td>
+<td>Live membership tracking</td>
+<td>Marketing campaigns can miss mid-publish joiners.</td>
+</tr>
+<tr>
+<td>Preferences</td>
+<td>Dispatch-time checks plus SUPPRESSED rows</td>
+<td>Silent drops</td>
+<td>Shows why a user was not notified.</td>
+</tr>
+<tr>
+<td>Acceptance</td>
+<td>Publish first to SQS and return 202</td>
+<td>Synchronous retries or Postgres polling</td>
+<td>Accepted work survives crashes without homemade queues.</td>
+</tr>
+<tr>
+<td>Retry</td>
+<td>SQS visibility, backoff, DLQ</td>
+<td>Custom retry bookkeeping</td>
+<td>Queue handles worker/provider failures.</td>
+</tr>
+<tr>
+<td>Priority</td>
+<td>Separate queues/workers plus Redis per-tier buckets</td>
+<td>One queue or separate queues only</td>
+<td>Reserves provider quota and compute for OTPs.</td>
+</tr>
+<tr>
+<td>Brownout</td>
+<td>Circuit breakers, bulkheads, provider router</td>
+<td>Continuing 30-second provider calls</td>
+<td>Sheds load and keeps high priority moving.</td>
+</tr>
+<tr>
+<td>Dedupe</td>
+<td>Stable IDs plus post-ack Redis sent cache</td>
+<td>Pre-send <code>SET NX</code> locks</td>
+<td>Pre-send locks turn worker crashes into drops.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> high-priority exceeds quota, providers brown out, outcome DB/dedupe is down, or campaign IDs are not idempotent.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "A priority queue without a provider budget still starves OTPs."</p>
+</blockquote>
+<h2 id="web-crawler">Web Crawler </h2>
+<p><strong>Signal:</strong> Crawl billions of pages without losing progress, hammering domains, or wasting work on duplicates.<br>
+<strong>Design:</strong> A multi-stage pipeline queues URL IDs, fetches HTML to blob storage, parses text/links, and updates crawl metadata.<br>
+SQS visibility timeouts, domain politeness locks, robots cache, URL dedupe, and content hashes control retries and traps.<br>
+<img src="images/WebCrawler-fig-08.png" alt="Web Crawler — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Output storage</td>
+<td>S3 blob storage for text/HTML</td>
+<td>HTML in queue messages</td>
+<td>Queues are expensive for large payloads.</td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td>Fetcher and extraction stages</td>
+<td>Monolithic crawler</td>
+<td>Failed stages retry without losing other progress.</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td>DynamoDB URL and Domain tables</td>
+<td>Queue-only state</td>
+<td>Stores blob links, robots, dedupe, depth.</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>SQS visibility, backoff, DLQ</td>
+<td>In-memory timers or Kafka manual retries</td>
+<td>Managed retries; URLs survive crawler crashes.</td>
+</tr>
+<tr>
+<td>Robots</td>
+<td>Cached robots plus <code>ChangeMessageVisibility</code> delay</td>
+<td>Ignoring Crawl-delay</td>
+<td>Respects disallow rules and deferred in-flight URLs.</td>
+</tr>
+<tr>
+<td>Politeness</td>
+<td>Redis per-domain locks, sliding window, jitter</td>
+<td>Local sleeps and synchronized retries</td>
+<td>Enforces global 1 req/s without stampedes.</td>
+</tr>
+<tr>
+<td>Scale</td>
+<td>Eight network-optimized crawlers plus autoscaled parsers</td>
+<td>One crawler machine</td>
+<td>10B pages finish in about 3.9 days.</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>Crawler DNS cache plus multiple providers</td>
+<td>Automatic uncached single-provider DNS</td>
+<td>DNS caused up to 70% elapsed time.</td>
+</tr>
+<tr>
+<td>Dedupe</td>
+<td>URL table plus content-hash DB index</td>
+<td>URL-only dedupe or RedisBloom</td>
+<td>Catches duplicate content with simpler indexing.</td>
+</tr>
+<tr>
+<td>Traps</td>
+<td>Max link-hop depth 15-20</td>
+<td>Unbounded link following</td>
+<td>Prevents crawler traps from consuming crawl forever.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> visibility is too short, messages delete before persistence, canonicalization is weak, or domain diversity is low.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "Politeness is global per domain; with many workers, local sleep is not enough."</p>
+</blockquote>
+<h2 id="bitly">Bitly </h2>
+<p><strong>Signal:</strong> Guarantee short-code uniqueness while making the read-heavy redirect path fast and highly available.<br>
+<strong>Design:</strong> Create mappings with Redis batched counters encoded Base62 and DB <code>UNIQUE(shortCode)</code> as final guard.<br>
+Redirects use primary-key lookup, Redis/Memcached cache, edge/CDN workers for hot links, and 302 for mutable analytics/expiry.<br>
+<img src="images/Bitly-fig-08.png" alt="Bitly — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code generation</td>
+<td>Redis <code>INCR</code> plus DB <code>UNIQUE</code> plus Base62</td>
+<td>Prefixes, random IDs, SHA-256 truncation</td>
+<td>Collision-free, compact; 1B fits six characters.</td>
+</tr>
+<tr>
+<td>Encoding</td>
+<td>Base62</td>
+<td>Base64</td>
+<td>Avoids <code>/</code> separators and <code>+</code> query-space ambiguity.</td>
+</tr>
+<tr>
+<td>Counter allocation</td>
+<td>Batched Redis counter ranges; disjoint regional ranges</td>
+<td>Per-write or cross-region counter calls</td>
+<td>Reduces coordination while preserving uniqueness.</td>
+</tr>
+<tr>
+<td>Redirect</td>
+<td>HTTP 302</td>
+<td>HTTP 301</td>
+<td>Keeps expiry, deletion, and analytics under server control.</td>
+</tr>
+<tr>
+<td>Expiration</td>
+<td>Cache TTL no longer than URL expiry</td>
+<td>Indefinite cache entries</td>
+<td>Avoids redirecting expired links from stale cache.</td>
+</tr>
+<tr>
+<td>Lookup</td>
+<td>Short code primary key/index</td>
+<td>Full table scan</td>
+<td>Finds mappings without scanning billions.</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>Redis/Memcached read cache</td>
+<td>Direct DB every click</td>
+<td>Handles ~600k read/sec peak redirects.</td>
+</tr>
+<tr>
+<td>Edge</td>
+<td>CDN plus Workers/Lambda@Edge</td>
+<td>Origin-only redirects</td>
+<td>Popular links never reach Primary Server.</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Single Postgres with replication/backups</td>
+<td>Immediate sharding</td>
+<td>500GB and ~1 write/sec fit modern SSDs.</td>
+</tr>
+<tr>
+<td>Services</td>
+<td>Separate Read and Write services</td>
+<td>One primary server</td>
+<td>Read-heavy workload scales independently.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> counter ranges overlap, cache TTL ignores expiration, edge invalidation is strict, or 301 leaks to browsers.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "This is not storage-hard at 500GB; it is redirect-read-hard at peak traffic."</p>
+</blockquote>
+<h2 id="price-tracker">Price Tracker </h2>
+<p><strong>Signal:</strong> Turn anti-scraping constraints into prioritized, validated price collection.<br>
+<strong>Design:</strong> Browser extension reports Amazon observations; crawlers selectively verify suspicious or uncovered products.<br>
+Price changes append to TimescaleDB/history and publish events to subscription notification workers.<br>
+<img src="images/PriceTracker-fig-13.png" alt="Price Tracker — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Services</td>
+<td>Separate Price History, Crawler, Subscription services</td>
+<td>One combined service</td>
+<td>Read charts and crawling scale differently.</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Primary DB plus TimescaleDB price history</td>
+<td>One generic database table</td>
+<td>Price history grows append-only to billions.</td>
+</tr>
+<tr>
+<td>Collection</td>
+<td>Chrome extension plus selective crawlers</td>
+<td>Naive 500M-product crawl</td>
+<td>Avoids 15-year single-crawler catalog pass.</td>
+</tr>
+<tr>
+<td>Prioritization</td>
+<td>User-interest crawl priority queues</td>
+<td>Equal refresh for all products</td>
+<td>Subscribed and searched products matter most.</td>
+</tr>
+<tr>
+<td>Discovery</td>
+<td>Extension-submitted unknown products</td>
+<td>Crawler-only discovery</td>
+<td>New products appear when users browse them.</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Trust-but-verify priority crawls</td>
+<td>Consensus-only validation</td>
+<td>Immediate alerts with fast correction for suspicious reports.</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>Kafka price-change events</td>
+<td>Two-hour cron scans</td>
+<td>Processes actual changes within one hour.</td>
+</tr>
+<tr>
+<td>Charts</td>
+<td>TimescaleDB <code>time_bucket</code> aggregations</td>
+<td>Scheduled pre-aggregation or ClickHouse</td>
+<td>Real-time charts with PostgreSQL operational simplicity.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> extension coverage is sparse, parser breaks, crawler verification is rate-limited, or DB/outbox diverges from events.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The extension is not just a UI feature; it is the scalable data-collection plane."</p>
+</blockquote>
+<h2 id="leetcode">LeetCode </h2>
+<p><strong>Signal:</strong> Run untrusted code safely with fast feedback without overengineering a modest product.<br>
+<strong>Design:</strong> API stores problems/submissions and queues judge work to warm per-language container pools.<br>
+Workers enforce sandbox limits, report results asynchronously, and Redis ZSETs serve contest leaderboards with polling.<br>
+<img src="images/Leetcode-fig-13.png" alt="LeetCode — final design"><br>
+<strong>Key decisions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chose</th>
+<th>Over</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecture</td>
+<td>Simple client-server monolith</td>
+<td>Microservices architecture</td>
+<td>Small product avoids service-management overhead.</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>DynamoDB Problem documents with test cases</td>
+<td>SQL relational model</td>
+<td>No complex queries; nest test cases.</td>
+</tr>
+<tr>
+<td>API trust</td>
+<td>Session/JWT userId, server timestamps</td>
+<td>Client-supplied userId or timestamps</td>
+<td>Client data is easy to manipulate.</td>
+</tr>
+<tr>
+<td>Execution</td>
+<td>Warm per-language Docker containers</td>
+<td>API-process run, VM per submission, Lambda</td>
+<td>Low latency with isolation and no cold starts.</td>
+</tr>
+<tr>
+<td>Sandbox</td>
+<td>Read-only FS, caps, timeout, no network, seccomp</td>
+<td>Container boundary alone</td>
+<td>Defense in depth for arbitrary code.</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>SQS submission queue</td>
+<td>Direct container calls only</td>
+<td>Buffers spikes and enables retries.</td>
+</tr>
+<tr>
+<td>Scaling</td>
+<td>ECS horizontal autoscaling per language</td>
+<td>Vertical scaling</td>
+<td>1,667-core burst cannot fit one box.</td>
+</tr>
+<tr>
+<td>Results</td>
+<td><code>GET /check/:id</code> 1s polling</td>
+<td>WebSockets</td>
+<td>LeetCode-scale feedback doesn't need persistent connections.</td>
+</tr>
+<tr>
+<td>Leaderboard</td>
+<td>Redis sorted set plus 5s polling</td>
+<td>DB queries or 30s cache refresh</td>
+<td>Fast enough without WebSocket complexity.</td>
+</tr>
+<tr>
+<td>Test harness</td>
+<td>Shared JSON cases with language harnesses</td>
+<td>Per-language test cases</td>
+<td>One suite runs across every language.</td>
+</tr>
+<tr>
+<td><strong>Breaks when:</strong> sandbox policy misses language needs, pools are cold, queue latency exceeds UX, or Redis leaderboard cannot rebuild from submissions.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Say:</strong> "The hard part is safely running untrusted code, not inventing a huge microservice mesh."</p>
+</blockquote>
+<hr>
+<h2 id="real-world-case-studies">Real-world case studies </h2>
+<table>
+<thead>
+<tr>
+<th>Company</th>
+<th>Problem</th>
+<th>What they did</th>
+<th>Maps to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shopify</td>
+<td>Redis holds and MySQL inventory could not commit together</td>
+<td>MySQL <code>reservation_units</code> rows plus <code>SELECT ... FOR UPDATE SKIP LOCKED</code></td>
+<td>Ticketmaster, Flash Sale, contention</td>
+</tr>
+<tr>
+<td>Discord</td>
+<td>Hot Cassandra message partitions and ops pain</td>
+<td>ScyllaDB plus Rust services, consistent hashing, request coalescing</td>
+<td>WhatsApp/chat storage, hot partitions</td>
+</tr>
+<tr>
+<td>Slack</td>
+<td>Redis job queue filled RAM and could not drain</td>
+<td>Kafka disk backlog in front of Redis dispatch state</td>
+<td>Job Scheduler, Notification System, burst queues</td>
+</tr>
+<tr>
+<td>Figma</td>
+<td>Live/offline browser design docs needed convergence</td>
+<td>Central document process plus simplified CRDT and per-property LWW</td>
+<td>Google Docs, collaborative editing</td>
+</tr>
+<tr>
+<td>Spotify</td>
+<td>Data lake scans were cheap but point queries were slow</td>
+<td>Random Access Parquet index plus key-aware file layout</td>
+<td>Search/read models, secondary indexes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Shopify SKIP LOCKED</strong></p>
+<ul>
+<li>The invariant was reserve-and-claim with the merchant ledger, so Redis could not be the source of truth.</li>
+<li>One counter row serialized every buyer; one row per reservable unit let concurrent buyers lock different rows.</li>
+<li><code>SKIP LOCKED</code> plus a bounded pool made an old rejected MySQL design practical.</li>
+</ul>
+<p><strong>Figma multiplayer</strong></p>
+<ul>
+<li>Figma avoided full OT by making one process own an open document and order edits centrally.</li>
+<li>Object properties were the merge unit, so independent edits like color and size could both survive.</li>
+<li>Last-writer-wins was acceptable because visual conflicts were visible and re-editable; text editors need stronger logic.</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
