@@ -141,6 +141,16 @@
       /* BEGIN GENERATED NOTES */
       const sections = [
         {
+          "title": "Start Here",
+          "notes": [
+            {
+              "title": "1. DSA & Problem Solving — Must Have",
+              "href": "Topics.html",
+              "description": "Notes on 1. DSA & Problem Solving."
+            }
+          ]
+        },
+        {
           "title": "COMPANY",
           "notes": [
             {
@@ -162,6 +172,16 @@
               "title": "C-Sharp",
               "href": "DSA/CSharp.html",
               "description": "Notes on C-Sharp."
+            },
+            {
+              "title": "Java for DSA and LLD Interviews",
+              "href": "DSA/Java-Details.html",
+              "description": "Target: Java 17+, with Java 21 features explicitly marked. Examples are independent reference snippets, not one combined program. Prefer ordinary…"
+            },
+            {
+              "title": "Java",
+              "href": "DSA/Java.html",
+              "description": "Target: Java 17+. Examples are independent snippets."
             },
             {
               "title": "Patterns",
@@ -231,17 +251,117 @@
           "title": "HLD",
           "notes": [
             {
-              "title": "HLD Cheatsheet — Solve Any System Design Problem",
-              "href": "HLD/CHEATSHEET-Backup.html",
-              "description": "One page playbook distilled from every note in this repo. Rule #1: There is no single right answer. You are graded on navigation, design, technical…"
+              "title": "High Level Design (HLD)",
+              "href": "HLD/README.html",
+              "description": "High level design describes the overall architecture of a system: its components, how they interact, and the trade-offs that make it scalable,…"
             },
             {
               "title": "HLD Cheatsheet — Solve Any System Design Problem",
               "href": "HLD/CHEATSHEET.html",
               "description": "One revision sheet for high level design. Framework → patterns → toolbox → Azure stack → problem playbooks. Rule #1: There is no single right answer.…"
+            },
+            {
+              "title": "Notes",
+              "href": "HLD/Notes.html",
+              "description": "Notes on Notes."
+            },
+            {
+              "title": "API Design",
+              "href": "HLD/ApiDesign/README.html",
+              "description": "Overview and index for API Design."
+            },
+            {
+              "title": "Asynchronous Systems",
+              "href": "HLD/AsyncSystems/AsyncSystems.html",
+              "description": "Work is handed off to a queue and processed later by a separate worker, instead of the caller waiting for it to finish."
+            },
+            {
+              "title": "Building Blocks",
+              "href": "HLD/BuildingBlocks/BuildingBlocks.html",
+              "description": "Notes on Building Blocks."
+            },
+            {
+              "title": "Caching",
+              "href": "HLD/Caching/Caching.html",
+              "description": "Storing frequently accessed data in a temporary storage area to reduce latency and improve performance"
+            },
+            {
+              "title": "System Design Concepts",
+              "href": "HLD/Concepts/Concepts.html",
+              "description": "Notes on System Design Concepts."
+            },
+            {
+              "title": "Database Modeling",
+              "href": "HLD/DatabaseModeling/DatabaseModeling.html",
+              "description": "Data Modeling defines hoow the data is: Structured, Stored and Related"
+            },
+            {
+              "title": "🎯 System Design Interview Guide",
+              "href": "HLD/HelloInterviewGuide/README.html",
+              "description": "Seven files. Everything you need to navigate and answer any system design question."
+            },
+            {
+              "title": "⚡ Quick Revision — Read This in the Last 60 Minutes",
+              "href": "HLD/HelloInterviewGuide/00-QuickRevision.html",
+              "description": "Everything below is a reminder, not a lesson. If a line doesn't ring a bell, follow the link and come back."
+            },
+            {
+              "title": "The Delivery Framework — How to Run the 45 Minutes",
+              "href": "HLD/HelloInterviewGuide/01-Framework.html",
+              "description": "Sources: Introduction · Delivery Framework"
+            },
+            {
+              "title": "Master Decision Trees — \"When Do I Use What?\"",
+              "href": "HLD/HelloInterviewGuide/02-DecisionTrees.html",
+              "description": "One page per decision. Use this as the lookup table during practice, and as the last thing you skim before the interview. Deeper reasoning lives in…"
+            },
+            {
+              "title": "Core Concepts",
+              "href": "HLD/HelloInterviewGuide/03-CoreConcepts.html",
+              "description": "One-file reference for the mechanics behind every design. Deep versions: see ../2-CoreConcepts/ and ../5-AdvanceTopics/ in the source library."
+            },
+            {
+              "title": "Patterns",
+              "href": "HLD/HelloInterviewGuide/04-Patterns.html",
+              "description": "Requirement phrasing → known solution shape. Deep versions: see ../3-Patterns/ in the source library."
+            },
+            {
+              "title": "Technologies",
+              "href": "HLD/HelloInterviewGuide/05-Technologies.html",
+              "description": "Pick the simplest component that satisfies the requirement, then defend it. Deep versions: see ../4-KeyTechnologies/ in the source library."
+            },
+            {
+              "title": "Problems",
+              "href": "HLD/HelloInterviewGuide/06-Problems.html",
+              "description": "32 designs, compressed to the decisions that matter. Full worked breakdowns (requirements, APIs, full deep dives, all diagrams) are in…"
+            },
+            {
+              "title": "System Design",
+              "href": "HLD/SystemDesign/SystemDesign.html",
+              "description": "Design complex systems that are scalable, reliable, and maintainable and solves a real world problem"
             }
           ],
           "subsections": [
+            {
+              "title": "API Design",
+              "notes": [
+                {
+                  "title": "Authentication and Authorization",
+                  "href": "HLD/ApiDesign/Auth/Auth.html",
+                  "description": "HISTORY: Human Trust > Seals > Shared Phrases > Passwords in Plain Text > Hashed Password > Asym Cryptography RSA > Token Based > MFA [Something you…"
+                },
+                {
+                  "title": "GraphQL",
+                  "href": "HLD/ApiDesign/Non-REST/NonREST.html",
+                  "description": "GraphQL is a query language for APIs and a runtime for executing those queries by allowing clients to request exactly the data they need."
+                },
+                {
+                  "title": "REST API Design",
+                  "href": "HLD/ApiDesign/REST/REST.html",
+                  "description": "Representational State Transfer (REST) is an architectural style for designing networked applications."
+                }
+              ]
+            },
             {
               "title": "Problems",
               "notes": [
@@ -264,6 +384,11 @@
                   "title": "Dropbox",
                   "href": "HLD/Problems/Dropbox/Dropbox.html",
                   "description": "Dropbox is a cloud-based file storage service that allows users to store and share files. It provides a secure and reliable way to store and access…"
+                },
+                {
+                  "title": "Instagram",
+                  "href": "HLD/Problems/Instagram/Instagram.html",
+                  "description": "Instagram is a social media platform primarily focused on visual content, allowing users to share photos and videos with their followers."
                 },
                 {
                   "title": "Leetcode",
@@ -514,6 +639,16 @@
         {
           "title": "SE",
           "notes": [
+            {
+              "title": "Computer Networks",
+              "href": "SE/ComputerNetworks/README.html",
+              "description": "A computer network is a system that connects two or more computing devices so they can communicate, share resources, and exchange data with each other"
+            },
+            {
+              "title": "Databases",
+              "href": "SE/Databases/README.html",
+              "description": "Overview and index for Databases."
+            },
             {
               "title": "Git",
               "href": "SE/Git/Git.html",
